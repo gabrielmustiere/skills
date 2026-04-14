@@ -12,14 +12,14 @@
       "name": "workflow",
       "source": "workflow",
       "description": "Skills pour les différentes étapes de mon workflow de développement ",
-      "version": "0.1.0",
+      "version": "0.6.0",
       "category": "development"
     },
     {
       "name": "sylius",
       "source": "sylius",
       "description": "Skills pour travailler avec Sylius",
-      "version": "0.1.0",
+      "version": "0.6.0",
       "category": "development"
     }
   ]

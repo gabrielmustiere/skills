@@ -1,7 +1,7 @@
 {
   "name": "workflow",
-  "description": "Pipeline de développement stack-agnostique (feature → design → implement → review → commit → report → sync). Détection automatique du stack (Symfony, Sylius) et chargement des règles framework adaptées.",
-  "version": "0.2.0",
+  "description": "Pipeline de développement stack-agnostique avec nomenclature symétrique : track feature (feature-pitch → feature-design → feature), track refacto (refactor-plan → refactor), track évolution technique (tech-plan → tech), puis review → commit → report → sync communs. Artifacts unifiés dans docs/story/ avec préfixes f-/r-/t- pour une timeline partagée. Détection automatique du stack (Symfony, Sylius) et chargement des règles framework adaptées.",
+  "version": "0.6.0",
   "author": {
     "name": "Gabriel Mustiere"
   },
