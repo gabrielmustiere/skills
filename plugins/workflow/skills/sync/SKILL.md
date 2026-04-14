@@ -1,7 +1,8 @@
 ---
 name: sync
-description: Réaligne la spec feature et le design technique avec ce qui a été réellement implémenté — applique les écarts validés et trace les modifications dans un changelog. Déclenche dès que l'utilisateur veut "synchroniser la doc", "réaligner la spec", "mettre à jour la doc après implémentation", ou évoque un décalage entre doc et code, même sans citer le skill.
+description: Réaligne la spec feature et le design technique avec ce qui a été réellement implémenté — applique les écarts validés et trace les modifications dans un changelog. Déclenche sur "synchronise / resync la doc", "réaligne la spec", "la doc n'est plus à jour", "la spec ne reflète plus le code", ou tout décalage doc/code constaté — même sans citer le skill.
 user_invocable: true
+disable-model-invocation: true
 ---
 
 # /sync — Réalignement de la documentation

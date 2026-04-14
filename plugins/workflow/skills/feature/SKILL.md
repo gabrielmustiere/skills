@@ -1,6 +1,6 @@
 ---
 name: feature
-description: Atelier interactif pour cadrer, challenger et documenter une fonctionnalité avant développement — produit docs/features/<NNN-slug>/feature.md. Déclenche dès que l'utilisateur évoque une nouvelle fonctionnalité, une idée à creuser, un besoin métier à formaliser, une refonte d'écran, ou demande à "spec" / "cadrer" / "challenger" une feature, même sans citer explicitement le skill.
+description: Atelier interactif pour cadrer, challenger et documenter une fonctionnalité avant développement — produit docs/features/<NNN-slug>/feature.md. Déclenche sur "j'ai une idée de feature", "on doit ajouter X", "faut revoir l'écran Y", "cadre / speccer / challenger ce besoin", "refondre ce parcours" — même sans citer le skill.
 user_invocable: true
 ---
 
@@ -35,14 +35,20 @@ Si le pitch est trop vague (ex : "améliorer les commandes", "moderniser l'admin
 
 Demande à l'utilisateur de pitcher sa fonctionnalité en une phrase. S'il l'a déjà fait dans son message ou via l'argument optionnel, passe directement à la validation de phase 0 puis au challenge.
 
-### Phase 2 — Challenge (boucle interactive)
+### Phase 2 — Détection du stack (contexte pour le challenge)
 
-Pour chaque idée, challenge sur ces axes (pas tous en même temps, 2-3 par tour, en piochant ce qui est pertinent pour la feature) :
+Lis `${CLAUDE_SKILL_DIR}/../../references/stacks/_detection.md` et applique la procédure. La spec produite reste **fonctionnelle**, pas technique — mais connaître le stack permet d'orienter les questions de transverses (ex: un projet Sylius suggère de challenger sur multi-channel / multi-thème, un projet Symfony sans e-commerce n'a pas ces axes).
+
+Lis aussi le `CLAUDE.md` du projet s'il existe — il contient les conventions et contraintes métier du projet user (découpage en modules, contraintes réglementaires, stakeholders).
+
+### Phase 3 — Challenge (boucle interactive)
+
+Pour chaque idée, challenge sur ces axes (pas tous en même temps, 2-3 par tour, en piochant ce qui est pertinent) :
 
 **Métier et utilisateurs**
 
 - **Le "pourquoi"** : Quel problème utilisateur ça résout ? Qu'est-ce qui se passe si on ne le fait pas ?
-- **Les utilisateurs** : Qui utilise ça exactement ? Admin Sylius ? Client final ? Les deux ? Avec quels droits ?
+- **Les utilisateurs** : Qui utilise ça exactement ? Admin ? Client final ? Les deux ? Avec quels droits ?
 - **Le périmètre** : Trop large ? Trop étroit ? Qu'est-ce qui est dans le scope et hors scope ?
 - **La priorité** : MVP vs nice-to-have — qu'est-ce qui est indispensable au lancement ?
 - **La mesure** : Comment on sait que ça marche ? Quel critère de succès, quelle métrique ?
@@ -52,25 +58,28 @@ Pour chaque idée, challenge sur ces axes (pas tous en même temps, 2-3 par tour
 - **Cas limites** : Données manquantes, état incohérent, droits insuffisants, double soumission, concurrence ?
 - **User stories** : Chaque story doit avoir un rôle, une action, un bénéfice clair. Refuse les stories floues type "en tant qu'admin je veux gérer X" sans préciser quoi et pourquoi.
 
-**Existant et écosystème Sylius**
+**Existant et écosystème**
 
-- **L'existant Sylius** : Avant d'aller plus loin, vérifie rapidement si une brique native couvre déjà tout ou partie du besoin. Regarde dans `docs/sylius-native/` (features déjà documentées), dans `vendor/sylius/` et dans la doc Sylius. Si oui, reformule la feature comme une **extension** plutôt qu'une réinvention.
-- **Plugins du projet** : Les plugins déjà installés (Mollie, PayPal, etc.) fournissent-ils des hooks utiles ?
+- **L'existant framework** : avant d'aller plus loin, vérifie rapidement si une brique native du framework couvre déjà tout ou partie du besoin. Pour un projet Sylius, consulter la doc Sylius et les bundles installés (`composer.json`). Pour un projet Symfony, vérifier les bundles tiers pertinents. Si une brique native couvre, reformule la feature comme une **extension** plutôt qu'une réinvention.
+- **Plugins/bundles installés** : les dépendances déjà présentes fournissent-elles des hooks utiles ? (Ex: un projet e-commerce peut avoir un plugin paiement dont on étend les workflows.)
+- **Features déjà documentées** : si le projet maintient un dossier `docs/` documentant les features existantes ou les mécanismes natifs, y chercher des recoupements.
 
-**Impacts transverses Sylius**
+**Impacts transverses**
 
-- **Multi-channel** : Faut-il un cloisonnement par channel ? La feature est-elle activable channel par channel ?
-- **Multi-thème** : Y a-t-il un impact sur les templates Twig de plusieurs thèmes ? Faut-il des Twig Hooks ?
-- **Traduction (i18n)** : Quels champs sont traduisibles ? Quels libellés UI à traduire ?
-- **API Platform** : La feature expose-t-elle une ressource API ? Auth JWT requise ? Permissions ?
-- **Permissions admin** : Faut-il un nouveau rôle, un voter, une restriction RBAC ?
-- **Emails / notifications** : Y a-t-il un email transactionnel à envoyer ? Une notification admin ?
-- **Dépendances métier** : Ça impacte quoi d'autre ? Commandes, paiements, stock, taxes, promos, fixtures ?
-- **Migration de données** : Si ça touche un schéma existant, faut-il un backfill des données existantes ?
+Les axes suivants sont à piocher en fonction du **stack détecté** — certains ne sont pas pertinents selon le projet (ex: multi-channel n'a aucun sens dans un back-office Symfony mono-tenant) :
+
+- **Multi-channel / multi-tenant** : cloisonnement par canal/client/organisation ? Activable par canal ? (Surtout pertinent pour les projets Sylius ou SaaS multi-tenant.)
+- **Multi-thème** : impact sur les templates de plusieurs thèmes ? Hooks UI nécessaires ? (Spécifique aux projets avec multi-thème, Sylius shop en particulier.)
+- **Traduction (i18n)** : champs traduisibles ? libellés UI à traduire ?
+- **API** : exposer une ressource API (REST/GraphQL) ? Auth requise ? Permissions ?
+- **Permissions admin** : nouveau rôle, voter, restriction fine ?
+- **Emails / notifications** : email transactionnel à envoyer ? notification admin ?
+- **Dépendances métier** : ça impacte quoi d'autre ? (Commandes, paiements, stock, utilisateurs, factures, selon le domaine.)
+- **Migration de données** : si ça touche un schéma existant, faut-il un backfill des données existantes ?
 
 Continue à itérer tant que l'utilisateur n'a pas signalé qu'il est satisfait. Si un axe est explicitement non pertinent, l'écarter et le mentionner dans "Hors scope".
 
-### Phase 3 — Synthèse et rédaction
+### Phase 4 — Synthèse et rédaction
 
 Quand l'utilisateur valide, rédige la spec dans `docs/features/`.
 
@@ -118,19 +127,19 @@ Ce qui a été explicitement exclu et pourquoi.
 
 ## Impacts transverses
 
-Synthèse rapide des axes impactés :
+Synthèse rapide des axes impactés (ne lister que les axes pertinents pour cette feature) :
 
-- **Multi-channel** : oui/non, comment
+- **Multi-channel / multi-tenant** : oui/non, comment
 - **Multi-thème** : oui/non
 - **i18n / traduction** : champs et libellés concernés
-- **API Platform** : ressources exposées
-- **Permissions admin** : nouveaux rôles / voters
+- **API** : ressources exposées
+- **Permissions** : nouveaux rôles / voters
 - **Emails / notifications** : lesquels
 - **Migration de données** : oui/non
 
 ## Notes pour le design technique
 
-Pointeurs bruts pour `/design` : entités Sylius probablement impactées, plugins concernés, points d'extension envisagés. **Ne pas concevoir ici** — juste lister les pistes pour que `/design` ait du contexte.
+Pointeurs bruts pour `/design` : entités probablement impactées, plugins/bundles concernés, points d'extension envisagés. **Ne pas concevoir ici** — juste lister les pistes pour que `/design` ait du contexte.
 
 ## Questions ouvertes
 
@@ -139,7 +148,7 @@ Points non résolus pendant l'atelier, à clarifier avant ou pendant le design t
 
 Après écriture, affiche un résumé et demande si des ajustements sont nécessaires.
 
-### Phase 4 — Clôture
+### Phase 5 — Clôture
 
 Annonce :
 

@@ -1,2 +1,4 @@
 .DS_Store
 *.log
+plugins/*/evals/
+plugins/*-workspace/

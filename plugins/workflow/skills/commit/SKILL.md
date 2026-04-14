@@ -1,7 +1,9 @@
 ---
 name: commit
-description: Génère un commit Conventional Commits v1.0.0 en français à partir du diff courant, propose le message, commit et push après validation explicite. Déclenche dès que l'utilisateur veut "commit", "committer", "pousser", "pusher", "envoyer" du code, ou demande à finaliser un changement git, même sans citer le skill.
+description: Génère un commit Conventional Commits v1.0.0 en français à partir du diff courant, propose le message, commit et push après validation explicite. Déclenche sur "commit", "pousse / push", "envoie ce changement", "finis ce truc", "c'est prêt tu peux pusher", ou toute intention de livrer du code git — même sans citer le skill.
 user_invocable: true
+disable-model-invocation: true
+argument-hint: "[--no-push] [--amend]"
 ---
 
 # /commit — Commit & push conventionnel
@@ -78,8 +80,8 @@ Si **ni stagé ni working tree** ne contiennent de changements, dis-le et arrêt
 **Vérifications de sécurité (bloquantes — alerter et attendre instruction)** :
 
 - Fichiers sensibles présents ? (.env, credentials, tokens, clés) → **Alerter et exclure**
-- `dump()`, `var_dump()`, `dd()` dans le diff ? → **Alerter** (le code de debug n'a rien à faire en commit)
-- Fichiers temporaires ou screenshots (`.playwright-mcp/`, captures) ? → **Alerter et exclure**
+- Code de debug résiduel dans le diff ? (PHP : `dump()` / `var_dump()` / `dd()` ; JS/TS : `console.log` / `debugger` ; Python : `print` / `breakpoint()` ; etc. selon le langage du projet) → **Alerter** (le debug n'a rien à faire en commit)
+- Fichiers temporaires ou screenshots (`.playwright-mcp/`, captures, artefacts CI locaux) ? → **Alerter et exclure**
 
 ### Phase 2 — Détection du type et scope
 
@@ -134,7 +136,7 @@ git commit -m "<message>"
 Si le commit échoue (hook pre-commit) :
 
 - Lire l'erreur
-- Corriger le problème (ECS, PHPStan, etc.)
+- Corriger le problème (lint/style, analyse statique, typage, tests — selon l'outillage du projet)
 - Créer un **nouveau** commit (ne jamais `--amend` sauf demande explicite)
 
 ### Phase 5 — Push

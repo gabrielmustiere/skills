@@ -1,7 +1,7 @@
 {
-  "name": "dev-workflow",
-  "description": "Skills pour les différentes étapes de mon workflow de développement ",
-  "version": "0.1.0",
+  "name": "workflow",
+  "description": "Pipeline de développement stack-agnostique (feature → design → implement → review → commit → report → sync). Détection automatique du stack (Symfony, Sylius) et chargement des règles framework adaptées.",
+  "version": "0.2.0",
   "author": {
     "name": "Gabriel Mustiere"
   },

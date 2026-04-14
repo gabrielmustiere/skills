@@ -1,12 +1,12 @@
 ---
 name: review
-description: Code review du diff avant merge — détecte sécurité, qualité, performance, conformité design, migrations, multi-channel/thème, conventions Sylius. Produit docs/features/<NNN-slug>/review.md. Déclenche dès que l'utilisateur veut "reviewer", "relire", "auditer" du code, valider un diff, vérifier la qualité avant commit ou merge, même sans citer le skill.
+description: Code review du diff avant merge — détecte sécurité, qualité, performance, conformité design, migrations, spécificités framework. Produit docs/features/<NNN-slug>/review.md. Déclenche sur "review ce diff", "relis avant merge", "audite ce changement", "c'est prêt à merger ?", "j'ai fini, tu peux vérifier ?" — même sans citer le skill.
 user_invocable: true
 ---
 
 # /review — Code review pré-merge
 
-Tu es un reviewer senior exigeant. Tu analyses le diff du code produit pour détecter les problèmes avant merge. Tu ne documentes pas (c'est le rôle de `/report`) — tu trouves les bugs, les failles, les régressions potentielles, et tu produis un verdict clair.
+Tu es un reviewer senior exigeant. Tu analyses le diff du code produit pour détecter les problèmes avant merge. Tu ne documentes pas (c'est `/report`) — tu trouves les bugs, les failles, les régressions potentielles, et tu produis un verdict clair.
 
 ## Périmètre du skill
 
@@ -18,7 +18,7 @@ Ce skill **lit** le code et **émet un verdict**. Il ne corrige pas (sauf si l'u
 
 ## Règles
 
-1. **Toujours lire le diff réel** — `git diff` / `git diff main...HEAD` / `git diff --cached`. Pas de suppositions, jamais.
+1. **Toujours lire le diff réel** — `git diff` / `git diff main...HEAD` / `git diff --cached`. Pas de suppositions.
 2. **Privilégier `AskUserQuestion`** pour les cas ambigus ("C'est volontaire ou un oubli ?"). Si l'outil n'est pas chargé, le récupérer via `ToolSearch`.
 3. **Prioriser les findings** : Bloquant > Important > Mineur. Ne pas noyer le dev sous les nitpicks.
 4. **Maximum 3 questions par tour.**
@@ -26,35 +26,39 @@ Ce skill **lit** le code et **émet un verdict**. Il ne corrige pas (sauf si l'u
 
 ## Déroulement
 
-### Phase 1 — Chargement du contexte
+### Phase 1 — Chargement du contexte et détection stack
 
 Si l'utilisateur fournit un design (`/review docs/features/007-slug/design.md`) ou un slug (`/review slug`), lis-le pour comparer l'intention avec le résultat. Lis aussi le `feature.md` pour avoir les critères d'acceptation.
 
 Sinon, travaille uniquement sur le diff brut.
 
+**Détecte le stack** : lis `${CLAUDE_SKILL_DIR}/../../references/stacks/_detection.md` et applique la procédure. Charge la ou les références stack correspondantes — elles listent les axes de review spécifiques au framework.
+
+**Lis le `CLAUDE.md` du projet** s'il existe — il précise les conventions projet qui complètent les règles stack.
+
 Récupère le diff selon l'état du repo (essaie dans cet ordre) :
 
 ```bash
 git diff --cached --stat        # 1. Y a-t-il des fichiers stagés ?
-git diff --stat                 # 2. Sinon, travaille sur le working tree
-git diff main...HEAD --stat     # 3. Ou sur la branche complète vs main
+git diff --stat                 # 2. Sinon, working tree
+git diff main...HEAD --stat     # 3. Ou branche complète vs main
 git log main..HEAD --oneline    # liste des commits si pertinent
 ```
 
-Choisis le périmètre le plus large parmi ce qui est dispo, ou demande à l'utilisateur si plusieurs sont valides. Si rien à reviewer du tout, dis-le et arrête-toi.
+Choisis le périmètre le plus large parmi ce qui est dispo, ou demande à l'utilisateur si plusieurs sont valides. Si rien à reviewer, dis-le et arrête-toi.
 
 ### Phase 2 — Analyse par axe
 
-Parcours chaque fichier modifié et analyse selon ces axes, dans cet ordre de priorité :
+Parcours chaque fichier modifié et analyse selon ces axes, dans cet ordre de priorité.
 
 #### Axe 1 — Sécurité (bloquant)
 
-- **Injection SQL** : requêtes construites par concaténation au lieu de paramètres Doctrine
-- **XSS** : variables non échappées dans les templates Twig (`{{ var|raw }}` sans raison)
-- **CSRF** : formulaires sans token CSRF
-- **Mass assignment** : entités exposées directement sans DTO ou serialization groups
-- **Secrets** : credentials, tokens, clés API dans le code ou la config commitée
-- **Permissions** : accès non vérifié (routes admin sans `ROLE_ADMIN`, voters manquants, etc.)
+- **Injection SQL** : requêtes construites par concaténation au lieu de paramètres.
+- **XSS** : variables non échappées dans les templates (`{{ var|raw }}` sans raison).
+- **CSRF** : formulaires sans token CSRF.
+- **Mass assignment** : entités exposées directement sans DTO ou serialization groups.
+- **Secrets** : credentials, tokens, clés API dans le code ou la config commitée.
+- **Permissions** : accès non vérifié (routes admin sans guard, voters manquants, etc.).
 
 #### Axe 2 — Conformité design (bloquant si design fourni)
 
@@ -64,60 +68,56 @@ Parcours chaque fichier modifié et analyse selon ces axes, dans cet ordre de pr
 - Si un écart existe : est-il justifié ou c'est une dérive silencieuse ?
 - Les critères d'acceptation de la `feature.md` sont-ils couverts ?
 
-#### Axe 3 — Migrations Doctrine (bloquant si migration présente)
+#### Axe 3 — Migrations (bloquant si migration présente)
+
+Pour les stacks Doctrine (Symfony / Sylius) — voir `symfony.md` :
 
 - La migration a-t-elle été générée (pas écrite à la main) ?
-- Le `down()` est-il fonctionnel et réversible ?
-- Les colonnes NOT NULL ont-elles un DEFAULT ou une migration en deux temps (nullable → backfill → NOT NULL) ?
-- Y a-t-il un risque de perte de données (DROP COLUMN, DROP TABLE) ?
-- Les index sont-ils pertinents pour les requêtes prévues ?
+- Le `down()` est-il fonctionnel et réversible (ou l'irréversibilité est-elle documentée) ?
+- Les colonnes NOT NULL sur table non vide ont-elles un DEFAULT ou une migration en deux temps ?
+- Risque de perte de données (DROP COLUMN, DROP TABLE) ? Backup ou migration de données préalable ?
+- Index pertinents pour les requêtes prévues ?
 - `schema:validate` passe-t-il ?
 
-#### Axe 4 — Conventions Sylius / projet (bloquant)
+#### Axe 4 — Conventions framework (bloquant)
 
-Issus du `CLAUDE.md` projet — leur violation casse silencieusement :
+Appliquer les règles du stack détecté. Les violations typiques qui cassent silencieusement sont documentées dans les références :
 
-- **Pas de modification vendor** : surcharge via Resource, EventListener, Decorator, Twig Hook, FormTypeExtension uniquement.
-- **Snake_case en BDD** : tout champ camelCase en PHP doit avoir un `#[ORM\Column(name: '...')]` ou `#[ORM\JoinColumn(name: '...')]`. Sinon : colonne en camelCase en BDD.
-- **DQL/SQL dans repository uniquement** : pas dans les services, listeners, contrôleurs.
-- **Validation custom Sylius** : `groups: ['Default', 'sylius']` obligatoire — sans `sylius`, la contrainte n'est jamais évaluée par les forms Sylius.
-- **FormTypeExtension** : tout champ ajouté doit être rendu dans **tous** les templates Twig concernés via Twig Hooks. Si un hook manque → 422 silencieux. Pour `ProductVariantType`, vérifier les hooks `product_variant.(create|update)` ET `product.(create|update)`.
-- **Composants Twig en sous-dossier** : un composant dans `src/Twig/Components/Media/` doit être appelé `Media:MonComposant`, pas `MonComposant`.
+- **Symfony** (`references/stacks/symfony.md`) : snake_case en BDD pour colonnes camelCase, DQL/SQL dans repositories uniquement, injection par constructeur, décoration plutôt que monkey-patching.
+- **Sylius** (`references/stacks/sylius.md`) : pas de modification vendor, validation `groups: ['Default', 'sylius']`, FormTypeExtension + Twig Hooks symétriques (piège 422 silencieux), composants Twig namespacés (`Media:MonComposant`), transitions StateMachine plutôt que setState direct.
 
-#### Axe 5 — Multi-channel et multi-thème front (important)
+Pour chaque modification, vérifier qu'elle respecte le mécanisme d'extension du framework plutôt qu'un contournement.
 
-- **Multi-channel** : les données sont-elles correctement cloisonnées par channel ? Les repositories filtrent-ils par channel quand nécessaire ?
-- **Multi-thème front shop** : les templates modifiés ont-ils des overrides dans `themes/ThemeAlpha/`, `themes/ThemeBeta/`, `themes/TailwindTheme/` qui doivent être mis à jour ? **L'admin n'a pas de variation de thème — ne pas chercher d'override admin.**
-- Les hooks Twig ajoutés sont-ils thème-agnostiques (utilisables par tous les thèmes) ?
+#### Axe 5 — Impacts transverses (important)
+
+Selon le stack détecté :
+
+- **Sylius — multi-channel** : données cloisonnées par channel ? Repositories filtrent-ils ? Fixtures multi-channel ?
+- **Sylius — multi-thème shop** : templates modifiés ont-ils des overrides dans `themes/*/templates/bundles/Sylius*Bundle/` à mettre à jour ? **L'admin Sylius n'a pas de variation de thème** — ne pas chercher d'override admin.
+- **Symfony / tous stacks — i18n** : libellés en dur dans les templates au lieu de `|trans` ?
+- **Symfony / tous stacks — API** : si ressource API touchée, serialization groups minimaux ? opérations protégées (security, voters) ? auth correcte ?
 
 #### Axe 6 — Qualité du code (important)
 
-- **Conventions Symfony** : injection par constructeur, typage strict, nommage PSR-4
-- **Entités** : héritent correctement de la base Sylius, implémentent l'interface, déclarées dans `_sylius.yaml`
+- **Conventions projet** : injection par constructeur, typage strict, nommage PSR-4 (PHP).
+- **Entités** : héritent correctement, interfaces implémentées, déclarations config à jour (Sylius : `_sylius.yaml`).
 - **DRY** : duplication de logique détectable ?
 - **Couplage** : dépendances circulaires, services qui en savent trop ?
-- **Code mort** : `dump()`, `var_dump()`, `dd()`, commentaires "// TODO sans ticket", code commenté laissé en place
-- **i18n / traduction** : libellés en dur dans les templates au lieu de `|trans` ?
+- **Code mort** : `dump()`, `var_dump()`, `dd()`, commentaires `// TODO` sans ticket, code commenté laissé en place.
 
 #### Axe 7 — Performance (important)
 
-- **N+1** : boucles qui déclenchent des requêtes lazy-load (relations Doctrine sans `JOIN`)
-- **Requêtes dans les boucles** : appels repository/service dans un `foreach`
-- **Cache** : les données fréquemment lues sont-elles cachées quand pertinent ?
-- **Pagination** : listes non paginées sur des collections potentiellement grandes
+- **N+1** : boucles qui déclenchent des requêtes lazy-load (relations Doctrine sans `JOIN`).
+- **Requêtes dans les boucles** : appels repository/service dans un `foreach`.
+- **Cache** : données fréquemment lues cachées quand pertinent ?
+- **Pagination** : listes non paginées sur des collections potentiellement grandes ?
 
-#### Axe 8 — API Platform (important si ressource API touchée)
-
-- Les serialization groups sont-ils définis et minimaux ?
-- Les opérations exposées sont-elles bien protégées (security, voters) ?
-- L'auth JWT est-elle correcte sur les routes sensibles ?
-
-#### Axe 9 — Tests (mineur sauf régression)
+#### Axe 8 — Tests (mineur sauf régression)
 
 - Les tests couvrent-ils les cas métier principaux ?
-- Les cas limites sont-ils testés (null, vide, droits insuffisants) ?
-- Les tests E2E ciblent-ils des attributs `data-test` plutôt que des sélecteurs fragiles ?
-- **Régression** : les tests existants passent-ils encore ? Si la review identifie un risque clair, le signaler en bloquant.
+- Cas limites testés (null, vide, droits insuffisants) ?
+- Tests E2E ciblent-ils des attributs `data-test` plutôt que des sélecteurs fragiles ?
+- **Régression** : si la review identifie un risque clair de régression des tests existants, le signaler en bloquant.
 
 ### Phase 3 — Écriture du fichier review
 
@@ -135,6 +135,7 @@ Format :
 # Review — [Nom de la feature]
 
 > Date : YYYY-MM-DD
+> Stack : [symfony | sylius | autre]
 > Périmètre : [working tree | staged | branche vs main] (N fichiers, ~N lignes)
 > Design de référence : `docs/features/NNN-slug/design.md` (ou "Aucun")
 
@@ -155,7 +156,7 @@ Format :
 - Statut : **NEEDS FIXES** ou **READY TO COMMIT**
 ```
 
-Tags possibles : `SECU`, `BUG`, `MIGRATION`, `PERF`, `ARCHI`, `CHANNEL`, `THEME`, `DESIGN`, `STYLE`, `I18N`, `API`, `CONV` (convention projet).
+Tags possibles : `SECU`, `BUG`, `MIGRATION`, `PERF`, `ARCHI`, `CHANNEL`, `THEME`, `DESIGN`, `STYLE`, `I18N`, `API`, `CONV` (convention framework).
 
 ### Phase 4 — Présentation au développeur
 
@@ -168,7 +169,7 @@ Pour chaque finding bloquant, demande : "Tu veux corriger maintenant ou on note 
 Quand tous les findings sont traités :
 
 1. Mettre à jour `docs/features/NNN-slug/review.md` — cocher les items corrigés, mettre à jour le verdict.
-2. Afficher le verdict dans la conversation :
+2. Afficher le verdict :
 
 ```
 ## Verdict

@@ -1,7 +1,8 @@
 ---
 name: report
-description: Compte rendu d'implémentation — compare la spec et le design prévus au code réellement produit, documente les écarts, décisions et critères d'acceptation dans docs/features/<NNN-slug>/report.md. Déclenche dès que l'utilisateur veut "documenter ce qui a été fait", "faire le bilan", "rapport post-implémentation", "compte rendu" d'une feature, même sans citer le skill.
+description: Compte rendu d'implémentation — compare la spec et le design prévus au code réellement produit, documente les écarts, décisions et critères d'acceptation dans docs/features/<NNN-slug>/report.md. Déclenche sur "documente ce qu'on a fait", "fais le bilan", "rapport post-implémentation", "raconter ce qu'on a livré", "le code a divergé de la spec" — même sans citer le skill.
 user_invocable: true
+disable-model-invocation: true
 ---
 
 # /report — Compte rendu d'implémentation

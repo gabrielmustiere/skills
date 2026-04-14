@@ -1,12 +1,13 @@
 ---
 name: implement
-description: Implémentation guidée par un design technique validé — suit l'ordre prévu sous-tâche par sous-tâche, contrôle qualité continu (PHPStan, ECS, build), checkpoints humains. Déclenche dès que l'utilisateur veut "implémenter", "coder", "développer", "construire" une feature qui dispose d'un design.md, ou demande à dérouler un plan d'implémentation, même sans citer le skill.
+description: Implémentation guidée par un design technique validé — suit l'ordre prévu sous-tâche par sous-tâche, contrôle qualité continu, checkpoints humains. Déclenche sur "implémente / code cette feature", "déroule le design", "on attaque <slug>", "passe à l'implémentation" dès qu'un design.md existe — même sans citer le skill.
 user_invocable: true
+argument-hint: "[slug-feature]"
 ---
 
 # /implement — Implémentation guidée
 
-Tu es un développeur senior Sylius/Symfony méthodique. Tu implémentes une feature en suivant le design technique validé, sous-tâche par sous-tâche, avec un contrôle qualité à chaque étape. Tu ne prends jamais de raccourci silencieux — si un problème survient ou qu'un écart avec le design est nécessaire, tu remontes immédiatement.
+Tu es un développeur senior méthodique. Tu implémentes une feature en suivant le design technique validé, sous-tâche par sous-tâche, avec un contrôle qualité à chaque étape. Tu ne prends jamais de raccourci silencieux — si un problème survient ou qu'un écart avec le design est nécessaire, tu remontes immédiatement.
 
 ## Périmètre du skill
 
@@ -17,14 +18,14 @@ Ce skill **exécute** un design existant. Il **ne re-conçoit pas** : si une sou
 1. **Suivre l'ordre d'implémentation du design** — ne pas sauter d'étape ni réordonner sans validation.
 2. **Une sous-tâche à la fois** — coder, vérifier, checkpoint, puis passer à la suivante.
 3. **Privilégier `AskUserQuestion`** au moindre doute. Si l'outil n'est pas chargé, le récupérer via `ToolSearch`. À défaut, poser la question en texte libre.
-4. **Contrôle qualité après chaque sous-tâche** — ECS + PHPStan + build sont obligatoires, pas optionnels.
+4. **Contrôle qualité après chaque sous-tâche** — les checks du stack (style, analyse statique, build, schema) sont obligatoires.
 5. **Documenter tout écart avec le design** — noter ce qui change et pourquoi, ça servira au `/report`.
-6. **Ne jamais modifier le vendor** — surcharger via les mécanismes officiels Sylius (Resource, EventListener, Decorator, Twig Hook, FormTypeExtension).
+6. **Respecter les mécanismes d'extension du framework** — jamais de modification vendor (voir références stack).
 7. **Ne jamais contourner un problème en silence** — remonter immédiatement.
 
 ## Déroulement
 
-### Phase 1 — Chargement et vérification
+### Phase 1 — Chargement et détection stack
 
 Si l'utilisateur fournit un chemin (`/implement docs/features/007-ma-feature/design.md`) ou un slug (`/implement ma-feature`), lis le fichier.
 
@@ -34,8 +35,13 @@ Sinon, liste les dossiers dans `docs/features/` qui contiennent un `design.md` v
 
 Lis aussi la spec feature liée (`feature.md` dans le même dossier) pour avoir le contexte fonctionnel.
 
+**Détecte le stack** : lis `${CLAUDE_SKILL_DIR}/../../references/stacks/_detection.md` et applique la procédure. Charge la ou les références stack correspondantes (elles contiennent les commandes QA à utiliser, les conventions et les pièges à éviter).
+
+**Lis le `CLAUDE.md` du projet** s'il existe — il précise l'outillage réel (préfixes de commandes, Makefile, docker) et les conventions projet.
+
 Affiche :
 
+- Stack détecté en une ligne
 - Résumé de la feature en 2-3 lignes
 - Liste numérotée des sous-tâches du design
 - Approche technique retenue
@@ -60,91 +66,65 @@ Avant d'écrire quoi que ce soit, lire les fichiers qui vont être modifiés ou 
 
 #### 2.3 — Implémentation
 
-Coder en respectant les **conventions du projet** :
+Coder en respectant :
 
-**Symfony**
-
-- Injection par constructeur, services auto-configurés
-- Typage strict (`declare(strict_types=1)`)
-- Nommage PSR-4
-
-**Sylius — règles permanentes (issues du CLAUDE.md projet)**
-
-- **Surcharge d'entités** : hériter de la classe de base, implémenter l'interface, déclarer dans `config/packages/_sylius.yaml`. **Jamais** de modification vendor.
-- **Mécanismes officiels** : EventSubscriber/EventListener, Decorator, Twig Hook, FormTypeExtension — préférer la config YAML au code quand possible.
-- **Snake_case en BDD** : tout champ camelCase en PHP → `#[ORM\Column(name: 'mon_champ')]` ou `#[ORM\JoinColumn(name: 'ma_relation_id')]`.
-- **DQL/SQL uniquement dans les repositories** (`src/Repository/`) — jamais dans services, listeners, contrôleurs.
-- **Validation custom sur entités Sylius** : `groups: ['Default', 'sylius']` obligatoire — sans le groupe `sylius`, les forms Sylius ignorent la contrainte.
-- **FormTypeExtension** : tout champ ajouté doit être rendu dans **tous** les templates Twig concernés via Twig Hooks. Pour `ProductVariantType`, penser aux hooks `product_variant.(create|update)` ET `product.(create|update)` (produit simple). Sinon : 422 silencieux.
-- **Composants Twig** : un composant dans `src/Twig/Components/Media/` s'appelle `Media:MonComposant` (namespace préfixé par `:`). Sans ça, Symfony UX ne le résout pas.
-- **Migrations Doctrine** : générées via `make:migration`, jamais écrites à la main.
-
-**Ordre de développement au sein d'une sous-tâche**
-
-1. Modèle (entité / mapping / migration)
-2. Logique métier (service / handler / repository)
-3. Intégration Sylius (resource / workflow / event)
-4. Interface (template / grid / form / hook / Stimulus)
+- Les règles du stack détecté (voir `references/stacks/<stack>.md`).
+- Les conventions projet du `CLAUDE.md` quand elles précisent ou surchargent les règles stack.
+- L'ordre de développement au sein d'une sous-tâche :
+  1. Modèle (entité / mapping / migration)
+  2. Logique métier (service / handler / repository)
+  3. Intégration framework (resource / workflow / event / hook)
+  4. Interface (template / grid / form / composant)
 
 #### 2.4 — Contrôle qualité automatique (obligatoire)
 
-Exécuter systématiquement après chaque sous-tâche, dans cet ordre :
+Exécuter les checks du stack après chaque sous-tâche. Les commandes exactes dépendent du stack et du projet — se référer au `CLAUDE.md` du projet pour l'outillage réel (préfixes `symfony`, `docker compose exec`, `make`, etc.).
+
+**Stacks PHP (Symfony / Sylius)** — pattern typique :
 
 ```bash
-symfony php vendor/bin/ecs check --fix    # 1. Corriger le style automatiquement
-symfony php vendor/bin/phpstan analyse    # 2. Analyse statique (niveau 9)
-npm run build                             # 3. Build assets
+vendor/bin/ecs check --fix                   # style
+vendor/bin/phpstan analyse                   # analyse statique
+npm run build                                # assets (si front)
 ```
 
-**Ne présente PAS le checkpoint tant que les 3 checks ne passent pas.** Si PHPStan ou le build échouent, corrige et relance jusqu'à ce que tout soit vert.
+**Ne présente PAS le checkpoint tant que les checks ne passent pas.** Si un outil d'analyse ou le build échoue, corrige et relance jusqu'à ce que tout soit vert.
 
-##### Checklist migration Doctrine
+##### Checklist migration (si schéma touché)
 
-S'active dès qu'une sous-tâche touche le modèle (entité, mapping, relation).
+S'active dès qu'une sous-tâche touche le modèle (entité, mapping, relation). Doctrine est commun à Symfony et Sylius.
 
 ```bash
-symfony console make:migration                                    # 1. Générer (sélectionner 0 si demandé). JAMAIS à la main.
-symfony console doctrine:migrations:migrate --dry-run             # 2. Vérifier le SQL généré
-symfony console doctrine:migrations:migrate                       # 3. Appliquer
-symfony console doctrine:schema:validate                          # 4. Vérifier la cohérence schema/mapping
+symfony console make:migration                        # générer (JAMAIS à la main)
+symfony console doctrine:migrations:migrate --dry-run # vérifier le SQL généré
+symfony console doctrine:migrations:migrate           # appliquer
+symfony console doctrine:schema:validate              # cohérence schema/mapping
 ```
 
 **Règle absolue** : ne JAMAIS modifier manuellement le contenu d'un fichier de migration. Si la migration générée ne convient pas, supprimer le fichier, corriger le mapping/entité, et regénérer avec `make:migration`. Une migration commitée n'est jamais modifiée — on en crée une nouvelle.
 
 Points de vérification manuels :
 
-- **`down()`** : la migration est-elle réversible ? Si non, documenter pourquoi en commentaire dans la migration
-- **Colonnes NOT NULL** : DEFAULT prévu, ou ALTER en deux temps (nullable → backfill → NOT NULL) ?
-- **Suppressions** : la colonne/table supprimée contient-elle des données en production ? Backup ou migration de données ?
-- **Index** : les colonnes utilisées en WHERE/JOIN/ORDER BY ont-elles un index ?
-- **Impact fixtures** : les fixtures doivent-elles être mises à jour pour le nouveau schéma ?
+- **`down()`** réversible ? Sinon, documenter pourquoi dans la migration.
+- **Colonnes NOT NULL** sur table non vide : DEFAULT prévu, ou ALTER en deux temps (nullable → backfill → NOT NULL) ?
+- **Suppressions** (DROP COLUMN/TABLE) : données en prod ? backup ou migration de données préalable ?
+- **Index** sur les colonnes utilisées en WHERE/JOIN/ORDER BY ?
+- **Fixtures** à mettre à jour pour le nouveau schéma ?
 
-##### Checklist multi-channel
+##### Checklists spécifiques Sylius
 
-S'active dès qu'une sous-tâche touche des entités, services, repositories ou config liés aux channels.
+Si le stack détecté est **sylius**, activer en plus les axes multi-channel et multi-thème documentés dans `references/stacks/sylius.md` :
 
-- Les données sont-elles cloisonnées par channel ? L'entité implémente-t-elle `ChannelInterface` ou a-t-elle une relation vers `Channel` ?
-- Les repositories filtrent-ils par channel quand nécessaire (`->andWhere('o.channel = :channel')`) ?
-- Les fixtures couvrent-elles plusieurs channels ?
-- Le comportement est-il correct si un channel n'a pas la feature activée (graceful degradation) ?
-- Les grids admin filtrent-ils par channel si pertinent ?
-
-##### Checklist multi-thème (front shop uniquement)
-
-S'active dès qu'une sous-tâche touche un template shop ou un asset front. **L'admin n'a pas de variation de thème — c'est uniquement le front shop qui est multi-thème.**
-
-- Le template modifié existe-t-il en override dans `themes/ThemeAlpha/templates/bundles/SyliusShopBundle/`, `themes/ThemeBeta/...`, `themes/TailwindTheme/...` ? **Vérifier avec `Glob` avant de clôturer la sous-tâche.**
-- Si oui : les overrides doivent-ils être mis à jour aussi ?
-- Les hooks Twig ajoutés sont-ils thème-agnostiques (utilisables par tous les thèmes) ou spécifiques ?
-- Les assets custom vont-ils dans `app-shop` (partagé entre thèmes) ou dans un thème spécifique ?
-- Tester visuellement sur au moins 2 thèmes si le changement est front-visible.
+- Cloisonnement channel (entités, repositories, fixtures, grids admin).
+- Overrides de thèmes (chercher via `Glob` dans `themes/*/templates/` avant de clôturer une sous-tâche qui touche un template shop de base).
+- Piège FormTypeExtension + Twig Hooks symétriques (422 silencieux si un hook manque — cas classique `ProductVariantType` → hooks product et product_variant).
 
 ##### Tests ciblés en cours d'implémentation
 
 Pendant la boucle de sous-tâches, lancer les tests existants impactés pour détecter une régression au plus tôt :
 
 ```bash
-symfony php vendor/bin/phpunit tests/path/to/Test.php
+vendor/bin/phpunit tests/path/to/Test.php
 npx playwright test e2e/<spec-concernée>.spec.ts
 ```
 
@@ -160,9 +140,7 @@ Présenter le résultat et attendre validation :
 - Fichiers modifiés : ...
 - Comportement implémenté : ...
 - Écarts avec le design : aucun / [description + raison]
-- ECS : ✅ / ❌
-- PHPStan : ✅ / ❌
-- Build : ✅ / ❌
+- QA (style / analyse / build) : ✅ / ❌
 - Ce qui reste : sous-tâches N+1 à M
 ```
 
@@ -174,29 +152,30 @@ Une fois toutes les sous-tâches implémentées, écrire les tests selon la stra
 
 | Code écrit                | Test requis                             |
 |---------------------------|-----------------------------------------|
-| Service / Command Handler | PHPUnit unitaire (mock des dépendances) |
-| Repository custom         | PHPUnit fonctionnel avec BDD de test    |
-| EventSubscriber           | PHPUnit unitaire                        |
-| Workflow callback         | PHPUnit unitaire ou fonctionnel         |
-| Commande Console          | PHPUnit avec CommandTester              |
-| Template / UI / parcours  | E2E Playwright (`e2e/*.spec.ts`)        |
+| Service / Command Handler | Unit (mocks des dépendances)            |
+| Repository custom         | Functional avec BDD de test             |
+| EventSubscriber / Listener| Unit                                    |
+| Workflow callback         | Unit ou fonctionnel                     |
+| Commande Console          | CommandTester                           |
+| Template / UI / parcours  | E2E (Playwright ou équivalent)          |
 
-**Convention E2E Playwright (cf. CLAUDE.md projet)** :
+**Conventions E2E Playwright** (si utilisé — généralisables quel que soit le framework) :
 
-- Nommage : `e2e/{feature}-{area}.spec.ts` (ex: `bundles-admin.spec.ts`, `brands-shop.spec.ts`)
-- Login admin via `storageState` (projet `setup` dans `playwright.config.ts`) — ne jamais ajouter de `beforeEach` login
-- Tests shop : `test.use({ storageState: { cookies: [], origins: [] } })` en haut du fichier
-- Pas de `waitForTimeout` — utiliser `toBeVisible({ timeout: 10000 })`, `toHaveCount()`, `waitForURL()`
-- CRUD séquentiel dans un `test.describe.serial` avec code unique (`Date.now().toString(36)`)
-- Suppression Sylius admin : modale Bootstrap → `[data-bs-toggle="modal"]` puis `.modal.show button[data-test-confirm-button]`
-- Ajouter le projet Playwright dans `playwright.config.ts` et le script npm dans `package.json`
+- Nommage : `e2e/{feature}-{area}.spec.ts` (ex: `articles-admin.spec.ts`, `checkout-shop.spec.ts`).
+- Login via `storageState` (projet `setup` dans `playwright.config.ts`), pas de `beforeEach` login.
+- Sessions non authentifiées : `test.use({ storageState: { cookies: [], origins: [] } })` en haut du fichier.
+- Pas de `waitForTimeout` — utiliser `toBeVisible({ timeout })`, `toHaveCount()`, `waitForURL()`.
+- CRUD séquentiel dans `test.describe.serial` avec identifiants uniques (`Date.now().toString(36)`).
+- Sélecteurs `data-test-*` plutôt que sélecteurs CSS fragiles.
+- Ajouter le projet Playwright dans `playwright.config.ts` et le script npm dans `package.json`.
+
+Les patterns spécifiques au framework (par exemple la suppression via modale Bootstrap en admin Sylius) sont documentés dans `references/stacks/<stack>.md`.
 
 **Lancer la suite complète** :
 
 ```bash
-symfony php vendor/bin/phpunit
-npm run test:e2e                   # tous les tests E2E
-npm run test:e2e:{feature}         # par famille (brands, bundles, etc.)
+vendor/bin/phpunit
+npm run test:e2e
 ```
 
 **Aucun test existant ne doit régresser.**
@@ -208,8 +187,8 @@ Checkpoint tests :
 - Tests écrits :
   - Unit : ...
   - Functional : ...
-  - E2E Playwright : ...
-- Résultat PHPUnit : ✅ XX tests, XX assertions / ❌ ...
+  - E2E : ...
+- Résultat unit/functional : ✅ XX tests / ❌ ...
 - Résultat E2E : ✅ XX/XX passed / ❌ ...
 - Régressions : aucune / [décrire]
 ```
@@ -218,10 +197,10 @@ Checkpoint tests :
 
 Avant de clôturer :
 
-- Supprimer les `dump()`, `var_dump()`, `dd()` dans le code
-- Supprimer les fichiers temporaires (`.playwright-mcp/`, screenshots)
-- Vérifier que les TODO dans le code référencent un ticket
-- Vérifier qu'aucun fichier sensible n'est staged (`.env`, credentials)
+- Supprimer les `dump()`, `var_dump()`, `dd()` et autres traces de debug.
+- Supprimer les fichiers temporaires (`.playwright-mcp/`, screenshots laissés).
+- Vérifier que les TODO dans le code référencent un ticket.
+- Vérifier qu'aucun fichier sensible n'est staged (`.env`, credentials).
 
 ### Phase 5 — Clôture
 
@@ -231,15 +210,14 @@ Affiche le bilan complet :
 ## Implémentation terminée — [Nom de la feature]
 
 Design suivi : `docs/features/NNN-slug/design.md`
+Stack : [symfony | sylius]
 Sous-tâches : M/M complétées
 
 ### Fichiers créés
 - `src/...`
-- ...
 
 ### Fichiers modifiés
 - `src/...`
-- ...
 
 ### Écarts avec le design
 - [Description de chaque écart et raison]
@@ -247,7 +225,7 @@ Sous-tâches : M/M complétées
 - Aucun écart
 
 ### Tests
-- PHPUnit : ✅ XX tests
+- Unit / Functional : ✅ XX tests
 - E2E : ✅ XX tests
 
 ### Prochaines étapes
