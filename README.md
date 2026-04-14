@@ -1,9 +1,16 @@
-# skills
+# Skills
 
 Marketplace personnelle de skills Claude Code. Les skills sont regroupées par **plugins thématiques** et installables dans n'importe quel projet via la commande `/plugin`.
 
 - **Nom de la marketplace** : `gabrielmustiere`
 - **Source** : `gabrielmustiere/skills` (ce repo)
+
+## Plugins disponibles
+
+| Plugin | Version | Description |
+| --- | --- | --- |
+| `workflow` | `0.6.0` | Pipeline de développement stack-agnostique. Trois tracks symétriques : **feature** (`feature-pitch` → `feature-design` → `feature`), **refacto** (`refactor-plan` → `refactor`), **évolution technique** (`tech-plan` → `tech`). Étapes communes : `review` → `commit` → `report` → `sync`. Détection auto du stack (Symfony, Sylius). |
+| `sylius` | `0.6.0` | Skills pour travailler avec Sylius (doc et conventions). |
 
 ## Installer dans un autre projet
 
@@ -11,14 +18,17 @@ Dans une session Claude Code ouverte sur n'importe quel projet :
 
 ```
 /plugin marketplace add gabrielmustiere/skills
-/plugin install dev-workflow@gabrielmustiere
+/plugin install workflow@gabrielmustiere
+/plugin install sylius@gabrielmustiere
 /reload-plugins
 ```
 
-Les skills d'un plugin sont toujours namespacées par le nom du plugin. Exemple d'invocation :
+Les skills d'un plugin sont toujours namespacées par le nom du plugin. Exemples d'invocation :
 
 ```
-/dev-workflow:sp-help
+/workflow:help
+/workflow:feature-pitch
+/sylius:doc-sylius
 ```
 
 Mettre à jour quand le catalogue change : `/plugin marketplace update gabrielmustiere` puis `/reload-plugins`.
@@ -28,7 +38,7 @@ Mettre à jour quand le catalogue change : `/plugin marketplace update gabrielmu
 Depuis n'importe quel projet :
 
 ```
-claude --plugin-dir /Users/gabriel/projets/skills/plugins/dev-workflow
+claude --plugin-dir /Users/gabriel/projets/skills/plugins/workflow
 ```
 
 Après modification d'une skill : `/reload-plugins` dans la session en cours (pas besoin de redémarrer). Plusieurs plugins en même temps : répéter `--plugin-dir`.
@@ -40,11 +50,11 @@ Après modification d'une skill : `/reload-plugins` dans la session en cours (pa
 ├── .claude-plugin/
 │   └── marketplace.json         ← catalogue (liste les plugins)
 └── plugins/
-    └── dev-workflow/             ← un plugin thématique
+    └── workflow/                 ← un plugin thématique
         ├── .claude-plugin/
         │   └── plugin.json       ← manifeste du plugin
         └── skills/
-            └── sp-help/
+            └── help/
                 └── SKILL.md      ← une skill
 ```
 
@@ -68,7 +78,7 @@ Aucune modif de `marketplace.json` nécessaire — la skill est auto-découverte
 
 ### Nouveau plugin thématique
 
-1. Créer `plugins/<nouveau>/.claude-plugin/plugin.json` (copier celui de `dev-workflow` et adapter `name`/`description`)
+1. Créer `plugins/<nouveau>/.claude-plugin/plugin.json` (copier celui de `workflow` et adapter `name`/`description`)
 2. Créer au moins une skill dans `plugins/<nouveau>/skills/<skill>/SKILL.md`
 3. Ajouter une entrée dans `.claude-plugin/marketplace.json` :
    ```json
