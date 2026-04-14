@@ -1,13 +1,14 @@
 ---
 name: report
-description: Compte rendu d'implémentation — compare la spec et le design prévus au code réellement produit, documente les écarts, décisions et critères d'acceptation dans docs/features/<NNN-slug>/report.md. Déclenche sur "documente ce qu'on a fait", "fais le bilan", "rapport post-implémentation", "raconter ce qu'on a livré", "le code a divergé de la spec" — même sans citer le skill.
+description: Compte rendu d'implémentation — compare l'intention prévue (spec+design pour une feature, plan pour un refacto/tech) au code réellement produit, documente les écarts et décisions dans docs/story/<f|r|t>-<NNN>-<slug>/report.md. Déclenche sur "documente ce qu'on a fait", "fais le bilan", "rapport post-implémentation", "raconter ce qu'on a livré", "le code a divergé de la spec / du plan" — même sans citer le skill.
+
 user_invocable: true
 disable-model-invocation: true
 ---
 
 # /report — Compte rendu d'implémentation
 
-Tu es un tech lead rigoureux qui fait la revue post-implémentation. Tu compares ce qui était prévu (spec + design) avec ce qui a été réellement codé, tu identifies les écarts, et tu produis un compte rendu exploitable.
+Tu es un tech lead rigoureux qui fait la revue post-implémentation. Tu compares ce qui était prévu (spec + design pour une feature, plan pour un refacto ou une évolution technique) avec ce qui a été réellement codé, tu identifies les écarts, et tu produis un compte rendu exploitable.
 
 ## Périmètre du skill
 
@@ -19,40 +20,62 @@ Ce skill **constate**, il ne juge pas et ne corrige pas. Son rôle est de captur
 
 Il ne refait pas une code review (`/review`) et n'aligne pas la doc (`/sync`).
 
+## Types de dossiers reconnus
+
+`docs/story/` utilise un préfixage par type pour obtenir une timeline partagée :
+
+- `docs/story/f-NNN-slug/` — **feature** : source d'intention = `feature.md` + `design.md`
+- `docs/story/r-NNN-slug/` — **refacto** : source d'intention = `plan.md` (comportement préservé + tests caractérisation)
+- `docs/story/t-NNN-slug/` — **évolution technique** : source d'intention = `plan.md` (brique technique ajoutée/changée)
+
+Le skill adapte ses questions et son template selon le type détecté.
+
 ## Règles
 
-1. **Toujours lire la spec, le design ET le code** avant de rédiger quoi que ce soit. Sans les trois, pas de comparaison possible.
+1. **Toujours lire la source d'intention ET le code** avant de rédiger quoi que ce soit. Sans les deux, pas de comparaison possible.
 2. **Privilégier `AskUserQuestion`** pour clarifier un écart non évident. Si l'outil n'est pas chargé, le récupérer via `ToolSearch`.
 3. **Ne pas juger, constater** — un écart n'est pas forcément un problème. Documenter le **pourquoi**.
 4. **Maximum 3 questions par tour.**
 
 ## Déroulement
 
-### Phase 1 — Chargement des documents de référence
+### Phase 1 — Chargement de la source d'intention
 
-Si l'utilisateur fournit un slug (`/report ma-feature`), cherche le dossier correspondant dans `docs/features/` et lis `feature.md` et `design.md`.
+Si l'utilisateur fournit un slug (`/report ma-feature`) ou un chemin, résous le dossier dans `docs/story/` en testant les préfixes `f-`, `r-`, `t-`.
 
-Sinon, liste les dossiers dans `docs/features/` qui contiennent un `design.md` via `Glob` et demande lequel traiter.
+Sinon, liste via `Glob` les dossiers `docs/story/[frt]-*` qui contiennent soit un `design.md` (type `f`) soit un `plan.md` (types `r` ou `t`), et demande lequel traiter.
 
-**Si `feature.md` ou `design.md` manque**, refuse de continuer et propose : "Pas de [feature.md|design.md] pour cette feature — impossible de comparer. Lance `/feature` ou `/design` si tu veux d'abord rétablir la doc, sinon précise-moi sur quoi reporter."
+**Détermine le type** selon le préfixe du dossier et charge les fichiers adéquats :
 
-Lis la spec feature et le design technique. Affiche un résumé en 3-4 lignes pour confirmer le périmètre.
+| Préfixe | Fichiers requis             | Bloquant si manquant                                        |
+|---------|------------------------------|-------------------------------------------------------------|
+| `f-`    | `feature.md` + `design.md`  | Lance `/feature-pitch` ou `/feature-design` d'abord          |
+| `r-`    | `plan.md`                    | Lance `/refactor-plan` d'abord                              |
+| `t-`    | `plan.md`                    | Lance le skill de planification évolution tech d'abord      |
+
+Si un fichier requis manque, refuse de continuer et redirige.
+
+Affiche un résumé en 3-4 lignes pour confirmer le périmètre (type, intention, livrable attendu).
 
 ### Phase 2 — Analyse du code implémenté
 
 Explore le code réellement produit :
 
-- **Git** : `git log --oneline` et `git diff` pour identifier les commits liés à la feature. Si possible, filtrer par scope/slug : `git log --grep=<slug-fragment>`.
-- **Fichiers créés** : compare avec la liste "Fichiers à créer" du design
-- **Fichiers modifiés** : compare avec la liste "Fichiers à modifier" du design
-- **Entités et migrations** : vérifie le schéma réel vs le schéma prévu (`migrations/` et `src/Entity/`)
-- **Services et config** : vérifie les services déclarés, l'injection, la config
-- **Templates et hooks** : vérifie l'intégration front, impact multi-thème (front shop uniquement)
-- **Tests** : vérifie les tests écrits vs la stratégie de test prévue dans le design
+- **Git** : `git log --oneline` et `git diff` pour identifier les commits liés. Si possible, filtrer par scope/slug : `git log --grep=<slug-fragment>`.
+- **Fichiers créés / modifiés** : compare avec ce qui était prévu (design ou plan).
+- **Entités et migrations** (`f-`, `t-` si la brique touche au schéma) : vérifie le schéma réel vs le schéma prévu (`migrations/` et `src/Entity/`).
+- **Services et config** : vérifie les services déclarés, l'injection, la config.
+- **Templates et hooks** (`f-`) : vérifie l'intégration front, impact multi-thème (front shop uniquement).
+- **Tests** :
+  - `f-` : tests écrits vs stratégie de test prévue dans le design.
+  - `r-` : **tests de caractérisation** présents (obligatoires pour un refacto), et la suite complète passe à l'identique avant / après.
+  - `t-` : tests/bench vérifiant les critères de succès du plan (perf, résilience, observabilité).
 
 ### Phase 3 — Revue interactive
 
-Présente tes constats par catégorie et demande des précisions sur les écarts :
+Présente tes constats par catégorie et demande des précisions sur les écarts.
+
+**Cas `f-` (feature)** — catégories :
 
 1. **Conformité** — ce qui a été implémenté exactement comme prévu
 2. **Écarts volontaires** — ce qui a changé en cours de route et pourquoi
@@ -61,21 +84,37 @@ Présente tes constats par catégorie et demande des précisions sur les écarts
 5. **Dette technique** — raccourcis pris, TODOs laissés, points à reprendre
 6. **Tests** — couverture réelle vs prévue, tests manquants par rapport à la stratégie
 
+**Cas `r-` (refacto)** — catégories :
+
+1. **Comportement préservé** — preuves que le comportement externe n'a pas bougé (tests caractérisation verts avant/après, pas de modif de signature publique, pas d'effet de bord nouveau)
+2. **Étapes réalisées** — étapes du plan faites / partiellement faites / non faites, dans l'ordre prévu ou non
+3. **Écarts volontaires** — stratégie ajustée en cours de route et pourquoi
+4. **Effets de bord détectés** — comportements qui ont malgré tout bougé (si oui, c'est une alerte : soit c'était un bug qu'on corrige, soit une régression)
+5. **Dette résiduelle** — code legacy encore en place à nettoyer plus tard
+
+**Cas `t-` (évolution technique)** — catégories :
+
+1. **Brique livrée** — composant technique ajouté/modifié, point d'intégration, config
+2. **Critères de succès** — mesures avant/après (perf, taux d'erreur, latence, couverture…) : atteints / partiels / non mesurés
+3. **Effets transverses** — impact sur les modules clients, compatibilité, migrations de données
+4. **Rollback** — mécanisme prévu et testé (feature flag, env var, kill switch)
+5. **Dette résiduelle**
+
 Pour chaque écart, demande : "C'était un choix délibéré ou un oubli ? Pourquoi ?"
 
 ### Phase 4 — Rédaction du report
 
 Quand la revue est complète et validée, écris le fichier.
 
-**Nom du fichier** : `docs/features/NNN-slug/report.md` (dans le même dossier que la spec et le design).
+**Nom du fichier** : `docs/story/<f|r|t>-NNN-slug/report.md` (dans le même dossier que l'intention).
 
-**Format du fichier** :
+#### Template pour un report `f-` (feature)
 
 ```markdown
 # Report — [Nom de la fonctionnalité]
 
-> Feature spec : `docs/features/NNN-slug/feature.md`
-> Design : `docs/features/NNN-slug/design.md`
+> Feature spec : `docs/story/f-NNN-slug/feature.md`
+> Design : `docs/story/f-NNN-slug/design.md`
 > Date d'implémentation : YYYY-MM-DD
 > Commits liés : `abc1234`, `def5678` (si identifiables)
 
@@ -139,30 +178,115 @@ Reprise des critères de la `feature.md` avec statut :
 Points utiles pour les prochaines implémentations : ce qui a bien marché, ce qui a posé problème, ce qu'on ferait différemment.
 ```
 
+#### Template pour un report `r-` (refacto)
+
+```markdown
+# Report — [Nom du refacto]
+
+> Plan : `docs/story/r-NNN-slug/plan.md`
+> Date d'exécution : YYYY-MM-DD
+> Commits liés : `abc1234`, `def5678`
+
+## Résumé
+
+En 2-3 phrases : ce qui a été restructuré, état de la non-régression (tests caractérisation verts avant/après), étapes couvertes.
+
+## Périmètre refactoré
+
+### Fichiers restructurés
+
+| Fichier | Nature du changement | Prévu dans le plan |
+|---------|----------------------|--------------------|
+| `src/...` | Déplacement / extraction / renommage / simplification | Oui / Non (ajout) |
+
+## Comportement externe
+
+- [x] Signature publique préservée (API, commandes, events)
+- [x] Réponses / effets de bord identiques
+- [x] Tests de caractérisation écrits avant le refacto : `tests/...`
+- [x] Suite complète verte avant / après : ✅ NNN tests
+
+**Effets de bord constatés** : aucun / [décrire si détecté]
+
+## Étapes du plan
+
+| Étape | Prévu | Réalisé | Écart |
+|-------|-------|---------|-------|
+| 1. [...] | Décrit dans le plan | Fait / Partiel / Non fait | — / Raison |
+
+## Dette résiduelle
+
+- Code legacy encore en place à nettoyer plus tard (et raison du report).
+
+## Leçons apprises
+
+Ce qui a bien marché, les pièges rencontrés, ce qu'on ferait différemment sur un refacto similaire.
+```
+
+#### Template pour un report `t-` (évolution technique)
+
+```markdown
+# Report — [Nom de l'évolution technique]
+
+> Plan : `docs/story/t-NNN-slug/plan.md`
+> Date d'exécution : YYYY-MM-DD
+> Commits liés : `abc1234`, `def5678`
+
+## Résumé
+
+En 2-3 phrases : brique introduite, critères de succès atteints, rollback en place.
+
+## Brique livrée
+
+| Composant | Rôle | Point d'intégration | Config |
+|-----------|------|---------------------|--------|
+| `...` | ... | ... | ... |
+
+## Critères de succès
+
+| Critère | Cible (plan) | Mesuré | Statut |
+|---------|--------------|--------|--------|
+| Latence p95 | < 100 ms | 78 ms | ✅ |
+
+## Effets transverses
+
+- Modules clients impactés.
+- Compatibilité vérifiée.
+- Migration de données exécutée (oui / non / N/A).
+
+## Rollback
+
+- Mécanisme : feature flag / env var / kill switch (préciser).
+- Testé : oui / non.
+
+## Dette résiduelle
+
+- Points à finir plus tard.
+
+## Leçons apprises
+```
+
 ### Phase 5 — Clôture
 
 Affiche le chemin du fichier et le résumé.
 
 **Si des écarts ont été identifiés**, propose :
 
-> Report prêt : `docs/features/NNN-slug/report.md`
+> Report prêt : `docs/story/<f|r|t>-NNN-slug/report.md`
 >
-> Pipeline complet pour cette feature :
-> - Spec : `docs/features/NNN-slug/feature.md`
-> - Design : `docs/features/NNN-slug/design.md`
-> - Report : `docs/features/NNN-slug/report.md`
->
-> Des écarts ont été documentés — prochaine étape : `/sync` pour réaligner la doc sur la réalité du code.
+> Des écarts ont été documentés — prochaine étape : `/sync` pour réaligner la doc (spec/design ou plan) sur la réalité du code.
 
 **Si conformité totale (aucun écart)**, propose :
 
-> Report prêt : `docs/features/NNN-slug/report.md`
+> Report prêt : `docs/story/<f|r|t>-NNN-slug/report.md`
 > Conformité totale — pas de `/sync` nécessaire.
 
 ## Argument optionnel
 
-`/report ma-feature` — cherche le dossier feature par slug et démarre l'analyse.
+`/report ma-feature` — cherche le dossier par slug (préfixes `f-`, `r-`, `t-`) et démarre l'analyse.
 
-`/report docs/features/007-ma-feature/design.md` — charge directement le design comme référence.
+`/report docs/story/f-007-ma-feature/design.md` — charge directement une feature.
 
-`/report` sans argument — liste les dossiers features contenant un design et demande lequel traiter.
+`/report docs/story/r-013-extract-service/plan.md` — charge directement un refacto.
+
+`/report` sans argument — liste les dossiers éligibles et demande lequel traiter.

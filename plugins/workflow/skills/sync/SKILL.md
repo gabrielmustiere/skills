@@ -1,17 +1,27 @@
 ---
 name: sync
-description: Réaligne la spec feature et le design technique avec ce qui a été réellement implémenté — applique les écarts validés et trace les modifications dans un changelog. Déclenche sur "synchronise / resync la doc", "réaligne la spec", "la doc n'est plus à jour", "la spec ne reflète plus le code", ou tout décalage doc/code constaté — même sans citer le skill.
+description: Réaligne la doc d'intention (feature.md + design.md pour une feature, plan.md pour un refacto ou évolution tech) avec ce qui a été réellement implémenté — applique les écarts validés et trace les modifications dans un changelog. Déclenche sur "synchronise / resync la doc", "réaligne la spec / le plan", "la doc n'est plus à jour", "la doc ne reflète plus le code", ou tout décalage doc/code constaté — même sans citer le skill.
 user_invocable: true
 disable-model-invocation: true
 ---
 
 # /sync — Réalignement de la documentation
 
-Tu es un tech lead méthodique. Tu réalignes la documentation (`feature.md` + `design.md`) avec la réalité du code implémenté. Tu ne modifies rien sans validation explicite de l'utilisateur.
+Tu es un tech lead méthodique. Tu réalignes la documentation d'intention avec la réalité du code implémenté. Tu ne modifies rien sans validation explicite de l'utilisateur.
 
 ## Périmètre du skill
 
-Ce skill **modifie** la doc fonctionnelle et technique pour qu'elle reflète le code livré. Il intervient **après** `/implement` (et idéalement après `/report` qui aura déjà identifié les écarts). Il ne re-cadre pas la feature, ne re-conçoit pas, et ne touche jamais au code.
+Ce skill **modifie** la doc d'intention pour qu'elle reflète le code livré. Il intervient **après** l'exécution (et idéalement après `/report` qui aura déjà identifié les écarts). Il ne re-cadre pas, ne re-conçoit pas, et ne touche jamais au code.
+
+## Types de dossiers reconnus
+
+`docs/story/` utilise un préfixage par type :
+
+- `docs/story/f-NNN-slug/` — **feature** : doc d'intention = `feature.md` + `design.md`
+- `docs/story/r-NNN-slug/` — **refacto** : doc d'intention = `plan.md`
+- `docs/story/t-NNN-slug/` — **évolution technique** : doc d'intention = `plan.md`
+
+Le skill adapte ses questions et les fichiers qu'il modifie selon le type.
 
 ## Règles
 
@@ -26,36 +36,50 @@ Ce skill **modifie** la doc fonctionnelle et technique pour qu'elle reflète le 
 
 ### Phase 1 — Chargement des sources
 
-Si l'utilisateur fournit un slug (`/sync ma-feature`) ou un chemin (`/sync docs/features/007-ma-feature/report.md`), résoudre vers le dossier `docs/features/NNN-slug/`.
+Si l'utilisateur fournit un slug (`/sync ma-feature`) ou un chemin (`/sync docs/story/f-007-ma-feature/report.md`), résous le dossier dans `docs/story/` en testant les préfixes `f-`, `r-`, `t-`.
 
-Sinon, liste les dossiers dans `docs/features/` qui contiennent un `design.md` via `Glob` et demande lequel traiter.
+Sinon, liste via `Glob` les dossiers `docs/story/[frt]-*` qui contiennent la doc d'intention adéquate (design.md pour `f-`, plan.md pour `r-`/`t-`) et demande lequel traiter.
 
-Lis tous les fichiers présents dans le dossier :
+**Détermine le type** selon le préfixe du dossier et lis les fichiers présents :
 
-- `docs/features/NNN-slug/feature.md`
-- `docs/features/NNN-slug/design.md`
-- `docs/features/NNN-slug/report.md` (s'il existe)
+| Préfixe | Fichiers d'intention          | Aussi lu si présent |
+|---------|-------------------------------|---------------------|
+| `f-`    | `feature.md` + `design.md`   | `report.md`         |
+| `r-`    | `plan.md`                     | `report.md`         |
+| `t-`    | `plan.md`                     | `report.md`         |
 
-**Si `feature.md` ou `design.md` manque**, refuse de continuer : "Pas de doc à synchroniser pour cette feature — il manque [fichier]. Lance `/feature` ou `/design` d'abord."
+**Si un fichier d'intention manque**, refuse de continuer : "Pas de doc à synchroniser pour ce dossier — il manque [fichier]. Lance [`/feature-pitch` | `/feature-design` | `/refactor-plan` | `/tech-plan`] d'abord."
 
 ### Phase 2 — Identification des écarts
 
-**Si un report existe** : extrais les écarts documentés (écarts volontaires, non implémenté, ajouts non prévus). C'est la source la plus fiable.
+**Si un `report.md` existe** : extrais les écarts documentés (écarts volontaires, non implémenté, ajouts non prévus). C'est la source la plus fiable.
 
 **Si pas de report** : analyse le code directement.
 
-- Lis les fichiers listés dans le design (créés et modifiés)
+- Lis les fichiers listés dans la doc d'intention (créés et modifiés)
 - Compare le code réel avec ce qui était prévu
 - Identifie les fichiers non prévus qui ont été créés
-- Vérifie les entités, services, templates, tests
 
-Classe les écarts en 3 catégories :
+Classe les écarts selon le type de dossier.
+
+**Cas `f-` (feature)** — 3 catégories :
 
 1. **Mises à jour spec feature** — règles métier qui ont changé, user stories ajoutées/modifiées, critères d'acceptation à corriger, hors scope qui a bougé, impacts transverses différents
 2. **Mises à jour design** — fichiers créés/modifiés différents du prévu, approche technique ajustée, stratégie de test modifiée, ordre d'implémentation réel
 3. **Aucune mise à jour nécessaire** — écarts mineurs qui ne changent pas la documentation
 
-**Si les 3 catégories sont vides**, dis-le à l'utilisateur : "Tout est conforme, rien à synchroniser." Et arrête-toi.
+**Cas `r-` (refacto)** — catégories :
+
+1. **Mises à jour plan** — stratégie de caractérisation ajustée, périmètre refactoré différent du prévu, étapes réordonnées ou fusionnées, nouvelle étape apparue en cours
+2. **Effets de bord à tracer** — si le refacto a malgré lui modifié un comportement, le documenter dans le plan (et signaler que ce n'est plus un "refacto pur")
+3. **Aucune mise à jour nécessaire**
+
+**Cas `t-` (évolution technique)** — catégories :
+
+1. **Mises à jour plan** — composant choisi différent du prévu, point d'intégration déplacé, critères de succès ajustés, stratégie de rollback modifiée
+2. **Aucune mise à jour nécessaire**
+
+**Si toutes les catégories sont vides**, dis-le à l'utilisateur : "Tout est conforme, rien à synchroniser." Et arrête-toi.
 
 ### Phase 3 — Revue interactive des changements
 
@@ -64,7 +88,7 @@ Pour chaque catégorie non vide, présente les modifications proposées et deman
 **Format de présentation par changement :**
 
 ```
-docs/features/NNN-slug/feature.md
+docs/story/f-NNN-slug/feature.md
 Section : [Règles métier]
 - Avant : "Le stock est décrémenté à la commande"
 - Après : "Le stock est décrémenté à la validation du paiement"
@@ -97,15 +121,14 @@ Après chaque fichier modifié, ajoute un bloc changelog en fin de fichier (ou a
 Affiche le résumé des modifications :
 
 > Sync terminé :
-> - `docs/features/NNN-slug/feature.md` — X modifications appliquées
-> - `docs/features/NNN-slug/design.md` — Y modifications appliquées
+> - `docs/story/<f|r|t>-NNN-slug/<fichier>.md` — X modifications appliquées
 >
 > Documentation réalignée avec l'implémentation.
 
 ## Argument optionnel
 
-`/sync ma-feature` — cherche le dossier feature par slug et démarre l'analyse.
+`/sync ma-feature` — cherche le dossier par slug (préfixes `f-`, `r-`, `t-`) et démarre l'analyse.
 
-`/sync docs/features/007-ma-feature/report.md` — utilise le report comme source des écarts.
+`/sync docs/story/r-013-extract-service/report.md` — utilise le report comme source des écarts.
 
-`/sync` sans argument — liste les dossiers features contenant un design et demande lequel traiter.
+`/sync` sans argument — liste les dossiers éligibles et demande lequel traiter.

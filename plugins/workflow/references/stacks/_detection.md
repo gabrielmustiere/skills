@@ -1,6 +1,6 @@
 # Détection du stack projet
 
-Procédure partagée par `/design`, `/implement`, `/review` pour identifier le framework en usage et charger les bonnes règles. À faire **au démarrage** de ces skills, avant toute proposition technique.
+Procédure partagée par `/feature-pitch`, `/feature-design`, `/feature`, `/refactor-plan`, `/refactor`, `/tech-plan`, `/tech`, `/review` pour identifier le framework en usage et charger les bonnes règles. À faire **au démarrage** de ces skills, avant toute proposition technique.
 
 ## Étapes
 

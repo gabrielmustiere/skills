@@ -1,6 +1,6 @@
 ---
 name: review
-description: Code review du diff avant merge — détecte sécurité, qualité, performance, conformité design, migrations, spécificités framework. Produit docs/features/<NNN-slug>/review.md. Déclenche sur "review ce diff", "relis avant merge", "audite ce changement", "c'est prêt à merger ?", "j'ai fini, tu peux vérifier ?" — même sans citer le skill.
+description: Code review du diff avant merge — détecte sécurité, qualité, performance, conformité design/plan, migrations, spécificités framework. Produit docs/story/<f|r|t>-<NNN>-<slug>/review.md selon le type de dossier ciblé. Déclenche sur "review ce diff", "relis avant merge", "audite ce changement", "c'est prêt à merger ?", "j'ai fini, tu peux vérifier ?" — même sans citer le skill.
 user_invocable: true
 ---
 
@@ -12,7 +12,7 @@ Tu es un reviewer senior exigeant. Tu analyses le diff du code produit pour dét
 
 Ce skill **lit** le code et **émet un verdict**. Il ne corrige pas (sauf si l'utilisateur le demande explicitement après présentation des findings) et ne commit pas (`/commit`). Il peut s'utiliser :
 
-- en pipeline standard, après `/implement` et avant `/commit`
+- en pipeline standard, après `/feature` / `/refactor` / `/tech` et avant `/commit`
 - en pipeline fast, avant `/commit` directement sur un petit diff
 - en standalone sur n'importe quel diff git (branche feature, staging, working tree)
 
@@ -28,7 +28,11 @@ Ce skill **lit** le code et **émet un verdict**. Il ne corrige pas (sauf si l'u
 
 ### Phase 1 — Chargement du contexte et détection stack
 
-Si l'utilisateur fournit un design (`/review docs/features/007-slug/design.md`) ou un slug (`/review slug`), lis-le pour comparer l'intention avec le résultat. Lis aussi le `feature.md` pour avoir les critères d'acceptation.
+Si l'utilisateur fournit un chemin (`/review docs/story/f-007-slug/design.md`, `/review docs/story/r-013-slug/plan.md`) ou un slug (`/review slug`), résous le dossier cible dans `docs/story/` (matchant `[frt]-NNN-slug`) et lis la **référence d'intention** selon le type :
+
+- Dossier `f-` (feature) → lire `design.md` + `feature.md` (critères d'acceptation)
+- Dossier `r-` (refacto) → lire `plan.md` (stratégie et critères de non-régression)
+- Dossier `t-` (évolution technique) → lire `plan.md` (stratégie et critères de succès)
 
 Sinon, travaille uniquement sur le diff brut.
 
@@ -60,13 +64,28 @@ Parcours chaque fichier modifié et analyse selon ces axes, dans cet ordre de pr
 - **Secrets** : credentials, tokens, clés API dans le code ou la config commitée.
 - **Permissions** : accès non vérifié (routes admin sans guard, voters manquants, etc.).
 
-#### Axe 2 — Conformité design (bloquant si design fourni)
+#### Axe 2 — Conformité à la référence d'intention (bloquant si fournie)
+
+**Cas feature (`f-`)** — référence = `design.md` :
 
 - Les fichiers créés/modifiés correspondent-ils au design ?
 - L'approche technique est-elle celle prévue ?
 - Les entités et relations sont-elles conformes au schéma prévu ?
 - Si un écart existe : est-il justifié ou c'est une dérive silencieuse ?
 - Les critères d'acceptation de la `feature.md` sont-ils couverts ?
+
+**Cas refacto (`r-`)** — référence = `plan.md`, focus inversé sur la non-régression :
+
+- Le **comportement externe** est-il strictement préservé (pas de signature publique modifiée, pas de réponse changée, pas de side-effect nouveau) ? Toute modification de comportement observable doit être signalée comme **bloquant**.
+- Les **tests de caractérisation** prévus dans le plan sont-ils bien présents et passent-ils ? Si la phase "verrou tests" du plan a été sautée, c'est bloquant.
+- Le périmètre du diff respecte-t-il le périmètre du plan (pas de scope creep silencieux) ?
+- Les étapes incrémentales prévues sont-elles toutes faites, ou seulement une partie ?
+
+**Cas évolution technique (`t-`)** — référence = `plan.md` :
+
+- La brique technique introduite correspond-elle au plan (lib choisie, point d'intégration, config) ?
+- Les critères de succès du plan (perf, résilience, observabilité) sont-ils mesurables après le diff ?
+- Le rollback prévu (feature flag, env var, kill switch) est-il bien en place ?
 
 #### Axe 3 — Migrations (bloquant si migration présente)
 
@@ -121,10 +140,12 @@ Selon le stack détecté :
 
 ### Phase 3 — Écriture du fichier review
 
-**Avant de présenter les findings**, persiste la review dans un fichier Markdown :
+**Avant de présenter les findings**, persiste la review dans un fichier Markdown au sein du dossier `docs/story/<f|r|t>-NNN-slug/` correspondant :
 
 ```
-docs/features/NNN-slug/review.md
+docs/story/f-NNN-slug/review.md   # review d'une feature
+docs/story/r-NNN-slug/review.md   # review d'un refacto
+docs/story/t-NNN-slug/review.md   # review d'une évolution technique
 ```
 
 (Si pas de slug — review standalone — propose un emplacement à l'utilisateur ou skip ce fichier.)
@@ -137,7 +158,7 @@ Format :
 > Date : YYYY-MM-DD
 > Stack : [symfony | sylius | autre]
 > Périmètre : [working tree | staged | branche vs main] (N fichiers, ~N lignes)
-> Design de référence : `docs/features/NNN-slug/design.md` (ou "Aucun")
+> Référence d'intention : `docs/story/f-NNN-slug/design.md` | `docs/story/r-NNN-slug/plan.md` | `docs/story/t-NNN-slug/plan.md` | "Aucune"
 
 ## Bloquants
 - [ ] **[TAG]** `fichier:ligne` — Description et correction suggérée
@@ -168,7 +189,7 @@ Pour chaque finding bloquant, demande : "Tu veux corriger maintenant ou on note 
 
 Quand tous les findings sont traités :
 
-1. Mettre à jour `docs/features/NNN-slug/review.md` — cocher les items corrigés, mettre à jour le verdict.
+1. Mettre à jour `docs/story/<f|r|t>-NNN-slug/review.md` — cocher les items corrigés, mettre à jour le verdict.
 2. Afficher le verdict :
 
 ```
@@ -185,8 +206,10 @@ Si READY TO COMMIT :
 
 ## Argument optionnel
 
-`/review docs/features/007-slug/design.md` — review avec comparaison au design.
+`/review docs/story/f-007-slug/design.md` — review d'une feature avec comparaison au design.
 
-`/review slug` — cherche le dossier feature par slug et charge son design.
+`/review docs/story/r-013-slug/plan.md` — review d'un refacto avec comparaison au plan (focus sur la non-régression).
 
-`/review` sans argument — review du diff courant sans référence design.
+`/review slug` — cherche le dossier par slug dans `docs/story/` (préfixes `f-`, `r-`, `t-`) et charge la référence d'intention adéquate.
+
+`/review` sans argument — review du diff courant sans référence d'intention.

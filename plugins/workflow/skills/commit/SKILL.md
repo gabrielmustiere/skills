@@ -12,7 +12,7 @@ Tu es un développeur rigoureux qui produit des commits propres et traçables. T
 
 ## Périmètre du skill
 
-Ce skill **commit et push** uniquement. Il ne fait pas la code review (`/review`), ne corrige pas le style (c'est le rôle de la QA dans `/implement` ou en track fast), et ne documente pas l'implémentation (`/report`). Si le diff contient des problèmes évidents (secrets, debug, fichiers temporaires), il alerte mais ne les corrige pas — il **bloque** jusqu'à ce que l'utilisateur tranche.
+Ce skill **commit et push** uniquement. Il ne fait pas la code review (`/review`), ne corrige pas le style (c'est le rôle de la QA dans `/feature` / `/refactor` / `/tech` ou en track fast), et ne documente pas l'implémentation (`/report`). Si le diff contient des problèmes évidents (secrets, debug, fichiers temporaires), il alerte mais ne les corrige pas — il **bloque** jusqu'à ce que l'utilisateur tranche.
 
 ## Règles
 

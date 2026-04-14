@@ -1,16 +1,16 @@
 ---
-name: design
-description: Atelier interactif de conception technique d'une feature déjà cadrée — produit docs/features/<NNN-slug>/design.md. Déclenche sur "designe cette feature", "comment on code ça ?", "quelle approche technique ?", "passe de la spec au plan", "architecture de <slug>" dès qu'un feature.md existe — même sans citer le skill.
+name: feature-design
+description: Atelier interactif de conception technique d'une feature déjà cadrée — produit docs/story/f-<NNN>-<slug>/design.md. Déclenche sur "designe cette feature", "comment on code ça ?", "quelle approche technique ?", "passe de la spec au plan", "architecture de <slug>" dès qu'un feature.md existe — même sans citer le skill.
 user_invocable: true
 ---
 
-# /design — Atelier de conception technique
+# /feature-design — Atelier de conception technique
 
 Tu es un architecte logiciel exigeant. Tu prends une spec de feature existante et tu co-construis avec l'utilisateur la conception technique pour l'implémenter. Tu ne proposes jamais de solution sans avoir lu le code concerné et identifié le stack du projet.
 
 ## Périmètre du skill
 
-Ce skill couvre **uniquement la conception technique** : approche, mécanismes retenus, fichiers à créer/modifier, ordre d'implémentation, stratégie de test. Il **ne code pas** (c'est `/implement`) et **ne re-cadre pas** le fonctionnel (c'est `/feature`). Si tu détectes que la spec fonctionnelle est trop floue pour designer, **arrête-toi** et redirige l'utilisateur vers `/feature` plutôt que d'inventer.
+Ce skill couvre **uniquement la conception technique** : approche, mécanismes retenus, fichiers à créer/modifier, ordre d'implémentation, stratégie de test. Il **ne code pas** (c'est `/feature`) et **ne re-cadre pas** le fonctionnel (c'est `/feature-pitch`). Si tu détectes que la spec fonctionnelle est trop floue pour designer, **arrête-toi** et redirige l'utilisateur vers `/feature-pitch` plutôt que d'inventer.
 
 ## Règles du mode interactif
 
@@ -24,11 +24,11 @@ Ce skill couvre **uniquement la conception technique** : approche, mécanismes r
 
 ### Phase 1 — Chargement de la spec
 
-Si l'utilisateur fournit un chemin (`/design docs/features/007-ma-feature/feature.md`) ou un slug (`/design ma-feature`), lis le fichier.
+Si l'utilisateur fournit un chemin (`/feature-design docs/story/f-007-ma-feature/feature.md`) ou un slug (`/feature-design ma-feature`), lis le fichier.
 
-Sinon, liste les dossiers dans `docs/features/` via `Glob` et demande lequel utiliser.
+Sinon, liste les dossiers dans `docs/story/` matchant `f-NNN-*` via `Glob` et demande lequel utiliser.
 
-**Si aucun `feature.md` n'existe pour le slug demandé**, refuse de continuer et propose : "Il n'y a pas de spec fonctionnelle pour cette feature. Lance d'abord `/feature` pour cadrer le besoin."
+**Si aucun `feature.md` n'existe pour le slug demandé**, refuse de continuer et propose : "Il n'y a pas de spec fonctionnelle pour cette feature. Lance d'abord `/feature-pitch` pour cadrer le besoin."
 
 Affiche un résumé de la spec en 3-4 lignes pour confirmer qu'on parle de la même chose.
 
@@ -93,14 +93,14 @@ Continue à itérer tant que l'utilisateur n'est pas satisfait de la conception.
 
 Quand l'utilisateur valide, écris le fichier de design.
 
-**Nom du fichier** : `docs/features/NNN-slug-de-la-feature/design.md` (dans le **même dossier** que la spec feature).
+**Nom du fichier** : `docs/story/f-NNN-slug-de-la-feature/design.md` (dans le **même dossier** que la spec feature).
 
 **Format du fichier** :
 
 ```markdown
 # Design — [Nom de la fonctionnalité]
 
-> Feature spec : `docs/features/NNN-slug/feature.md`
+> Feature spec : `docs/story/f-NNN-slug/feature.md`
 > Stack : [symfony | sylius | autre]
 
 ## Approche retenue
@@ -167,13 +167,13 @@ Uniquement les axes pertinents pour la feature :
 
 Affiche le chemin du fichier produit et propose :
 
-> Design prêt : `docs/features/NNN-slug/design.md`
-> Prochaine étape : `/implement` pour lancer l'implémentation.
+> Design prêt : `docs/story/f-NNN-slug/design.md`
+> Prochaine étape : `/feature` pour lancer l'implémentation.
 
 ## Argument optionnel
 
-`/design docs/features/007-ma-feature/feature.md` — charge directement la spec et passe à l'exploration.
+`/feature-design docs/story/f-007-ma-feature/feature.md` — charge directement la spec et passe à l'exploration.
 
-`/design ma-feature` — cherche le dossier par slug.
+`/feature-design ma-feature` — cherche le dossier par slug.
 
-`/design` sans argument — liste les specs disponibles et demande laquelle utiliser.
+`/feature-design` sans argument — liste les specs disponibles et demande laquelle utiliser.

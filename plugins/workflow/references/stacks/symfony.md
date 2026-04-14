@@ -1,6 +1,6 @@
 # Stack — Symfony
 
-Référence chargée par `/design`, `/implement`, `/review`, `/help` quand le projet est détecté comme Symfony (ou Sylius, qui étend Symfony). C'est un **radar de points de vigilance** pour concevoir et reviewer — pas un tutoriel procédural (les procédures étape par étape sont l'affaire de skills dédiées).
+Référence chargée par `/feature-design`, `/feature`, `/refactor-plan`, `/refactor`, `/tech-plan`, `/tech`, `/review`, `/help` quand le projet est détecté comme Symfony (ou Sylius, qui étend Symfony). C'est un **radar de points de vigilance** pour concevoir et reviewer — pas un tutoriel procédural (les procédures étape par étape sont l'affaire de skills dédiées).
 
 ## Détection
 
