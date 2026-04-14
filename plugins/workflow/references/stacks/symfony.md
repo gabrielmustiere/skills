@@ -13,7 +13,9 @@ Référence chargée par `/feature-design`, `/feature`, `/refactor-plan`, `/refa
 - **Reversibility du `down()`** : si la migration est volontairement irréversible (drop de donnée par exemple), le documenter dans le fichier de migration en commentaire.
 - **NOT NULL sur table non vide** : ALTER en deux temps (nullable → backfill → NOT NULL), ou DEFAULT prévu. Sinon la migration casse en prod sur les lignes existantes.
 - **Index** : toute colonne utilisée en WHERE/JOIN/ORDER BY doit avoir un index. L'absence se paie cher sur les grosses tables.
-- **DQL/SQL dans repository uniquement** (`src/Repository/`). Jamais dans services, listeners, contrôleurs — sinon la logique de requête se disperse, devient non testable unitairement, et le même query se retrouve dupliqué à plusieurs endroits.
+- **Tout accès aux données passe par une méthode nommée d'un repository.** Aucun appel direct à `$em->find()`, `$em->getRepository()->findBy()`, DQL ou QueryBuilder hors `src/Repository/` — les services, listeners, contrôleurs appellent `OrderRepository::findPendingForUser($user)`, pas `findBy(['status' => ...])`. La méthode expose l'intention métier (pas la mécanique SQL), reste testable unitairement, et concentre l'optimisation à un seul endroit. Seule exception : `EntityValueResolver` dans un contrôleur (le resolver résout l'entité via le repository pour nous).
+
+> **Skills dédiés** : pour dérouler précisément la procédure d'un de ces trois domaines, rediriger vers le plugin `symfony` plutôt que de tout détailler ici — `/symfony:doctrine-entity` (entités, relations, validation), `/symfony:doctrine-query` (DQL/QueryBuilder/N+1), `/symfony:doctrine-migration` (génération, dry-run, réversibilité). Les règles ci-dessus restent le radar de vigilance pour la review et le cadrage.
 
 ## Services
 

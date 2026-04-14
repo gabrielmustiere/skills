@@ -12,7 +12,7 @@
       "name": "workflow",
       "source": "workflow",
       "description": "Skills pour les différentes étapes de mon workflow de développement ",
-      "version": "0.6.0",
+      "version": "0.7.0",
       "category": "development"
     },
     {
@@ -20,6 +20,13 @@
       "source": "sylius",
       "description": "Skills pour travailler avec Sylius",
       "version": "0.6.0",
+      "category": "development"
+    },
+    {
+      "name": "symfony",
+      "source": "symfony",
+      "description": "Skills focalisées Symfony/Doctrine (entités, requêtes, migrations, forms, HTTP client, validator, service container, event dispatcher) relayées par le plugin workflow via détection stack",
+      "version": "0.7.0",
       "category": "development"
     }
   ]

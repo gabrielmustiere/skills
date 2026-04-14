@@ -9,8 +9,9 @@ Marketplace personnelle de skills Claude Code. Les skills sont regroupées par *
 
 | Plugin | Version | Description |
 | --- | --- | --- |
-| `workflow` | `0.6.0` | Pipeline de développement stack-agnostique. Trois tracks symétriques : **feature** (`feature-pitch` → `feature-design` → `feature`), **refacto** (`refactor-plan` → `refactor`), **évolution technique** (`tech-plan` → `tech`). Étapes communes : `review` → `commit` → `report` → `sync`. Détection auto du stack (Symfony, Sylius). |
+| `workflow` | `0.7.0` | Pipeline de développement stack-agnostique. Trois tracks symétriques : **feature** (`feature-pitch` → `feature-design` → `feature`), **refacto** (`refactor-plan` → `refactor`), **évolution technique** (`tech-plan` → `tech`). Étapes communes : `review` → `commit` → `report` → `sync`. Détection auto du stack (Symfony, Sylius). |
 | `sylius` | `0.6.0` | Skills pour travailler avec Sylius (doc et conventions). |
+| `symfony` | `0.7.0` | 20 skills Symfony/Doctrine groupées par domaine : **doctrine** (entity, migration, query), **events** (dispatch, listen, subscribe), **forms** (type, handle, render, advanced), **http-client** (request, response, async, test), **services** (define, wire, tags), **validation** (constraints, groups, use). Relayées par `workflow` quand le stack détecté est Symfony/Sylius. |
 
 ## Installer dans un autre projet
 
@@ -20,6 +21,7 @@ Dans une session Claude Code ouverte sur n'importe quel projet :
 /plugin marketplace add gabrielmustiere/skills
 /plugin install workflow@gabrielmustiere
 /plugin install sylius@gabrielmustiere
+/plugin install symfony@gabrielmustiere
 /reload-plugins
 ```
 
@@ -29,6 +31,7 @@ Les skills d'un plugin sont toujours namespacées par le nom du plugin. Exemples
 /workflow:help
 /workflow:feature-pitch
 /sylius:doc-sylius
+/symfony:doctrine-entity
 ```
 
 Mettre à jour quand le catalogue change : `/plugin marketplace update gabrielmustiere` puis `/reload-plugins`.

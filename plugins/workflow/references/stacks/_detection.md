@@ -21,6 +21,18 @@ Traitées dans l'ordre — la première qui matche gagne.
 
 Les références sont dans le même dossier que ce fichier : `plugins/workflow/references/stacks/`. Chaque skill utilisant la détection les lit via `Read` une fois le stack identifié.
 
+## Skills dédiés disponibles (stack Symfony / Sylius)
+
+Quand le stack détecté est `symfony` ou `sylius`, les skills du plugin `symfony` sont disponibles pour approfondir les opérations Doctrine. Les skills du workflow (`/feature`, `/refactor`, `/tech`, `/review`) peuvent y **rediriger** l'utilisateur plutôt que de détailler ces opérations inline — elles restent focalisées sur le pipeline :
+
+| Besoin pendant une sous-tâche                               | Skill à suggérer                 |
+|-------------------------------------------------------------|----------------------------------|
+| Créer ou modifier une entité, ajouter une relation          | `/symfony:doctrine-entity`       |
+| Écrire/réviser une requête repository (DQL, QueryBuilder)    | `/symfony:doctrine-query`        |
+| Générer, relire, exécuter ou annuler une migration           | `/symfony:doctrine-migration`    |
+
+Règle : quand une sous-tâche de `/feature` ou `/refactor` touche principalement un de ces trois domaines, proposer à l'utilisateur d'invoquer la skill dédiée (« Cette sous-tâche est centrée sur le mapping — tu veux enchaîner via `/symfony:doctrine-entity` ? ») plutôt que de tout dérouler en ligne. Les skills du pipeline gardent leur orchestration (checkpoints, QA, report), les skills `symfony` fournissent la procédure précise.
+
 ## Résumé à afficher
 
 Une ligne juste après la détection, pour que l'utilisateur sache ce qui va être appliqué :
