@@ -1,0 +1,10 @@
+{
+  "name": "dworkflow",
+  "description": "Skills pour les différentes étapes de mon workflow de développement ",
+  "version": "0.1.0",
+  "author": {
+    "name": "Gabriel Mustiere"
+  },
+  "homepage": "https://github.com/gabrielmustiere/skills",
+  "repository": "https://github.com/gabrielmustiere/skills"
+}
