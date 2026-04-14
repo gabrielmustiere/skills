@@ -1,6 +1,6 @@
 {
-  "name": "dworkflow",
-  "description": "Skills pour les différentes étapes de mon workflow de développement ",
+  "name": "sylius",
+  "description": "Skills pour travailler avec Sylius",
   "version": "0.1.0",
   "author": {
     "name": "Gabriel Mustiere"
