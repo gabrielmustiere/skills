@@ -1,7 +1,7 @@
 {
   "name": "symfony",
-  "description": "Skills focalisées Symfony/Doctrine : entités, requêtes, migrations, forms (FormType, traitement, rendu Twig, scénarios avancés), HTTP Client (request, response, concurrence/retry/cache, tests), Validator (contraintes, usage hors form, groupes et validation conditionnelle), Service Container (déclaration, câblage d'arguments, tags et décoration), EventDispatcher (subscribers, listeners via #[AsEventListener], dispatch d'événements custom). Complémentaires au plugin workflow — invoquées directement ou relayées par /feature, /refactor, /tech quand le stack détecté est Symfony ou Sylius.",
-  "version": "0.7.0",
+  "description": "Skills focalisées Symfony/Doctrine : entités, requêtes, migrations, forms (FormType, traitement, rendu Twig, scénarios avancés), HTTP Client (request, response, concurrence/retry/cache, tests), Validator (contraintes, usage hors form, groupes et validation conditionnelle), Service Container (déclaration, câblage d'arguments, tags et décoration), EventDispatcher (subscribers, listeners via #[AsEventListener], dispatch d'événements custom), Messenger (message + handler, transports, routing, worker, retry, DLQ, scheduler), Serializer (normalizers, encoders, groupes, NameConverter, DTO, normalizer custom), ObjectMapper (objet → objet via #[Map], transformers, conditions, multi-cibles, récursion). Complémentaires au plugin workflow — invoquées directement ou relayées par /feature, /refactor, /tech quand le stack détecté est Symfony ou Sylius.",
+  "version": "0.12.0",
   "author": {
     "name": "Gabriel Mustiere"
   },
