@@ -1,6 +1,6 @@
 ---
 name: doc-sylius
-description: Analyse et documente une feature Sylius existante (code custom src/ ou natif vendor/) dans docs/sylius-native/<NNN-slug>/feature.md — entités, workflows, routes, grids, hooks Twig, API. Déclenche dès que l'utilisateur veut "comprendre comment marche X dans Sylius", "documenter une feature existante", "tracer le code" d'un domaine, ou cherche à reverse-engineer un comportement Sylius, même sans citer le skill.
+description: Analyse et documente une feature Sylius existante (custom `src/` ou natif `vendor/`) dans `docs/sylius-native/<NNN-slug>/feature.md` : entités, workflows, routes, grids, Twig hooks, API. Pour comprendre ou tracer un comportement Sylius.
 user_invocable: true
 ---
 
