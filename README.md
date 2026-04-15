@@ -13,6 +13,57 @@ Marketplace personnelle de skills Claude Code. Les skills sont regroupées par *
 | `sylius` | `0.6.0` | Skills pour travailler avec Sylius (doc et conventions). |
 | `symfony` | `0.7.0` | 20 skills Symfony/Doctrine groupées par domaine : **doctrine** (entity, migration, query), **events** (dispatch, listen, subscribe), **forms** (type, handle, render, advanced), **http-client** (request, response, async, test), **services** (define, wire, tags), **validation** (constraints, groups, use). Relayées par `workflow` quand le stack détecté est Symfony/Sylius. |
 
+## Inventaire des skills
+
+### `workflow` — Pipeline de développement (13 skills)
+
+| Skill | Rôle |
+| --- | --- |
+| `help` | Sommaire du workflow, tracks, skills et artifacts |
+| `feature-pitch` | Atelier de cadrage d'une idée de feature → `feature.md` |
+| `feature-design` | Design technique d'une feature cadrée → `design.md` |
+| `feature` | Implémentation guidée à partir du design |
+| `refactor-plan` | Cadrage refacto + tests de caractérisation → `plan.md` |
+| `refactor` | Exécution guidée d'un refacto avec verrou tests |
+| `tech-plan` | Cadrage évolution technique (perf, résilience, sécu) → `plan.md` |
+| `tech` | Exécution d'une évolution technique avec baseline/kill switch |
+| `review` | Code review du diff (sécurité, qualité, conformité) |
+| `commit` | Génère un Conventional Commit FR et push |
+| `report` | Compte rendu intention vs code réel |
+| `sync` | Réaligne la doc d'intention avec le code livré |
+| `test-scenario` | Joue un scénario utilisateur via Playwright MCP |
+
+### `sylius` — Documentation Sylius (1 skill)
+
+| Skill | Rôle |
+| --- | --- |
+| `doc-sylius` | Documente une feature Sylius (custom ou vendor) → `docs/sylius-native/` |
+
+### `symfony` — Skills Symfony/Doctrine (20 skills)
+
+| Domaine | Skill | Rôle |
+| --- | --- | --- |
+| **doctrine** | `doctrine-entity` | Entité Doctrine : ORM, relations, types custom |
+|  | `doctrine-query` | Requête Doctrine : find/findBy, DQL, QueryBuilder, DBAL |
+|  | `doctrine-migration` | Migration : génération, dry-run, réversibilité |
+| **events** | `event-dispatch` | Définit et dispatche un événement custom |
+|  | `event-listen` | Event Listener (`#[AsEventListener]`) |
+|  | `event-subscribe` | Event Subscriber (multi-callbacks, priorités) |
+| **forms** | `form-type` | Classe FormType (AbstractType, buildForm) |
+|  | `form-handle` | Traitement en contrôleur (createForm, handleRequest, PRG) |
+|  | `form-render` | Rendu Twig (thèmes, customisation par bloc) |
+|  | `form-advanced` | DataTransformer, FormEvents, CollectionType, FileType |
+| **http-client** | `http-client-request` | Construction d'une requête HTTP sortante |
+|  | `http-client-response` | Consommation de réponse, exceptions, streaming |
+|  | `http-client-async` | Concurrence, retry, cache, rate-limit, SSE |
+|  | `http-client-test` | Mock HttpClient, MockResponse, HAR |
+| **services** | `service-define` | Déclaration (autowiring, autoconfiguration) |
+|  | `service-wire` | Câblage d'arguments (scalaires, env, alias, `#[Target]`) |
+|  | `service-tags` | Tags, collections, factories, décorateurs |
+| **validation** | `validation-constraints` | Contraintes `#[Assert\*]` sur entité/DTO/classe |
+|  | `validation-groups` | Groupes, séquences, validation conditionnelle |
+|  | `validation-use` | `ValidatorInterface` hors form (DTO, payload, CLI) |
+
 ## Installer dans un autre projet
 
 Dans une session Claude Code ouverte sur n'importe quel projet :
