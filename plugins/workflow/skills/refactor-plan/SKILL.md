@@ -1,6 +1,6 @@
 ---
 name: refactor-plan
-description: Atelier interactif pour cadrer un refacto — motivation, périmètre, stratégie de caractérisation tests, plan d'exécution incrémental, critères de non-régression — produit docs/story/r-<NNN>-<slug>/plan.md. Déclenche sur "on doit refactorer X", "ce code est devenu illisible", "extraire ce service", "faut découper cette classe", "nettoyer la dette sur Y", "moderniser ce module" — même sans citer le skill.
+description: Atelier interactif pour cadrer un refacto — motivation, périmètre, stratégie de caractérisation tests, plan d'exécution incrémental, critères de non-régression — produit docs/story/<NNN>-r-<slug>/plan.md. Déclenche sur "on doit refactorer X", "ce code est devenu illisible", "extraire ce service", "faut découper cette classe", "nettoyer la dette sur Y", "moderniser ce module" — même sans citer le skill.
 user_invocable: true
 ---
 
@@ -105,8 +105,8 @@ Quand l'utilisateur valide, écris le plan dans `docs/story/`.
 
 **Choix du dossier** :
 
-- Format : `docs/story/r-NNN-slug/` (préfixe `r-` pour *refacto*, NNN sur 3 chiffres, slug en kebab-case).
-- **Compteur global partagé** avec les features (`f-`) et évolutions techniques (`t-`) : scanner `docs/story/` pour tous les dossiers matchant `^[frt]-(\d{3})-.+`, extraire le numéro max parmi tous types confondus, incrémenter de 1.
+- Format : `docs/story/NNN-r-slug/` (préfixe `r-` pour *refacto*, NNN sur 3 chiffres, slug en kebab-case).
+- **Compteur global partagé** avec les features (`f-`) et évolutions techniques (`t-`) : scanner `docs/story/` pour tous les dossiers matchant `^(\d{3})-[frt]-.+`, extraire le numéro max parmi tous types confondus, incrémenter de 1.
 - **Collision de slug** : si le slug proposé existe déjà sous un autre numéro (tous préfixes confondus), demande à l'utilisateur s'il veut **étendre** ou choisir un slug distinct. Ne jamais écraser.
 
 **Nom du fichier** : `plan.md` dans ce dossier.
@@ -223,7 +223,7 @@ Après écriture, affiche un résumé et demande si des ajustements sont nécess
 
 Annonce :
 
-> Plan refacto prêt : `docs/story/r-NNN-slug/plan.md`
+> Plan refacto prêt : `docs/story/NNN-r-slug/plan.md`
 > Prochaine étape : `/refactor` pour exécuter (verrou caractérisation d'abord, puis étapes incrémentales).
 
 ## Argument optionnel

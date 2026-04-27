@@ -1,6 +1,6 @@
 ---
 name: review
-description: Code review du diff avant merge — détecte sécurité, qualité, performance, conformité design/plan, migrations, spécificités framework. Produit docs/story/<f|r|t>-<NNN>-<slug>/review.md selon le type de dossier ciblé. Déclenche sur "review ce diff", "relis avant merge", "audite ce changement", "c'est prêt à merger ?", "j'ai fini, tu peux vérifier ?" — même sans citer le skill.
+description: Code review du diff avant merge — détecte sécurité, qualité, performance, conformité design/plan, migrations, spécificités framework. Produit docs/story/<NNN>-<f|r|t>-<slug>/review.md selon le type de dossier ciblé. Déclenche sur "review ce diff", "relis avant merge", "audite ce changement", "c'est prêt à merger ?", "j'ai fini, tu peux vérifier ?" — même sans citer le skill.
 user_invocable: true
 ---
 
@@ -28,7 +28,7 @@ Ce skill **lit** le code et **émet un verdict**. Il ne corrige pas (sauf si l'u
 
 ### Phase 1 — Chargement du contexte et détection stack
 
-Si l'utilisateur fournit un chemin (`/review docs/story/f-007-slug/design.md`, `/review docs/story/r-013-slug/plan.md`) ou un slug (`/review slug`), résous le dossier cible dans `docs/story/` (matchant `[frt]-NNN-slug`) et lis la **référence d'intention** selon le type :
+Si l'utilisateur fournit un chemin (`/review docs/story/007-f-slug/design.md`, `/review docs/story/013-r-slug/plan.md`) ou un slug (`/review slug`), résous le dossier cible dans `docs/story/` (matchant `NNN-[frt]-slug`) et lis la **référence d'intention** selon le type :
 
 - Dossier `f-` (feature) → lire `design.md` + `feature.md` (critères d'acceptation)
 - Dossier `r-` (refacto) → lire `plan.md` (stratégie et critères de non-régression)
@@ -140,12 +140,12 @@ Selon le stack détecté :
 
 ### Phase 3 — Écriture du fichier review
 
-**Avant de présenter les findings**, persiste la review dans un fichier Markdown au sein du dossier `docs/story/<f|r|t>-NNN-slug/` correspondant :
+**Avant de présenter les findings**, persiste la review dans un fichier Markdown au sein du dossier `docs/story/NNN-<f|r|t>-slug/` correspondant :
 
 ```
-docs/story/f-NNN-slug/review.md   # review d'une feature
-docs/story/r-NNN-slug/review.md   # review d'un refacto
-docs/story/t-NNN-slug/review.md   # review d'une évolution technique
+docs/story/NNN-f-slug/review.md   # review d'une feature
+docs/story/NNN-r-slug/review.md   # review d'un refacto
+docs/story/NNN-t-slug/review.md   # review d'une évolution technique
 ```
 
 (Si pas de slug — review standalone — propose un emplacement à l'utilisateur ou skip ce fichier.)
@@ -158,7 +158,7 @@ Format :
 > Date : YYYY-MM-DD
 > Stack : [symfony | sylius | autre]
 > Périmètre : [working tree | staged | branche vs main] (N fichiers, ~N lignes)
-> Référence d'intention : `docs/story/f-NNN-slug/design.md` | `docs/story/r-NNN-slug/plan.md` | `docs/story/t-NNN-slug/plan.md` | "Aucune"
+> Référence d'intention : `docs/story/NNN-f-slug/design.md` | `docs/story/NNN-r-slug/plan.md` | `docs/story/NNN-t-slug/plan.md` | "Aucune"
 
 ## Bloquants
 - [ ] **[TAG]** `fichier:ligne` — Description et correction suggérée
@@ -189,7 +189,7 @@ Pour chaque finding bloquant, demande : "Tu veux corriger maintenant ou on note 
 
 Quand tous les findings sont traités :
 
-1. Mettre à jour `docs/story/<f|r|t>-NNN-slug/review.md` — cocher les items corrigés, mettre à jour le verdict.
+1. Mettre à jour `docs/story/NNN-<f|r|t>-slug/review.md` — cocher les items corrigés, mettre à jour le verdict.
 2. Afficher le verdict :
 
 ```
@@ -206,9 +206,9 @@ Si READY TO COMMIT :
 
 ## Argument optionnel
 
-`/review docs/story/f-007-slug/design.md` — review d'une feature avec comparaison au design.
+`/review docs/story/007-f-slug/design.md` — review d'une feature avec comparaison au design.
 
-`/review docs/story/r-013-slug/plan.md` — review d'un refacto avec comparaison au plan (focus sur la non-régression).
+`/review docs/story/013-r-slug/plan.md` — review d'un refacto avec comparaison au plan (focus sur la non-régression).
 
 `/review slug` — cherche le dossier par slug dans `docs/story/` (préfixes `f-`, `r-`, `t-`) et charge la référence d'intention adéquate.
 

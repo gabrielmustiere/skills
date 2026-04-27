@@ -46,15 +46,15 @@ Règle d'or : ne jamais passer à l'étape suivante sans validation explicite du
 
 ## Convention dossiers `docs/story/`
 
-Tous les artifacts vivent dans `docs/story/` à plat, préfixés par type. **Compteur global partagé** entre tous les types pour obtenir une timeline unique du projet.
+Tous les artifacts vivent dans `docs/story/` à plat, **numérotés globalement** puis taggés par type. Format : `NNN-<f|r|t>-<slug>`. Le numéro vient en premier pour que le tri lexicographique de `ls` corresponde à l'ordre chronologique.
 
-| Préfixe | Type              | Doc d'intention              | Exemple                             |
-|---------|-------------------|------------------------------|-------------------------------------|
-| `f-`    | Feature           | `feature.md` + `design.md`  | `docs/story/f-042-checkout-express/` |
-| `r-`    | Refacto           | `plan.md`                    | `docs/story/r-043-extract-pricing/`  |
-| `t-`    | Évolution tech    | `plan.md`                    | `docs/story/t-044-redis-cache/`      |
+| Tag    | Type              | Doc d'intention              | Exemple                             |
+|--------|-------------------|------------------------------|-------------------------------------|
+| `f`    | Feature           | `feature.md` + `design.md`  | `docs/story/042-f-checkout-express/` |
+| `r`    | Refacto           | `plan.md`                    | `docs/story/043-r-extract-pricing/`  |
+| `t`    | Évolution tech    | `plan.md`                    | `docs/story/044-t-redis-cache/`      |
 
-Les numéros s'incrémentent globalement (f-042 → r-043 → t-044 → f-045…), ce qui permet de lire la timeline d'évolution du projet en listant simplement `docs/story/`.
+Les numéros s'incrémentent globalement (042-f → 043-r → 044-t → 045-f…), ce qui permet de lire la timeline d'évolution du projet en listant simplement `docs/story/`.
 
 ## Choisir son track
 
@@ -73,12 +73,12 @@ Pour tout changement qui introduit une nouvelle fonctionnalité ou modifie un co
 
 | #  | Skill              | Rôle                                                         | Produit                                      |
 |----|--------------------|--------------------------------------------------------------|----------------------------------------------|
-| 1  | `/feature-pitch`   | Cadrer et challenger une fonctionnalité                      | `docs/story/f-NNN-slug/feature.md`           |
-| 2  | `/feature-design`  | Concevoir la solution technique à partir de la spec          | `docs/story/f-NNN-slug/design.md`            |
+| 1  | `/feature-pitch`   | Cadrer et challenger une fonctionnalité                      | `docs/story/NNN-f-slug/feature.md`           |
+| 2  | `/feature-design`  | Concevoir la solution technique à partir de la spec          | `docs/story/NNN-f-slug/design.md`            |
 | 3  | `/feature`         | Implémenter sous-tâche par sous-tâche avec QA continue       | Code + migrations + tests                    |
-| 4  | `/review`          | Code review (sécu, perf, qualité, conformité design)         | `docs/story/f-NNN-slug/review.md`            |
+| 4  | `/review`          | Code review (sécu, perf, qualité, conformité design)         | `docs/story/NNN-f-slug/review.md`            |
 | 5  | `/commit`          | Commit Conventional Commits en français + push               | Commit                                       |
-| 6  | `/report`          | Documenter ce qui a été fait vs ce qui était prévu           | `docs/story/f-NNN-slug/report.md`            |
+| 6  | `/report`          | Documenter ce qui a été fait vs ce qui était prévu           | `docs/story/NNN-f-slug/report.md`            |
 | 7  | `/sync`            | Réaligner spec et design avec la réalité du code             | Mise à jour `feature.md` + `design.md`       |
 
 ## Track refacto — Comportement figé, code restructuré
@@ -89,11 +89,11 @@ Pour restructurer du code sans toucher au comportement externe (dette, couplage,
 
 | #  | Skill             | Rôle                                                              | Produit                           |
 |----|-------------------|-------------------------------------------------------------------|-----------------------------------|
-| 1  | `/refactor-plan`  | Cadrer un refacto (motivation, cible, caractérisation, étapes)   | `docs/story/r-NNN-slug/plan.md`   |
+| 1  | `/refactor-plan`  | Cadrer un refacto (motivation, cible, caractérisation, étapes)   | `docs/story/NNN-r-slug/plan.md`   |
 | 2  | `/refactor`       | Exécuter : verrou tests puis étapes incrémentales, non-régression | Code restructuré + tests          |
-| 3  | `/review`         | Code review focus non-régression                                  | `docs/story/r-NNN-slug/review.md` |
+| 3  | `/review`         | Code review focus non-régression                                  | `docs/story/NNN-r-slug/review.md` |
 | 4  | `/commit`         | Commit + push (souvent un commit par étape)                       | Commits                           |
-| 5  | `/report`         | Documenter l'exécution vs le plan                                 | `docs/story/r-NNN-slug/report.md` |
+| 5  | `/report`         | Documenter l'exécution vs le plan                                 | `docs/story/NNN-r-slug/report.md` |
 | 6  | `/sync`           | Réaligner le plan si la stratégie a dévié                         | Mise à jour `plan.md`             |
 
 ## Track tech — Perf, résilience, observabilité, sécu (non user-facing)
@@ -104,11 +104,11 @@ Pour ajouter ou modifier une brique technique observable (latence, taux d'erreur
 
 | #  | Skill          | Rôle                                                               | Produit                           |
 |----|----------------|--------------------------------------------------------------------|-----------------------------------|
-| 1  | `/tech-plan`   | Cadrer l'évolution (problème, brique, métriques cibles, rollback) | `docs/story/t-NNN-slug/plan.md`   |
+| 1  | `/tech-plan`   | Cadrer l'évolution (problème, brique, métriques cibles, rollback) | `docs/story/NNN-t-slug/plan.md`   |
 | 2  | `/tech`        | Exécuter : baseline, kill switch, étapes mesurées, validation      | Code + config + observabilité     |
-| 3  | `/review`      | Code review (kill switch, compatibilité, non-régression)          | `docs/story/t-NNN-slug/review.md` |
+| 3  | `/review`      | Code review (kill switch, compatibilité, non-régression)          | `docs/story/NNN-t-slug/review.md` |
 | 4  | `/commit`      | Commit + push                                                      | Commits                           |
-| 5  | `/report`      | Documenter les critères atteints / non atteints vs le plan         | `docs/story/t-NNN-slug/report.md` |
+| 5  | `/report`      | Documenter les critères atteints / non atteints vs le plan         | `docs/story/NNN-t-slug/report.md` |
 | 6  | `/sync`        | Réaligner le plan si la stratégie a dévié                          | Mise à jour `plan.md`             |
 
 ## Track fast — Bugfixes et petits changements
@@ -129,10 +129,12 @@ En cas de doute → partir sur le track approprié (feature, refacto ou tech). I
 
 ## Utilitaires (hors pipeline)
 
-| Skill            | Rôle                                                                              |
-|------------------|-----------------------------------------------------------------------------------|
-| `/test-scenario` | Tester un scénario utilisateur via Playwright MCP (navigateur piloté en live)     |
-| `/help`          | Ce sommaire — pour se rappeler le workflow et les skills disponibles              |
+| Skill                | Rôle                                                                                       |
+|----------------------|--------------------------------------------------------------------------------------------|
+| `/test-scenario`     | Tester un scénario utilisateur via Playwright MCP (navigateur piloté en live)              |
+| `/migrate-legacy`    | Renommer les anciens dossiers `docs/story/<f\|r\|t>-NNN-<slug>/` vers `NNN-<f\|r\|t>-<slug>/` |
+| `/import-external`   | Importer une doc produite par Spec Kit, BMAD-METHOD ou GSD vers le format workflow         |
+| `/help`              | Ce sommaire — pour se rappeler le workflow et les skills disponibles                       |
 
 Des plugins complémentaires (ex: `sylius`, `symfony`) peuvent exposer des skills plus tactiques (procédures spécifiques au framework : créer une Resource, diagnostiquer un Twig Hook, etc.). Ils se combinent naturellement avec le workflow via l'auto-découverte de Claude Code.
 

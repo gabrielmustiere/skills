@@ -17,9 +17,9 @@ Ce skill **modifie** la doc d'intention pour qu'elle reflète le code livré. Il
 
 `docs/story/` utilise un préfixage par type :
 
-- `docs/story/f-NNN-slug/` — **feature** : doc d'intention = `feature.md` + `design.md`
-- `docs/story/r-NNN-slug/` — **refacto** : doc d'intention = `plan.md`
-- `docs/story/t-NNN-slug/` — **évolution technique** : doc d'intention = `plan.md`
+- `docs/story/NNN-f-slug/` — **feature** : doc d'intention = `feature.md` + `design.md`
+- `docs/story/NNN-r-slug/` — **refacto** : doc d'intention = `plan.md`
+- `docs/story/NNN-t-slug/` — **évolution technique** : doc d'intention = `plan.md`
 
 Le skill adapte ses questions et les fichiers qu'il modifie selon le type.
 
@@ -36,9 +36,9 @@ Le skill adapte ses questions et les fichiers qu'il modifie selon le type.
 
 ### Phase 1 — Chargement des sources
 
-Si l'utilisateur fournit un slug (`/sync ma-feature`) ou un chemin (`/sync docs/story/f-007-ma-feature/report.md`), résous le dossier dans `docs/story/` en testant les préfixes `f-`, `r-`, `t-`.
+Si l'utilisateur fournit un slug (`/sync ma-feature`) ou un chemin (`/sync docs/story/007-f-ma-feature/report.md`), résous le dossier dans `docs/story/` en testant les préfixes `f-`, `r-`, `t-`.
 
-Sinon, liste via `Glob` les dossiers `docs/story/[frt]-*` qui contiennent la doc d'intention adéquate (design.md pour `f-`, plan.md pour `r-`/`t-`) et demande lequel traiter.
+Sinon, liste via `Glob` les dossiers `docs/story/*-[frt]-*` qui contiennent la doc d'intention adéquate (design.md pour `f-`, plan.md pour `r-`/`t-`) et demande lequel traiter.
 
 **Détermine le type** selon le préfixe du dossier et lis les fichiers présents :
 
@@ -88,7 +88,7 @@ Pour chaque catégorie non vide, présente les modifications proposées et deman
 **Format de présentation par changement :**
 
 ```
-docs/story/f-NNN-slug/feature.md
+docs/story/NNN-f-slug/feature.md
 Section : [Règles métier]
 - Avant : "Le stock est décrémenté à la commande"
 - Après : "Le stock est décrémenté à la validation du paiement"
@@ -121,7 +121,7 @@ Après chaque fichier modifié, ajoute un bloc changelog en fin de fichier (ou a
 Affiche le résumé des modifications :
 
 > Sync terminé :
-> - `docs/story/<f|r|t>-NNN-slug/<fichier>.md` — X modifications appliquées
+> - `docs/story/NNN-<f|r|t>-slug/<fichier>.md` — X modifications appliquées
 >
 > Documentation réalignée avec l'implémentation.
 
@@ -129,6 +129,6 @@ Affiche le résumé des modifications :
 
 `/sync ma-feature` — cherche le dossier par slug (préfixes `f-`, `r-`, `t-`) et démarre l'analyse.
 
-`/sync docs/story/r-013-extract-service/report.md` — utilise le report comme source des écarts.
+`/sync docs/story/013-r-extract-service/report.md` — utilise le report comme source des écarts.
 
 `/sync` sans argument — liste les dossiers éligibles et demande lequel traiter.

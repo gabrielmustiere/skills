@@ -1,6 +1,6 @@
 ---
 name: refactor
-description: Exécution guidée d'un refacto cadré — verrou tests de caractérisation AVANT de toucher au code, puis exécution étape par étape avec vérif continue de non-régression et checkpoints humains. Déclenche sur "déroule ce refacto", "exécute le plan de refacto", "on attaque <slug>", "lance le refacto" dès qu'un plan.md existe sous docs/story/r-NNN-slug/ — même sans citer le skill.
+description: Exécution guidée d'un refacto cadré — verrou tests de caractérisation AVANT de toucher au code, puis exécution étape par étape avec vérif continue de non-régression et checkpoints humains. Déclenche sur "déroule ce refacto", "exécute le plan de refacto", "on attaque <slug>", "lance le refacto" dès qu'un plan.md existe sous docs/story/NNN-r-slug/ — même sans citer le skill.
 user_invocable: true
 argument-hint: "[slug-refacto]"
 ---
@@ -11,7 +11,7 @@ Tu es un développeur senior méthodique, spécialisé dans le refactoring sûr.
 
 ## Périmètre du skill
 
-Ce skill **exécute** un plan de refacto existant (`docs/story/r-NNN-slug/plan.md`). Il **ne re-cadre pas** : si une étape révèle que le plan est bancal, tu remontes et tu proposes de retourner à `/refactor-plan` plutôt que d'improviser. Il ne fait pas la code review (`/review`), ni le commit (`/commit`), ni le report (`/report`).
+Ce skill **exécute** un plan de refacto existant (`docs/story/NNN-r-slug/plan.md`). Il **ne re-cadre pas** : si une étape révèle que le plan est bancal, tu remontes et tu proposes de retourner à `/refactor-plan` plutôt que d'improviser. Il ne fait pas la code review (`/review`), ni le commit (`/commit`), ni le report (`/report`).
 
 ## Principe directeur : comportement préservé
 
@@ -37,9 +37,9 @@ Il n'y a pas de troisième option.
 
 ### Phase 1 — Chargement du plan et détection stack
 
-Si l'utilisateur fournit un chemin (`/refactor docs/story/r-013-extract-pricing/plan.md`) ou un slug (`/refactor extract-pricing`), lis le fichier.
+Si l'utilisateur fournit un chemin (`/refactor docs/story/013-r-extract-pricing/plan.md`) ou un slug (`/refactor extract-pricing`), lis le fichier.
 
-Sinon, liste les dossiers `docs/story/r-*` qui contiennent un `plan.md` via `Glob` et demande lequel exécuter.
+Sinon, liste les dossiers `docs/story/*-r-*` qui contiennent un `plan.md` via `Glob` et demande lequel exécuter.
 
 **Si aucun `plan.md` n'existe pour le slug demandé**, refuse de continuer : "Pas de plan de refacto pour ce slug. Lance `/refactor-plan` d'abord."
 
@@ -187,7 +187,7 @@ Affiche le bilan :
 ```
 ## Refacto terminé — [Nom]
 
-Plan suivi : `docs/story/r-NNN-slug/plan.md`
+Plan suivi : `docs/story/NNN-r-slug/plan.md`
 Stack : [symfony | sylius]
 Étapes : M/M complétées
 
@@ -219,8 +219,8 @@ Stack : [symfony | sylius]
 
 ## Argument optionnel
 
-`/refactor docs/story/r-013-extract-pricing/plan.md` — charge le plan et démarre.
+`/refactor docs/story/013-r-extract-pricing/plan.md` — charge le plan et démarre.
 
-`/refactor extract-pricing` — cherche le dossier `r-NNN-extract-pricing` par slug et charge son `plan.md`.
+`/refactor extract-pricing` — cherche le dossier `NNN-r-extract-pricing` par slug et charge son `plan.md`.
 
-`/refactor` sans argument — liste les dossiers `r-NNN-*` contenant un plan.
+`/refactor` sans argument — liste les dossiers `NNN-r-*` contenant un plan.

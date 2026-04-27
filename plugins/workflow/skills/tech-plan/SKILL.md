@@ -1,6 +1,6 @@
 ---
 name: tech-plan
-description: Atelier interactif pour cadrer une évolution technique non user-facing (perf, résilience, observabilité, sécu préventive, scalabilité) — produit docs/story/t-<NNN>-<slug>/plan.md. Déclenche sur "on doit ajouter un cache", "faut du retry sur cet appel", "il nous faut un circuit breaker", "améliorer les logs", "passer en async", "ajouter un health check", "introduire un index", "mesurer la latence", "sécuriser X" — même sans citer le skill.
+description: Atelier interactif pour cadrer une évolution technique non user-facing (perf, résilience, observabilité, sécu préventive, scalabilité) — produit docs/story/<NNN>-t-<slug>/plan.md. Déclenche sur "on doit ajouter un cache", "faut du retry sur cet appel", "il nous faut un circuit breaker", "améliorer les logs", "passer en async", "ajouter un health check", "introduire un index", "mesurer la latence", "sécuriser X" — même sans citer le skill.
 user_invocable: true
 ---
 
@@ -119,8 +119,8 @@ Quand l'utilisateur valide, écris le plan dans `docs/story/`.
 
 **Choix du dossier** :
 
-- Format : `docs/story/t-NNN-slug/` (préfixe `t-` pour *tech*, NNN sur 3 chiffres, slug en kebab-case).
-- **Compteur global partagé** avec les features (`f-`) et refactos (`r-`) : scanner `docs/story/` pour tous les dossiers matchant `^[frt]-(\d{3})-.+`, extraire le numéro max parmi tous types confondus, incrémenter de 1.
+- Format : `docs/story/NNN-t-slug/` (préfixe `t-` pour *tech*, NNN sur 3 chiffres, slug en kebab-case).
+- **Compteur global partagé** avec les features (`f-`) et refactos (`r-`) : scanner `docs/story/` pour tous les dossiers matchant `^(\d{3})-[frt]-.+`, extraire le numéro max parmi tous types confondus, incrémenter de 1.
 - **Collision de slug** : si le slug proposé existe déjà sous un autre numéro (tous préfixes confondus), demande à l'utilisateur s'il veut **étendre** ou choisir un slug distinct. Ne jamais écraser.
 
 **Nom du fichier** : `plan.md` dans ce dossier.
@@ -211,7 +211,7 @@ Après écriture, affiche un résumé et demande si des ajustements sont nécess
 
 Annonce :
 
-> Plan évolution tech prêt : `docs/story/t-NNN-slug/plan.md`
+> Plan évolution tech prêt : `docs/story/NNN-t-slug/plan.md`
 > Prochaine étape : `/tech` pour exécuter (baseline → kill switch → implémentation incrémentale → mesure après → validation des critères).
 
 ## Argument optionnel

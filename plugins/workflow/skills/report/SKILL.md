@@ -1,6 +1,6 @@
 ---
 name: report
-description: Compte rendu d'implémentation — compare l'intention prévue (spec+design pour une feature, plan pour un refacto/tech) au code réellement produit, documente les écarts et décisions dans docs/story/<f|r|t>-<NNN>-<slug>/report.md. Déclenche sur "documente ce qu'on a fait", "fais le bilan", "rapport post-implémentation", "raconter ce qu'on a livré", "le code a divergé de la spec / du plan" — même sans citer le skill.
+description: Compte rendu d'implémentation — compare l'intention prévue (spec+design pour une feature, plan pour un refacto/tech) au code réellement produit, documente les écarts et décisions dans docs/story/<NNN>-<f|r|t>-<slug>/report.md. Déclenche sur "documente ce qu'on a fait", "fais le bilan", "rapport post-implémentation", "raconter ce qu'on a livré", "le code a divergé de la spec / du plan" — même sans citer le skill.
 
 user_invocable: true
 disable-model-invocation: true
@@ -24,9 +24,9 @@ Il ne refait pas une code review (`/review`) et n'aligne pas la doc (`/sync`).
 
 `docs/story/` utilise un préfixage par type pour obtenir une timeline partagée :
 
-- `docs/story/f-NNN-slug/` — **feature** : source d'intention = `feature.md` + `design.md`
-- `docs/story/r-NNN-slug/` — **refacto** : source d'intention = `plan.md` (comportement préservé + tests caractérisation)
-- `docs/story/t-NNN-slug/` — **évolution technique** : source d'intention = `plan.md` (brique technique ajoutée/changée)
+- `docs/story/NNN-f-slug/` — **feature** : source d'intention = `feature.md` + `design.md`
+- `docs/story/NNN-r-slug/` — **refacto** : source d'intention = `plan.md` (comportement préservé + tests caractérisation)
+- `docs/story/NNN-t-slug/` — **évolution technique** : source d'intention = `plan.md` (brique technique ajoutée/changée)
 
 Le skill adapte ses questions et son template selon le type détecté.
 
@@ -43,7 +43,7 @@ Le skill adapte ses questions et son template selon le type détecté.
 
 Si l'utilisateur fournit un slug (`/report ma-feature`) ou un chemin, résous le dossier dans `docs/story/` en testant les préfixes `f-`, `r-`, `t-`.
 
-Sinon, liste via `Glob` les dossiers `docs/story/[frt]-*` qui contiennent soit un `design.md` (type `f`) soit un `plan.md` (types `r` ou `t`), et demande lequel traiter.
+Sinon, liste via `Glob` les dossiers `docs/story/*-[frt]-*` qui contiennent soit un `design.md` (type `f`) soit un `plan.md` (types `r` ou `t`), et demande lequel traiter.
 
 **Détermine le type** selon le préfixe du dossier et charge les fichiers adéquats :
 
@@ -106,15 +106,15 @@ Pour chaque écart, demande : "C'était un choix délibéré ou un oubli ? Pourq
 
 Quand la revue est complète et validée, écris le fichier.
 
-**Nom du fichier** : `docs/story/<f|r|t>-NNN-slug/report.md` (dans le même dossier que l'intention).
+**Nom du fichier** : `docs/story/NNN-<f|r|t>-slug/report.md` (dans le même dossier que l'intention).
 
 #### Template pour un report `f-` (feature)
 
 ```markdown
 # Report — [Nom de la fonctionnalité]
 
-> Feature spec : `docs/story/f-NNN-slug/feature.md`
-> Design : `docs/story/f-NNN-slug/design.md`
+> Feature spec : `docs/story/NNN-f-slug/feature.md`
+> Design : `docs/story/NNN-f-slug/design.md`
 > Date d'implémentation : YYYY-MM-DD
 > Commits liés : `abc1234`, `def5678` (si identifiables)
 
@@ -183,7 +183,7 @@ Points utiles pour les prochaines implémentations : ce qui a bien marché, ce q
 ```markdown
 # Report — [Nom du refacto]
 
-> Plan : `docs/story/r-NNN-slug/plan.md`
+> Plan : `docs/story/NNN-r-slug/plan.md`
 > Date d'exécution : YYYY-MM-DD
 > Commits liés : `abc1234`, `def5678`
 
@@ -228,7 +228,7 @@ Ce qui a bien marché, les pièges rencontrés, ce qu'on ferait différemment su
 ```markdown
 # Report — [Nom de l'évolution technique]
 
-> Plan : `docs/story/t-NNN-slug/plan.md`
+> Plan : `docs/story/NNN-t-slug/plan.md`
 > Date d'exécution : YYYY-MM-DD
 > Commits liés : `abc1234`, `def5678`
 
@@ -272,21 +272,21 @@ Affiche le chemin du fichier et le résumé.
 
 **Si des écarts ont été identifiés**, propose :
 
-> Report prêt : `docs/story/<f|r|t>-NNN-slug/report.md`
+> Report prêt : `docs/story/NNN-<f|r|t>-slug/report.md`
 >
 > Des écarts ont été documentés — prochaine étape : `/sync` pour réaligner la doc (spec/design ou plan) sur la réalité du code.
 
 **Si conformité totale (aucun écart)**, propose :
 
-> Report prêt : `docs/story/<f|r|t>-NNN-slug/report.md`
+> Report prêt : `docs/story/NNN-<f|r|t>-slug/report.md`
 > Conformité totale — pas de `/sync` nécessaire.
 
 ## Argument optionnel
 
 `/report ma-feature` — cherche le dossier par slug (préfixes `f-`, `r-`, `t-`) et démarre l'analyse.
 
-`/report docs/story/f-007-ma-feature/design.md` — charge directement une feature.
+`/report docs/story/007-f-ma-feature/design.md` — charge directement une feature.
 
-`/report docs/story/r-013-extract-service/plan.md` — charge directement un refacto.
+`/report docs/story/013-r-extract-service/plan.md` — charge directement un refacto.
 
 `/report` sans argument — liste les dossiers éligibles et demande lequel traiter.

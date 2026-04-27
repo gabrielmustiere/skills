@@ -27,9 +27,9 @@ Ce skill **exécute** un design existant. Il **ne re-conçoit pas** : si une sou
 
 ### Phase 1 — Chargement et détection stack
 
-Si l'utilisateur fournit un chemin (`/feature docs/story/f-007-ma-feature/design.md`) ou un slug (`/feature ma-feature`), lis le fichier.
+Si l'utilisateur fournit un chemin (`/feature docs/story/007-f-ma-feature/design.md`) ou un slug (`/feature ma-feature`), lis le fichier.
 
-Sinon, liste les dossiers dans `docs/story/` matchant `f-NNN-*` qui contiennent un `design.md` via `Glob` et demande lequel implémenter.
+Sinon, liste les dossiers dans `docs/story/` matchant `NNN-f-*` qui contiennent un `design.md` via `Glob` et demande lequel implémenter.
 
 **Si aucun `design.md` n'existe pour le slug demandé**, refuse de continuer et propose : "Pas de design technique pour cette feature. Lance `/feature-design` d'abord."
 
@@ -209,7 +209,7 @@ Affiche le bilan complet :
 ```
 ## Implémentation terminée — [Nom de la feature]
 
-Design suivi : `docs/story/f-NNN-slug/design.md`
+Design suivi : `docs/story/NNN-f-slug/design.md`
 Stack : [symfony | sylius]
 Sous-tâches : M/M complétées
 
@@ -237,8 +237,8 @@ Sous-tâches : M/M complétées
 
 ## Argument optionnel
 
-`/feature docs/story/f-007-ma-feature/design.md` — charge le design et démarre.
+`/feature docs/story/007-f-ma-feature/design.md` — charge le design et démarre.
 
 `/feature ma-feature` — cherche le dossier feature par slug (préfixe `f-`) et charge son `design.md`.
 
-`/feature` sans argument — liste les dossiers `f-NNN-*` contenant un design.
+`/feature` sans argument — liste les dossiers `NNN-f-*` contenant un design.

@@ -1,6 +1,6 @@
 ---
 name: tech
-description: Exécution guidée d'une évolution technique cadrée — baseline mesurée AVANT, kill switch en place, étapes incrémentales, mesure après chaque étape, validation des critères de succès chiffrés. Déclenche sur "déroule ce plan tech", "exécute l'évolution technique", "on attaque <slug>", "ajoute ce cache / retry / log structuré" dès qu'un plan.md existe sous docs/story/t-NNN-slug/ — même sans citer le skill.
+description: Exécution guidée d'une évolution technique cadrée — baseline mesurée AVANT, kill switch en place, étapes incrémentales, mesure après chaque étape, validation des critères de succès chiffrés. Déclenche sur "déroule ce plan tech", "exécute l'évolution technique", "on attaque <slug>", "ajoute ce cache / retry / log structuré" dès qu'un plan.md existe sous docs/story/NNN-t-slug/ — même sans citer le skill.
 user_invocable: true
 argument-hint: "[slug-tech]"
 ---
@@ -11,7 +11,7 @@ Tu es un développeur senior orienté fiabilité. Tu exécutes un plan d'évolut
 
 ## Périmètre du skill
 
-Ce skill **exécute** un plan d'évolution technique existant (`docs/story/t-NNN-slug/plan.md`). Il **ne re-cadre pas** : si une étape révèle que le plan est bancal ou que la cible n'est pas atteignable, tu remontes et tu proposes de retourner à `/tech-plan` plutôt que d'improviser. Il ne fait pas la code review (`/review`), ni le commit (`/commit`), ni le report (`/report`).
+Ce skill **exécute** un plan d'évolution technique existant (`docs/story/NNN-t-slug/plan.md`). Il **ne re-cadre pas** : si une étape révèle que le plan est bancal ou que la cible n'est pas atteignable, tu remontes et tu proposes de retourner à `/tech-plan` plutôt que d'improviser. Il ne fait pas la code review (`/review`), ni le commit (`/commit`), ni le report (`/report`).
 
 ## Principe directeur : mesurer avant, mesurer après
 
@@ -35,9 +35,9 @@ Si un cache n'améliore pas la latence, si un retry ne fait pas baisser le taux 
 
 ### Phase 1 — Chargement du plan et détection stack
 
-Si l'utilisateur fournit un chemin (`/tech docs/story/t-044-redis-cache/plan.md`) ou un slug (`/tech redis-cache`), lis le fichier.
+Si l'utilisateur fournit un chemin (`/tech docs/story/044-t-redis-cache/plan.md`) ou un slug (`/tech redis-cache`), lis le fichier.
 
-Sinon, liste les dossiers `docs/story/t-*` qui contiennent un `plan.md` via `Glob` et demande lequel exécuter.
+Sinon, liste les dossiers `docs/story/*-t-*` qui contiennent un `plan.md` via `Glob` et demande lequel exécuter.
 
 **Si aucun `plan.md` n'existe pour le slug demandé**, refuse de continuer : "Pas de plan d'évolution tech pour ce slug. Lance `/tech-plan` d'abord."
 
@@ -83,7 +83,7 @@ Si une métrique ne peut pas être mesurée (outillage absent, env non représen
 
 #### 2.3 — Consigner la baseline dans le plan
 
-Modifier `docs/story/t-NNN-slug/plan.md` pour renseigner la colonne "Baseline actuelle" de chaque métrique. Commit dédié : "docs(t-NNN): consigne baseline".
+Modifier `docs/story/NNN-t-slug/plan.md` pour renseigner la colonne "Baseline actuelle" de chaque métrique. Commit dédié : "docs(t-NNN): consigne baseline".
 
 Checkpoint baseline :
 
@@ -212,7 +212,7 @@ Affiche le bilan :
 ```
 ## Évolution tech terminée — [Nom]
 
-Plan suivi : `docs/story/t-NNN-slug/plan.md`
+Plan suivi : `docs/story/NNN-t-slug/plan.md`
 Stack : [symfony | sylius]
 Étapes : M/M complétées
 
@@ -249,8 +249,8 @@ Stack : [symfony | sylius]
 
 ## Argument optionnel
 
-`/tech docs/story/t-044-redis-cache/plan.md` — charge le plan et démarre.
+`/tech docs/story/044-t-redis-cache/plan.md` — charge le plan et démarre.
 
-`/tech redis-cache` — cherche le dossier `t-NNN-redis-cache` par slug et charge son `plan.md`.
+`/tech redis-cache` — cherche le dossier `NNN-t-redis-cache` par slug et charge son `plan.md`.
 
-`/tech` sans argument — liste les dossiers `t-NNN-*` contenant un plan.
+`/tech` sans argument — liste les dossiers `NNN-t-*` contenant un plan.

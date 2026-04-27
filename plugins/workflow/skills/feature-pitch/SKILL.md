@@ -1,6 +1,6 @@
 ---
 name: feature-pitch
-description: Atelier interactif pour cadrer, challenger et documenter une fonctionnalité avant développement — produit docs/story/f-<NNN>-<slug>/feature.md. Déclenche sur "j'ai une idée de feature", "on doit ajouter X", "faut revoir l'écran Y", "cadre / speccer / challenger ce besoin", "refondre ce parcours" — même sans citer le skill.
+description: Atelier interactif pour cadrer, challenger et documenter une fonctionnalité avant développement — produit docs/story/<NNN>-f-<slug>/feature.md. Déclenche sur "j'ai une idée de feature", "on doit ajouter X", "faut revoir l'écran Y", "cadre / speccer / challenger ce besoin", "refondre ce parcours" — même sans citer le skill.
 user_invocable: true
 ---
 
@@ -85,8 +85,8 @@ Quand l'utilisateur valide, rédige la spec dans `docs/story/`.
 
 **Choix du dossier** :
 
-- Format : `docs/story/f-NNN-slug-de-la-feature/` (préfixe `f-` pour *feature*, NNN = prochain numéro sur 3 chiffres, slug en kebab-case).
-- **Compteur global partagé** avec les refactos (`r-`) et évolutions techniques (`t-`) pour obtenir une timeline unique : scanner `docs/story/` pour tous les dossiers matchant `^[frt]-(\d{3})-.+`, extraire le numéro max parmi tous types confondus, incrémenter de 1.
+- Format : `docs/story/NNN-f-slug-de-la-feature/` (préfixe `f-` pour *feature*, NNN = prochain numéro sur 3 chiffres, slug en kebab-case).
+- **Compteur global partagé** avec les refactos (`r-`) et évolutions techniques (`t-`) pour obtenir une timeline unique : scanner `docs/story/` pour tous les dossiers matchant `^(\d{3})-[frt]-.+`, extraire le numéro max parmi tous types confondus, incrémenter de 1.
 - **Collision de slug** : si le slug proposé existe déjà sous un autre numéro (tous préfixes confondus), demande à l'utilisateur s'il veut **étendre** le dossier existant (et basculer sur cette spec) ou choisir un slug distinct. Ne jamais écraser une spec existante sans validation.
 
 **Nom du fichier** : `feature.md` dans ce dossier.
@@ -152,7 +152,7 @@ Après écriture, affiche un résumé et demande si des ajustements sont nécess
 
 Annonce :
 
-> Spec prête : `docs/story/f-NNN-slug/feature.md`
+> Spec prête : `docs/story/NNN-f-slug/feature.md`
 > Prochaine étape : `/feature-design` pour concevoir la solution technique.
 
 ## Argument optionnel
