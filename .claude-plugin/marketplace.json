@@ -28,6 +28,13 @@
       "description": "Skills focalisées Symfony/Doctrine (entités, requêtes, migrations, forms, HTTP client, validator, service container, event dispatcher, messenger, serializer, object-mapper, controller, routing) relayées par le plugin workflow via détection stack",
       "version": "0.12.0",
       "category": "development"
+    },
+    {
+      "name": "editorial",
+      "source": "./plugins/editorial",
+      "description": "Pipeline éditorial en deux étapes — article-plan (cadrage) puis article (rédaction guidée + vérifications + traduction) — pour articles de blog et fiches side-project. Stack-agnostique : détecte Astro Content Collections, Next.js MDX, Hugo, Jekyll ou markdown brut. Artifacts unifiés sous docs/story/a-NNN-slug/.",
+      "version": "0.1.1",
+      "category": "writing"
     }
   ]
 }

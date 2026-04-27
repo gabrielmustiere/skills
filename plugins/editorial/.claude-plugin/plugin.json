@@ -1,0 +1,10 @@
+{
+  "name": "editorial",
+  "description": "Pipeline éditorial de rédaction d'articles de blog et de fiches side-project en deux étapes : article-plan (cadrage — sujet, thèse, audience, recherche, chapitrage, tonalité, frontmatter prévisionnel) puis article (rédaction guidée du .md/.mdx final, vérifications schéma + lint + format, traduction multilingue si prévue). Stack-agnostique : détection automatique de la stack de blog (Astro Content Collections, Next.js MDX, Hugo, Jekyll, markdown brut) et adaptation aux conventions du projet. Artifacts unifiés dans docs/story/ avec préfixe a-, cohérent avec le plugin workflow.",
+  "version": "0.1.1",
+  "author": {
+    "name": "Gabriel Mustiere"
+  },
+  "homepage": "https://github.com/gabrielmustiere/skills",
+  "repository": "https://github.com/gabrielmustiere/skills"
+}
