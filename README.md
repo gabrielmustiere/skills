@@ -179,6 +179,30 @@ Aucune modif de `marketplace.json` nécessaire — la skill est auto-découverte
 
 Côté utilisateurs : `/plugin marketplace update gabrielmustiere` puis `/plugin install <nouveau>@gabrielmustiere`.
 
+## Versionnage
+
+Deux niveaux de versions, **indépendants** :
+
+- **Marketplace (ce repo)** — un schéma semver unifié `vX.Y.Z` matérialisé par les **tags Git et les GitHub Releases**. Monotone, une seule séquence pour toutes les releases. C'est ce que l'utilisateur voit dans la liste des releases GitHub.
+- **Plugin** — chaque `plugin.json` a sa propre `version` (semver). Sert à déclencher la mise à jour côté utilisateurs et à indiquer la maturité interne du plugin. **N'est pas reflétée dans les tags Git.**
+
+### Bumper la marketplace
+
+Règles pour le tag global après un `git push` :
+- **Patch** (`v0.5.0` → `v0.5.1`) : fix isolé, doc, refacto interne.
+- **Minor** (`v0.5.0` → `v0.6.0`) : nouveau plugin, nouvelles skills, ajouts non breaking.
+- **Major** (`v0.x` → `v1.0.0`) : restructuration de la marketplace, breaking côté utilisateurs.
+
+```
+git tag -a v0.6.0 -m "v0.6.0 — <résumé>"
+git push origin v0.6.0
+gh release create v0.6.0 --title "v0.6.0 — <résumé>" --notes "..."
+```
+
+### Bumper un plugin
+
+Indépendant du tag global. Bumper la `version` dans `plugin.json` selon ses propres changements (semver classique). Ce numéro est ce que voit l'utilisateur quand il fait `/plugin install <plugin>@gabrielmustiere`.
+
 ## Référence frontmatter SKILL.md
 
 Champs optionnels utiles (voir [doc officielle](https://code.claude.com/docs/fr/skills#frontmatter-reference)) :
