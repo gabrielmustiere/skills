@@ -12,7 +12,7 @@
       "name": "workflow",
       "source": "./plugins/workflow",
       "description": "Skills pour les différentes étapes de mon workflow de développement ",
-      "version": "0.7.0",
+      "version": "0.10.0",
       "category": "development"
     },
     {
