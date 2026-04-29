@@ -47,7 +47,7 @@ Après modification d'une skill : `/reload-plugins` dans la session en cours (pa
 | `workflow` | `0.10.0` | Pipeline de développement stack-agnostique. Trois tracks symétriques : **feature** (`feature-pitch` → `feature-design` → `feature`), **refacto** (`refactor-plan` → `refactor`), **évolution technique** (`tech-plan` → `tech`). Étapes communes : `review` → `commit` → `report` → `sync`. Outillage transverse : `migrate-legacy`, `import-external`, `release`. Détection auto du stack (Symfony, Sylius). |
 | `sylius` | `0.24.0` | Skills pour travailler avec Sylius (doc, conventions, entités traduisibles, customization de modèle/form/grid/template/styles/dynamic/validation/state-machine/translation/fixtures, commandes, e-mails, promotions panier, coupons, ajustements). |
 | `symfony` | `0.12.0` | 25 skills Symfony/Doctrine groupées par domaine : **doctrine** (entity, migration, query), **events** (dispatch, listen, subscribe), **forms** (type, handle, render, advanced), **http** (controller-action, routing-define), **http-client** (request, response, async, test), **messenger** (async), **serializer** (use), **object-mapper**, **services** (define, wire, tags), **validation** (constraints, groups, use). Relayées par `workflow` quand le stack détecté est Symfony/Sylius. |
-| `editorial` | `0.1.0` | Pipeline éditorial en deux étapes — `article-plan` (cadrage) puis `article` (rédaction guidée + vérifications + traduction) — pour articles de blog et fiches side-project. Stack-agnostique : détecte Astro Content Collections, Next.js MDX, Hugo, Jekyll ou markdown brut. Artifacts unifiés sous `docs/story/a-NNN-slug/`. |
+| `editorial` | `0.2.0` | Pipeline éditorial en trois étapes — `article-plan` (cadrage), `article` (rédaction guidée + vérifications + traduction) et `article-rework` (retouche chirurgicale d'une portion d'un article publié) — pour articles de blog et fiches side-project. Stack-agnostique : détecte Astro Content Collections, Next.js MDX, Hugo, Jekyll ou markdown brut. Artifacts unifiés sous `docs/story/a-NNN-slug/`. |
 
 ## Inventaire des skills
 
@@ -125,12 +125,13 @@ Après modification d'une skill : `/reload-plugins` dans la session en cours (pa
 |  | [`validation-groups`](plugins/symfony/skills/validation-groups/SKILL.md) | Groupes, séquences, validation conditionnelle |
 |  | [`validation-use`](plugins/symfony/skills/validation-use/SKILL.md) | `ValidatorInterface` hors form (DTO, payload, CLI) |
 
-### `editorial` — Pipeline de rédaction (2 skills)
+### `editorial` — Pipeline de rédaction (3 skills)
 
 | Skill | Rôle |
 | --- | --- |
 | [`article-plan`](plugins/editorial/skills/article-plan/SKILL.md) | Atelier de cadrage d'un article de blog ou d'une fiche side-project — sujet, thèse, audience, recherche, chapitrage, tonalité, frontmatter prévisionnel adapté à la stack détectée → `docs/story/a-<NNN>-<slug>/plan.md` |
 | [`article`](plugins/editorial/skills/article/SKILL.md) | Rédaction guidée à partir du `plan.md` validé — produit le fichier final dans la collection détectée (Astro CC, Next MDX, Hugo, Jekyll, markdown brut), frontmatter conforme au schéma, vérifications schéma + lint + format, traduction multilingue si prévue |
+| [`article-rework`](plugins/editorial/skills/article-rework/SKILL.md) | Retouche chirurgicale d'une portion d'un article publié (chapitre, section, paragraphe) — respecte la voix de l'article, lit le `plan.md` associé, met à jour le plan si la promesse de la section change, propage à la traduction, vérifie schéma + lint + format |
 
 ## Structure du repo
 

@@ -7,6 +7,15 @@ et ce projet adhère au [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+## [0.7.0] - 2026-04-29
+
+### Added
+- Skill `editorial:article-rework` pour retoucher chirurgicalement une portion d'article publié (chapitre, section, paragraphe) — respect de la voix de l'article, lecture du `plan.md` associé, mise à jour du plan si la promesse d'une section change, propagation à la traduction si une version existe, vérifications schéma + lint + format
+
+### Changed
+- Plugin `editorial` bumpé à `0.2.0` — description enrichie pour refléter le workflow complet en trois étapes (article-plan → article → article-rework)
+- `marketplace.json` et `README.md` synchronisés à `0.2.0` pour le plugin `editorial` (catalogue + inventaire des skills)
+
 ## [0.6.0] - 2026-04-27
 
 ### Added
@@ -18,6 +27,7 @@ et ce projet adhère au [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Plugin `workflow` synchronisé à `0.10.0` dans `marketplace.json` et `README.md` (alignement avec `plugin.json`)
 - Inventaire workflow du `README.md` complété avec les skills `migrate-legacy`, `import-external` et `release`
 
-[Unreleased]: https://github.com/gabrielmustiere/skills/compare/v0.6.0...HEAD
+[Unreleased]: https://github.com/gabrielmustiere/skills/compare/v0.7.0...HEAD
+[0.7.0]: https://github.com/gabrielmustiere/skills/compare/v0.6.0...v0.7.0
 [0.6.0]: https://github.com/gabrielmustiere/skills/compare/v0.5.0...v0.6.0
 [0.5.0]: https://github.com/gabrielmustiere/skills/releases/tag/v0.5.0

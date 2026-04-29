@@ -32,8 +32,8 @@
     {
       "name": "editorial",
       "source": "./plugins/editorial",
-      "description": "Pipeline éditorial en deux étapes — article-plan (cadrage) puis article (rédaction guidée + vérifications + traduction) — pour articles de blog et fiches side-project. Stack-agnostique : détecte Astro Content Collections, Next.js MDX, Hugo, Jekyll ou markdown brut. Artifacts unifiés sous docs/story/a-NNN-slug/.",
-      "version": "0.1.1",
+      "description": "Pipeline éditorial en trois étapes — article-plan (cadrage), article (rédaction guidée + vérifications + traduction) et article-rework (retouche chirurgicale d'une portion d'un article publié) — pour articles de blog et fiches side-project. Stack-agnostique : détecte Astro Content Collections, Next.js MDX, Hugo, Jekyll ou markdown brut. Artifacts unifiés sous docs/story/a-NNN-slug/.",
+      "version": "0.2.0",
       "category": "writing"
     }
   ]
