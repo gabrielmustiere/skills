@@ -1,8 +1,8 @@
 # Skills
 
-Collection de skills Claude Code. Les skills sont regroupées par **plugins thématiques** et installables dans n'importe quel projet via la commande `/plugin`.
+Collection de skills Claude Code regroupées par **plugins thématiques**, installables dans n'importe quel projet via `/plugin`.
 
-- **Nom de la marketplace** : `gabrielmustiere`
+- **Marketplace** : `gabrielmustiere`
 - **Source** : `gabrielmustiere/skills` (ce repo)
 
 ## Installation
@@ -18,7 +18,7 @@ Dans une session Claude Code ouverte sur n'importe quel projet :
 /reload-plugins
 ```
 
-Les skills d'un plugin sont toujours namespacées par le nom du plugin. Exemples d'invocation :
+Les skills d'un plugin sont toujours namespacées par le nom du plugin :
 
 ```
 /workflow:help
@@ -28,17 +28,7 @@ Les skills d'un plugin sont toujours namespacées par le nom du plugin. Exemples
 /editorial:article-plan
 ```
 
-Mettre à jour quand le catalogue change : `/plugin marketplace update gabrielmustiere` puis `/reload-plugins`.
-
-### Tester localement sans publier
-
-Depuis n'importe quel projet :
-
-```
-claude --plugin-dir /Users/gabriel/projets/skills/plugins/workflow
-```
-
-Après modification d'une skill : `/reload-plugins` dans la session en cours (pas besoin de redémarrer). Plusieurs plugins en même temps : répéter `--plugin-dir`.
+Mettre à jour le catalogue : `/plugin marketplace update gabrielmustiere` puis `/reload-plugins`.
 
 ## Plugins disponibles
 
@@ -133,91 +123,3 @@ Après modification d'une skill : `/reload-plugins` dans la session en cours (pa
 | [`article-plan`](plugins/editorial/skills/article-plan/SKILL.md) | Atelier de cadrage d'un article de blog ou d'une fiche side-project — sujet, thèse, audience, recherche, chapitrage, tonalité, frontmatter prévisionnel adapté à la stack détectée → `docs/story/a-<NNN>-<slug>/plan.md` |
 | [`article`](plugins/editorial/skills/article/SKILL.md) | Rédaction guidée à partir du `plan.md` validé — produit le fichier final dans la collection détectée (Astro CC, Next MDX, Hugo, Jekyll, markdown brut), frontmatter conforme au schéma, vérifications schéma + lint + format, traduction multilingue si prévue |
 | [`article-rework`](plugins/editorial/skills/article-rework/SKILL.md) | Retouche chirurgicale d'une portion d'un article publié (chapitre, section, paragraphe) — respecte la voix de l'article, lit le `plan.md` associé, met à jour le plan si la promesse de la section change, propage à la traduction, vérifie schéma + lint + format |
-
-## Structure du repo
-
-```
-.
-├── .claude-plugin/
-│   └── marketplace.json         ← catalogue (liste les plugins)
-└── plugins/
-    └── workflow/                 ← un plugin thématique
-        ├── .claude-plugin/
-        │   └── plugin.json       ← manifeste du plugin
-        └── skills/
-            └── help/
-                └── SKILL.md      ← une skill
-```
-
-Règle : `skills/`, `commands/`, `agents/`, `hooks/` sont à la **racine du plugin**, jamais dans `.claude-plugin/`.
-
-## Ajouter une skill
-
-### Dans un plugin thématique existant
-
-1. Créer `plugins/<plugin>/skills/<nom-skill>/SKILL.md` avec un frontmatter :
-   ```yaml
-   ---
-   name: nom-skill
-   description: Ce que fait la skill et quand l'utiliser.
-   ---
-   ```
-2. Bumper la `version` dans `plugins/<plugin>/.claude-plugin/plugin.json` (semver)
-3. `git push`
-
-Aucune modif de `marketplace.json` nécessaire — la skill est auto-découverte dans le plugin.
-
-### Nouveau plugin thématique
-
-1. Créer `plugins/<nouveau>/.claude-plugin/plugin.json` (copier celui de `workflow` et adapter `name`/`description`)
-2. Créer au moins une skill dans `plugins/<nouveau>/skills/<skill>/SKILL.md`
-3. Ajouter une entrée dans `.claude-plugin/marketplace.json` :
-   ```json
-   {
-     "name": "<nouveau>",
-     "source": "./plugins/<nouveau>",
-     "description": "...",
-     "version": "0.1.0"
-   }
-   ```
-4. `git push`
-
-Côté utilisateurs : `/plugin marketplace update gabrielmustiere` puis `/plugin install <nouveau>@gabrielmustiere`.
-
-## Versionnage
-
-Deux niveaux de versions, **indépendants** :
-
-- **Marketplace (ce repo)** — un schéma semver unifié `vX.Y.Z` matérialisé par les **tags Git et les GitHub Releases**. Monotone, une seule séquence pour toutes les releases. C'est ce que l'utilisateur voit dans la liste des releases GitHub.
-- **Plugin** — chaque `plugin.json` a sa propre `version` (semver). Sert à déclencher la mise à jour côté utilisateurs et à indiquer la maturité interne du plugin. **N'est pas reflétée dans les tags Git.**
-
-### Bumper la marketplace
-
-Règles pour le tag global après un `git push` :
-- **Patch** (`v0.5.0` → `v0.5.1`) : fix isolé, doc, refacto interne.
-- **Minor** (`v0.5.0` → `v0.6.0`) : nouveau plugin, nouvelles skills, ajouts non breaking.
-- **Major** (`v0.x` → `v1.0.0`) : restructuration de la marketplace, breaking côté utilisateurs.
-
-```
-git tag -a v0.6.0 -m "v0.6.0 — <résumé>"
-git push origin v0.6.0
-gh release create v0.6.0 --title "v0.6.0 — <résumé>" --notes "..."
-```
-
-### Bumper un plugin
-
-Indépendant du tag global. Bumper la `version` dans `plugin.json` selon ses propres changements (semver classique). Ce numéro est ce que voit l'utilisateur quand il fait `/plugin install <plugin>@gabrielmustiere`.
-
-## Référence frontmatter SKILL.md
-
-Champs optionnels utiles (voir [doc officielle](https://code.claude.com/docs/fr/skills#frontmatter-reference)) :
-
-| Champ                      | Usage                                                                          |
-| -------------------------- | ------------------------------------------------------------------------------ |
-| `description`              | Recommandé. Aide Claude à décider quand charger la skill automatiquement.      |
-| `disable-model-invocation` | `true` = seul l'utilisateur peut invoquer (pour `/deploy`, `/commit`, etc.).   |
-| `allowed-tools`            | Outils autorisés sans demander permission quand la skill est active.           |
-| `paths`                    | Globs qui limitent l'auto-activation à certains fichiers.                      |
-| `argument-hint`            | Hint d'autocomplétion, ex : `[issue-number]`.                                  |
-
-Substitutions disponibles dans le contenu : `$ARGUMENTS`, `$0`, `$1`, `${CLAUDE_SKILL_DIR}`, `${CLAUDE_SESSION_ID}`.
