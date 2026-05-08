@@ -7,6 +7,25 @@ et ce projet adhère au [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+## [1.0.0] - 2026-05-08
+
+### Notes
+
+Première version stable de la marketplace `gabrielmustiere`. Le format des plugins et le namespacing des skills sont désormais figés. **63 skills** réparties sur 4 plugins thématiques :
+
+- `workflow` — 17 skills (pipeline de développement stack-agnostique)
+- `symfony` — 25 skills (Symfony / Doctrine par domaine)
+- `sylius` — 18 skills (e-commerce Sylius 2.x)
+- `editorial` — 3 skills (rédaction d'articles & side-projects)
+
+### Added
+- Skill `workflow:vision` — **Phase 0** du pipeline : atelier de cadrage de la vision projet (problème, audience, valeur, North Star, principes, anti-objectifs) → `docs/vision.md`. Document fondateur lu par `feature-pitch` pour challenger l'alignement de chaque feature.
+
+### Changed
+- README focalisé sur l'utilisateur final (installation + inventaire des skills) — sections de contribution retirées
+- `marketplace.json` synchronisé avec `plugin.json` pour le plugin `workflow` (0.11.0)
+- `CLAUDE.md` et `README.md` alignés sur la nomenclature `workflow` (résidus `dev-workflow` purgés) et la nouvelle phase 0 vision
+
 ## [0.7.0] - 2026-04-29
 
 ### Added
@@ -27,7 +46,8 @@ et ce projet adhère au [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Plugin `workflow` synchronisé à `0.10.0` dans `marketplace.json` et `README.md` (alignement avec `plugin.json`)
 - Inventaire workflow du `README.md` complété avec les skills `migrate-legacy`, `import-external` et `release`
 
-[Unreleased]: https://github.com/gabrielmustiere/skills/compare/v0.7.0...HEAD
+[Unreleased]: https://github.com/gabrielmustiere/skills/compare/v1.0.0...HEAD
+[1.0.0]: https://github.com/gabrielmustiere/skills/compare/v0.7.0...v1.0.0
 [0.7.0]: https://github.com/gabrielmustiere/skills/compare/v0.6.0...v0.7.0
 [0.6.0]: https://github.com/gabrielmustiere/skills/compare/v0.5.0...v0.6.0
 [0.5.0]: https://github.com/gabrielmustiere/skills/releases/tag/v0.5.0
