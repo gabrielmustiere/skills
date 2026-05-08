@@ -1,9 +1,22 @@
-# Skills
+![Forge](documentation/banner.png)
 
-Collection de skills Claude Code regroupées par **plugins thématiques**, installables dans n'importe quel projet via `/plugin`.
+Collection de skills Claude Code regroupées par **plugins thématiques**, installables dans n'importe quel projet via `/plugin`. Une petite forge où je façonne mes outils pour Claude Code et que je partage en libre-service.
 
 - **Marketplace** : `gabrielmustiere`
 - **Source** : `gabrielmustiere/skills` (ce repo)
+
+## Premier pas avec `workflow`
+
+Le plugin `workflow` est le plus structurant de la Forge : il pilote tout le cycle de développement en trois tracks symétriques, stack-agnostique. Le geste de base :
+
+1. **Phase 0 — `/workflow:vision`** (une fois par projet) → atelier de cadrage qui produit `docs/vision.md` (problème, audience, North Star, principes, anti-objectifs). Lu ensuite par `feature-pitch` pour challenger l'alignement de chaque feature.
+2. **Choisir une track** selon la nature du besoin :
+   - **Feature** (user-facing) : `/workflow:feature-pitch` → `/workflow:feature-design` → `/workflow:feature`
+   - **Refacto** : `/workflow:refactor-plan` → `/workflow:refactor`
+   - **Évolution technique** (perf, résilience, sécu, observabilité) : `/workflow:tech-plan` → `/workflow:tech`
+3. **Fin de cycle, communes aux trois tracks** : `/workflow:review` → `/workflow:commit` → `/workflow:report` → `/workflow:sync`.
+
+Chaque étape produit un artefact sous `docs/story/NNN-<f|r|t>-<slug>/` qui sert d'entrée à la suivante (`feature.md`, `design.md`, `plan.md`, `review.md`, `report.md`). Si tu hésites sur le skill à appeler, `/workflow:help` rappelle l'état du pipeline et le prochain geste possible.
 
 ## Installation
 
