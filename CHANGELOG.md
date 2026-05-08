@@ -7,6 +7,13 @@ et ce projet adhère au [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+## [1.1.0] - 2026-05-08
+
+### Changed
+- 20 descriptions de skill resserrées sous le seuil de 250 caractères (au-delà, la description est tronquée dans la liste de skills chargée en contexte) en préservant les phrases de déclenchement
+- 9 skills Sylius enrichis d'une section « Déclenche sur… » pour améliorer leur invocation automatique : `doc-sylius`, `dynamic`, `email`, `fixtures`, `model`, `styles`, `template`, `translation`, `validation`
+- Plugins bumpés : `workflow` 0.12.0, `editorial` 0.3.0, `sylius` 0.25.0 — synchronisés dans `marketplace.json`
+
 ## [1.0.0] - 2026-05-08
 
 ### Notes
@@ -46,7 +53,8 @@ Première version stable de la marketplace `gabrielmustiere`. Le format des plug
 - Plugin `workflow` synchronisé à `0.10.0` dans `marketplace.json` et `README.md` (alignement avec `plugin.json`)
 - Inventaire workflow du `README.md` complété avec les skills `migrate-legacy`, `import-external` et `release`
 
-[Unreleased]: https://github.com/gabrielmustiere/skills/compare/v1.0.0...HEAD
+[Unreleased]: https://github.com/gabrielmustiere/skills/compare/v1.1.0...HEAD
+[1.1.0]: https://github.com/gabrielmustiere/skills/compare/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/gabrielmustiere/skills/compare/v0.7.0...v1.0.0
 [0.7.0]: https://github.com/gabrielmustiere/skills/compare/v0.6.0...v0.7.0
 [0.6.0]: https://github.com/gabrielmustiere/skills/compare/v0.5.0...v0.6.0
