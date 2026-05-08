@@ -41,6 +41,17 @@ Lis `${CLAUDE_SKILL_DIR}/../../references/stacks/_detection.md` et applique la p
 
 Lis aussi le `CLAUDE.md` du projet s'il existe — il contient les conventions et contraintes métier du projet user (découpage en modules, contraintes réglementaires, stakeholders).
 
+**Lecture de la vision projet** : si `docs/vision.md` existe, lis-le intégralement. La vision est la boussole du projet — chaque feature doit s'aligner avec :
+
+- Le **problème** central que le projet résout (la feature en attaque-t-elle un nouveau pan, ou est-elle hors sujet ?).
+- L'**audience cible** (la feature sert-elle l'utilisateur principal, un secondaire, ou personne d'identifié ?).
+- Les **principes produit** et les **anti-objectifs** explicites (la feature en transgresse-t-elle un ?).
+- La **North Star metric** (la feature est-elle censée la faire bouger ? Comment ?).
+
+Pendant le challenge (phase 3), pose au moins une question d'alignement vision quand c'est pertinent — surtout si la feature semble à la marge du périmètre. Si la feature contredit explicitement un anti-objectif ou un principe, signale-le clairement et demande si c'est un pivot assumé (auquel cas il faut d'abord lancer `/vision` en mode pivot avant de continuer).
+
+Si `docs/vision.md` n'existe pas, ce n'est pas bloquant — note que l'alignement vision n'est pas vérifiable et propose au user de lancer `/vision` quand il le sentira utile.
+
 ### Phase 3 — Challenge (boucle interactive)
 
 Pour chaque idée, challenge sur ces axes (pas tous en même temps, 2-3 par tour, en piochant ce qui est pertinent) :
@@ -101,6 +112,15 @@ Quand l'utilisateur valide, rédige la spec dans `docs/story/`.
 ## Contexte
 
 Pourquoi cette fonctionnalité existe. Quel problème elle résout. Ce qui a motivé la décision.
+
+## Alignement vision
+
+_(Section présente uniquement si `docs/vision.md` existe.)_
+
+- **Problème adressé** : à quel pan du problème central de la vision cette feature s'attaque.
+- **Audience servie** : utilisateur principal / secondaire / nouveau segment.
+- **Principes respectés / tendus** : si la feature met un principe sous tension, expliquer le compromis.
+- **Impact North Star** : effet attendu sur la métrique (positif, neutre, à mesurer).
 
 ## Utilisateurs concernés
 

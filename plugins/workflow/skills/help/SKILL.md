@@ -1,6 +1,6 @@
 ---
 name: help
-description: Sommaire du workflow de développement — présente les quatre tracks (feature, refacto, tech, fast), tous les skills avec leur ordre d'utilisation et les artifacts produits dans docs/story/. Déclenche sur "je suis perdu", "quoi faire maintenant ?", "quel skill utiliser ?", "rappelle-moi le workflow", "par où je commence ?", "c'est quoi <skill>" — même sans citer le skill.
+description: Sommaire du workflow de développement — présente la phase 0 (vision projet), les quatre tracks (feature, refacto, tech, fast), tous les skills avec leur ordre d'utilisation et les artifacts produits dans docs/story/ et docs/vision.md. Déclenche sur "je suis perdu", "quoi faire maintenant ?", "quel skill utiliser ?", "rappelle-moi le workflow", "par où je commence ?", "c'est quoi <skill>" — même sans citer le skill.
 user_invocable: true
 ---
 
@@ -9,6 +9,12 @@ user_invocable: true
 ## Schéma global du pipeline
 
 ```
+                       PHASE 0 — VISION PROJET (une fois, ou pivot)
+                       ┌────────┐
+                       │vision │──▶ docs/vision.md (problème, audience, valeur,
+                       └────────┘    North Star, principes, anti-objectifs)
+                                     Lu par feature-pitch pour challenger l'alignement.
+
                         TRACK FEATURE (valeur utilisateur, structurante)
  ┌──────────────┐   ┌───────────────┐   ┌────────┐   ┌────────┐   ┌────────┐   ┌────────┐   ┌──────┐
  │feature-pitch │──▶│feature-design│──▶│feature│──▶│review │──▶│commit │──▶│report │──▶│sync │
@@ -55,6 +61,16 @@ Tous les artifacts vivent dans `docs/story/` à plat, **numérotés globalement*
 | `t`    | Évolution tech    | `plan.md`                    | `docs/story/044-t-redis-cache/`      |
 
 Les numéros s'incrémentent globalement (042-f → 043-r → 044-t → 045-f…), ce qui permet de lire la timeline d'évolution du projet en listant simplement `docs/story/`.
+
+## Phase 0 — Vision projet
+
+Avant le premier track, en tout début de projet (ou lors d'un pivot stratégique), poser la **vision** une fois pour toutes : pourquoi ce produit existe, pour qui, quelle valeur il crée, comment on mesure le succès, et ce qu'on refuse explicitement de faire.
+
+| #  | Skill      | Rôle                                                              | Produit          |
+|----|------------|-------------------------------------------------------------------|------------------|
+| 0  | `/vision` | Atelier challengeur sur problème, audience, valeur, North Star, principes, anti-objectifs | `docs/vision.md` |
+
+`docs/vision.md` est lu par `/feature-pitch` à chaque nouvelle feature pour challenger l'alignement (problème adressé, audience, principes, impact North Star). Pas de lancement à chaque feature : la vision est un document fondateur, révisé seulement lors d'un pivot.
 
 ## Choisir son track
 
