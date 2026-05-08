@@ -24,11 +24,11 @@ plugins/<plugin-name>/
 
 Règle structurelle critique : `skills/`, `commands/`, `agents/`, `hooks/` vont **à la racine du plugin**, jamais dans `.claude-plugin/`. Seul `plugin.json` habite `.claude-plugin/`.
 
-Granularité : **plugins thématiques**. Un plugin regroupe plusieurs skills liées (ex: `dev-workflow` contient toutes les skills `sp-*` du pipeline de développement). Les utilisateurs installent un thème entier, pas skill par skill.
+Granularité : **plugins thématiques**. Un plugin regroupe plusieurs skills liées (ex: `workflow` contient toutes les skills du pipeline de développement : phase 0 vision, tracks feature/refacto/tech, étapes communes). Les utilisateurs installent un thème entier, pas skill par skill.
 
-Namespacing : les skills de plugin sont toujours invoquées en préfixant par le nom du plugin → `/dev-workflow:sp-help`, pas `/sp-help`. Le préfixe vient du champ `name` dans `plugin.json`.
+Namespacing : les skills de plugin sont toujours invoquées en préfixant par le nom du plugin → `/workflow:help`, pas `/help`. Le préfixe vient du champ `name` dans `plugin.json`.
 
-Résolution des `source` dans `marketplace.json` : `metadata.pluginRoot: "./plugins"` permet d'écrire `"source": "dev-workflow"` au lieu de `"source": "./plugins/dev-workflow"`.
+Résolution des `source` dans `marketplace.json` : `metadata.pluginRoot: "./plugins"` permet d'écrire `"source": "workflow"` au lieu de `"source": "./plugins/workflow"`.
 
 ## Workflow d'édition
 
@@ -39,7 +39,7 @@ Résolution des `source` dans `marketplace.json` : `metadata.pluginRoot: "./plug
 4. Aucune modif de `marketplace.json` — les skills sont auto-découvertes dans le plugin
 
 ### Créer un nouveau plugin thématique
-1. `plugins/<nouveau>/.claude-plugin/plugin.json` (copier `dev-workflow/` comme base)
+1. `plugins/<nouveau>/.claude-plugin/plugin.json` (copier `workflow/` comme base)
 2. Au moins une skill dans `plugins/<nouveau>/skills/<skill>/SKILL.md`
 3. Ajouter une entrée au tableau `plugins` de `.claude-plugin/marketplace.json`
 4. `git push`
