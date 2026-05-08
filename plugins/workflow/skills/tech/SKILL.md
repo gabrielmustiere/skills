@@ -1,6 +1,6 @@
 ---
 name: tech
-description: Exécution guidée d'une évolution technique cadrée — baseline mesurée AVANT, kill switch en place, étapes incrémentales, mesure après chaque étape, validation des critères de succès chiffrés. Déclenche sur "déroule ce plan tech", "exécute l'évolution technique", "on attaque <slug>", "ajoute ce cache / retry / log structuré" dès qu'un plan.md existe sous docs/story/NNN-t-slug/ — même sans citer le skill.
+description: Exécute une évolution technique cadrée — baseline AVANT, kill switch, étapes incrémentales, mesure après chaque étape. Déclenche sur "déroule ce plan tech", "on attaque <slug>" dès qu'un plan.md existe sous docs/story/NNN-t-slug/.
 user_invocable: true
 argument-hint: "[slug-tech]"
 ---

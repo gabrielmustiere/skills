@@ -1,6 +1,6 @@
 ---
 name: email
-description: Envoie, personnalise ou ajoute un e-mail Sylius via le service Sender ou un EmailManager (OrderEmailManager, ShipmentEmailManager), override de templates Twig par canal, e-mail custom via SyliusMailerBundle.
+description: Personnalise ou ajoute un e-mail Sylius via Sender/EmailManager, override de templates Twig par canal, e-mail custom via SyliusMailerBundle. Déclenche sur "envoyer un mail Sylius", "personnaliser l'email de commande", "ajouter un email custom".
 user_invocable: true
 allowed-tools: Read, Write, Edit, Glob, Grep, Bash
 ---

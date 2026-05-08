@@ -1,6 +1,6 @@
 ---
 name: article
-description: Rédaction guidée d'un article de blog ou side-project à partir du `plan.md` validé sous `docs/story/a-<NNN>-<slug>/` — produit le fichier final dans la collection détectée (Astro CC, contentlayer, Hugo, Jekyll, markdown brut), frontmatter conforme au schéma, vérifications schéma + lint + format, traduction multilingue si prévue. Deuxième étape après `article-plan`. Déclenche sur "rédige l'article depuis ce plan", "écris l'article a-002", "passe à la rédaction", "exécute le plan d'article", "draft l'article", "rédige depuis docs/story/a-…". À utiliser dès qu'un `plan.md` existe et que le user veut passer à l'écriture.
+description: Rédige un article depuis le `plan.md` sous `docs/story/a-<NNN>-<slug>/` — fichier dans la collection détectée (Astro, Hugo, Jekyll, MDX), schéma + traduction. Déclenche sur "rédige depuis ce plan", "écris l'article", "draft l'article".
 metadata:
   version: 0.1.0
 ---

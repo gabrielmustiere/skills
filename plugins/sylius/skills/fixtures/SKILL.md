@@ -1,6 +1,6 @@
 ---
 name: fixtures
-description: Customise les fixtures Sylius : modifie la suite `default` dans `sylius_fixtures.yaml` (currencies, channels, shipping/payment methods), étend un `ExampleFactory` + `Fixture` pour un champ custom. Champ absent → `/sylius:model` d'abord.
+description: Customise les fixtures Sylius — suite `default` dans `sylius_fixtures.yaml`, `ExampleFactory` + `Fixture` pour un champ custom. Champ absent → `/sylius:model`. Déclenche sur "ajouter une fixture Sylius", "customiser données de test", "seed Sylius".
 user_invocable: true
 allowed-tools: Read, Write, Edit, Glob, Grep, Bash
 ---

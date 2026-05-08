@@ -1,6 +1,6 @@
 ---
 name: template
-description: Customise un template Sylius (shop/admin) via Twig Hooks en priorité (`sylius_twig_hooks`), override `templates/bundles/` en fallback. Couvre hook/hookable, priorités, repérage via Profiler, désactivation, Sylius Themes multi-canal.
+description: Customise un template Sylius (shop/admin) via Twig Hooks (`sylius_twig_hooks`) en priorité, override `templates/bundles/` en fallback. Déclenche sur "modifier un template Sylius", "ajouter un bloc dans le checkout", "customiser l'admin Sylius".
 user_invocable: true
 allowed-tools: Read, Write, Edit, Glob, Grep, Bash
 ---

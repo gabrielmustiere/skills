@@ -1,6 +1,6 @@
 ---
 name: tech-plan
-description: Atelier interactif pour cadrer une évolution technique non user-facing (perf, résilience, observabilité, sécu préventive, scalabilité) — produit docs/story/<NNN>-t-<slug>/plan.md. Déclenche sur "on doit ajouter un cache", "faut du retry sur cet appel", "il nous faut un circuit breaker", "améliorer les logs", "passer en async", "ajouter un health check", "introduire un index", "mesurer la latence", "sécuriser X" — même sans citer le skill.
+description: Cadre une évolution technique (perf, résilience, observabilité, sécu, scalabilité) — produit docs/story/<NNN>-t-<slug>/plan.md. Déclenche sur "ajouter un cache", "retry sur cet appel", "circuit breaker", "passer en async", "sécuriser X".
 user_invocable: true
 ---
 

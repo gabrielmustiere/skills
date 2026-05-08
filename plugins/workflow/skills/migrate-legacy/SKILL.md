@@ -1,6 +1,6 @@
 ---
 name: migrate-legacy
-description: Migre les anciens dossiers `docs/story/<f|r|t>-NNN-<slug>/` (workflow < 0.8) vers le nouveau format `docs/story/NNN-<f|r|t>-<slug>/` avec compteur en tête, pour que `ls` rende l'ordre chronologique. Détecte automatiquement les dossiers à l'ancien format, propose un plan de renommage, exécute via `git mv` pour préserver l'historique. Déclenche sur "migre l'ancien format", "convertis mes dossiers f-/r-/t-", "j'ai des dossiers f-042-... à renommer", "passe au nouveau format de story", "applique la nouvelle convention compteur en tête", "renomme docs/story/" — même sans citer le skill.
+description: Migre `docs/story/<f|r|t>-NNN-<slug>/` (workflow < 0.8) vers `docs/story/NNN-<f|r|t>-<slug>/` (compteur en tête, ordre chronologique). Renommage via `git mv` pour préserver l'historique. Déclenche sur "migre l'ancien format", "renomme docs/story/".
 user_invocable: true
 ---
 

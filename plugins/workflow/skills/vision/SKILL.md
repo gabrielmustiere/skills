@@ -1,6 +1,6 @@
 ---
 name: vision
-description: Atelier interactif pour cadrer la vision globale d'un projet — problème, audience, proposition de valeur, North Star metric, principes produit, anti-objectifs. Phase 0 du workflow, exécutée une fois en début de projet (ou refondue lors d'un pivot). Produit docs/vision.md, document fondateur lu par feature-pitch pour challenger l'alignement de chaque nouvelle feature. Déclenche sur "définir la vision du projet", "on démarre un nouveau projet", "j'ai besoin d'un PRD", "quelle est la valeur de ce produit", "rédiger la vision produit", "cadrer le projet", "north star", "proposition de valeur", "on pivote", "redéfinir l'objectif du projet" — même sans citer le skill.
+description: Cadre la vision projet — problème, audience, valeur, North Star, principes, anti-objectifs. Phase 0, produit docs/vision.md (lu par feature-pitch). Déclenche sur "définir la vision", "démarrer un projet", "north star", "on pivote".
 user_invocable: true
 ---
 

@@ -1,6 +1,6 @@
 ---
 name: release
-description: Crée une release versionnée — détermine le bump SemVer à partir des Conventional Commits depuis le dernier tag, met à jour CHANGELOG.md au format Keep a Changelog, crée un tag annoté vX.Y.Z, pousse et publie la release GitHub via gh. Déclenche sur "release", "tag", "publier une version", "ship", "bump version", "v1.2.0", "nouvelle release", "changelog", ou toute intention de livrer une version — même sans citer le skill.
+description: Crée une release versionnée — bump SemVer depuis les Conventional Commits, MAJ CHANGELOG.md (Keep a Changelog), tag annoté vX.Y.Z, push, release GitHub via gh. Déclenche sur "release", "tag", "publier une version", "bump version", "changelog".
 user_invocable: true
 disable-model-invocation: true
 argument-hint: "[major|minor|patch] [--no-push] [--draft] [--pre <suffix>]"

@@ -1,6 +1,6 @@
 ---
 name: feature
-description: Implémentation guidée d'une feature par un design technique validé — suit l'ordre prévu sous-tâche par sous-tâche, contrôle qualité continu, checkpoints humains. Déclenche sur "implémente / code cette feature", "déroule le design", "on attaque <slug>", "passe à l'implémentation" dès qu'un design.md existe — même sans citer le skill.
+description: Implémente une feature depuis un design validé — sous-tâche par sous-tâche, qualité continue, checkpoints humains. Déclenche sur "implémente cette feature", "déroule le design", "on attaque <slug>" dès qu'un design.md existe.
 user_invocable: true
 argument-hint: "[slug-feature]"
 ---

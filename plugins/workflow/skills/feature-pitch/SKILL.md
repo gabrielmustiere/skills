@@ -1,6 +1,6 @@
 ---
 name: feature-pitch
-description: Atelier interactif pour cadrer, challenger et documenter une fonctionnalité avant développement — produit docs/story/<NNN>-f-<slug>/feature.md. Déclenche sur "j'ai une idée de feature", "on doit ajouter X", "faut revoir l'écran Y", "cadre / speccer / challenger ce besoin", "refondre ce parcours" — même sans citer le skill.
+description: Cadre, challenge et documente une feature avant développement — produit docs/story/<NNN>-f-<slug>/feature.md. Déclenche sur "idée de feature", "on doit ajouter X", "revoir l'écran Y", "cadre ce besoin", "refondre ce parcours".
 user_invocable: true
 ---
 

@@ -1,6 +1,6 @@
 ---
 name: import-external
-description: Importe une documentation produite par un autre outil de spec-driven development (Spec Kit, BMAD-METHOD, GSD/get-shit-done) vers le format workflow `docs/story/NNN-<f|r|t>-<slug>/`. Détecte automatiquement la source via les indices structurels (`specs/`, `docs/stories/`, `.plans/`), propose un mapping fichiers + tags type, exécute la conversion en lot après validation. Déclenche sur "convertis mes specs Spec Kit", "j'ai un projet BMAD à migrer", "importe ces .plans GSD", "on passe ce projet sur le workflow", "comment porter cette doc spec-driven", "migrer depuis spec-kit / bmad / gsd / get-shit-done" — même sans citer le skill.
+description: Importe une doc Spec Kit / BMAD / GSD vers `docs/story/NNN-<f|r|t>-<slug>/`. Détecte la source, propose un mapping. Déclenche sur "convertis mes specs Spec Kit", "migrer un projet BMAD", "importe mes .plans GSD".
 user_invocable: true
 ---
 

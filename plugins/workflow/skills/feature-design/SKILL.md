@@ -1,6 +1,6 @@
 ---
 name: feature-design
-description: Atelier interactif de conception technique d'une feature déjà cadrée — produit docs/story/<NNN>-f-<slug>/design.md. Déclenche sur "designe cette feature", "comment on code ça ?", "quelle approche technique ?", "passe de la spec au plan", "architecture de <slug>" dès qu'un feature.md existe — même sans citer le skill.
+description: Conception technique d'une feature déjà cadrée — produit docs/story/<NNN>-f-<slug>/design.md. Déclenche sur "designe cette feature", "comment on code ça", "quelle approche technique", "passe de la spec au plan" dès qu'un feature.md existe.
 user_invocable: true
 ---
 

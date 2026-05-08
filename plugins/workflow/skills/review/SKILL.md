@@ -1,6 +1,6 @@
 ---
 name: review
-description: Code review du diff avant merge — détecte sécurité, qualité, performance, conformité design/plan, migrations, spécificités framework. Produit docs/story/<NNN>-<f|r|t>-<slug>/review.md selon le type de dossier ciblé. Déclenche sur "review ce diff", "relis avant merge", "audite ce changement", "c'est prêt à merger ?", "j'ai fini, tu peux vérifier ?" — même sans citer le skill.
+description: Code review du diff avant merge — sécurité, qualité, perf, conformité design/plan, migrations. Produit docs/story/<NNN>-<f|r|t>-<slug>/review.md. Déclenche sur "review ce diff", "relis avant merge", "audite ce changement", "c'est prêt à merger".
 user_invocable: true
 ---
 

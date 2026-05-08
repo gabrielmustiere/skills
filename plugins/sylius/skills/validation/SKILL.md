@@ -1,6 +1,6 @@
 ---
 name: validation
-description: Customise la validation d'un resource Sylius : `config/validator/<Model>.yaml` + groupe custom rebranché via `sylius.form.type.*.validation_groups`. PromotionRule/Action via ChannelCodeCollection. Champ absent → `/sylius:model`.
+description: Customise la validation d'un resource Sylius — `config/validator/<Model>.yaml` + groupe custom via `sylius.form.type.*.validation_groups`. Champ absent → `/sylius:model`. Déclenche sur "ajouter une contrainte Sylius", "valider un champ custom".
 user_invocable: true
 allowed-tools: Read, Write, Edit, Glob, Grep, Bash
 ---

@@ -1,6 +1,6 @@
 ---
 name: sync
-description: Réaligne la doc d'intention (feature.md + design.md pour une feature, plan.md pour un refacto ou évolution tech) avec ce qui a été réellement implémenté — applique les écarts validés et trace les modifications dans un changelog. Déclenche sur "synchronise / resync la doc", "réaligne la spec / le plan", "la doc n'est plus à jour", "la doc ne reflète plus le code", ou tout décalage doc/code constaté — même sans citer le skill.
+description: Réaligne la doc d'intention (feature.md + design.md, ou plan.md) avec le code réellement livré — applique les écarts validés et trace dans un changelog. Déclenche sur "synchronise la doc", "réaligne la spec", "la doc n'est plus à jour".
 user_invocable: true
 disable-model-invocation: true
 ---

@@ -1,6 +1,6 @@
 ---
 name: help
-description: Sommaire du workflow de développement — présente la phase 0 (vision projet), les quatre tracks (feature, refacto, tech, fast), tous les skills avec leur ordre d'utilisation et les artifacts produits dans docs/story/ et docs/vision.md. Déclenche sur "je suis perdu", "quoi faire maintenant ?", "quel skill utiliser ?", "rappelle-moi le workflow", "par où je commence ?", "c'est quoi <skill>" — même sans citer le skill.
+description: Sommaire du workflow — phase 0 (vision), quatre tracks (feature, refacto, tech, fast), skills avec leur ordre et artifacts produits. Déclenche sur "je suis perdu", "quoi faire maintenant", "quel skill utiliser", "par où je commence".
 user_invocable: true
 ---
 

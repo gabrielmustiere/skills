@@ -1,6 +1,6 @@
 ---
 name: commit
-description: Génère un commit Conventional Commits v1.0.0 en français à partir du diff courant, propose le message, commit et push après validation explicite. Déclenche sur "commit", "pousse / push", "envoie ce changement", "finis ce truc", "c'est prêt tu peux pusher", ou toute intention de livrer du code git — même sans citer le skill.
+description: Commit Conventional Commits v1.0.0 en français depuis le diff courant — propose le message, commit + push après validation. Déclenche sur "commit", "push", "envoie ce changement", "finis ce truc", "c'est prêt tu peux pusher".
 user_invocable: true
 disable-model-invocation: true
 argument-hint: "[--no-push] [--amend]"

@@ -1,6 +1,6 @@
 ---
 name: styles
-description: Customise les styles Sylius 2.x (admin Tabler ou shop Bootstrap) : surcharge les variables CSS (`--tblr-*`, `--bs-*`) via SCSS sans patcher vendor. `assets/<ctx>/styles/custom.scss`, import entrypoint.js, `yarn build`.
+description: Customise les styles Sylius 2.x (admin Tabler / shop Bootstrap) — surcharge les variables CSS (`--tblr-*`, `--bs-*`) via SCSS, sans patcher vendor. Déclenche sur "changer la couleur admin Sylius", "thème Sylius shop", "surcharger les styles".
 user_invocable: true
 allowed-tools: Read, Write, Edit, Glob, Grep, Bash
 ---

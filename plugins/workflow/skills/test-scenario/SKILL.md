@@ -1,6 +1,6 @@
 ---
 name: test-scenario
-description: Joue un scénario utilisateur en temps réel via Playwright MCP — pilote un vrai navigateur sur une application web pour valider un parcours, vérifier un comportement, reproduire un bug. Déclenche sur "teste manuellement le checkout", "vérifie ce parcours en live", "reproduis ce bug", "simule un user qui…", "navigue comme un client sur…" — même sans citer le skill.
+description: Joue un scénario utilisateur via Playwright MCP — pilote un vrai navigateur pour valider un parcours, reproduire un bug. Déclenche sur "teste manuellement le checkout", "vérifie ce parcours en live", "reproduis ce bug", "simule un user".
 user_invocable: true
 argument-hint: "[scénario ou url]"
 ---

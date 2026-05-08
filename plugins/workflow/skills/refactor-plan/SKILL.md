@@ -1,6 +1,6 @@
 ---
 name: refactor-plan
-description: Atelier interactif pour cadrer un refacto — motivation, périmètre, stratégie de caractérisation tests, plan d'exécution incrémental, critères de non-régression — produit docs/story/<NNN>-r-<slug>/plan.md. Déclenche sur "on doit refactorer X", "ce code est devenu illisible", "extraire ce service", "faut découper cette classe", "nettoyer la dette sur Y", "moderniser ce module" — même sans citer le skill.
+description: Cadre un refacto — motivation, périmètre, tests de caractérisation, plan incrémental — produit docs/story/<NNN>-r-<slug>/plan.md. Déclenche sur "refactorer X", "extraire ce service", "découper cette classe", "nettoyer la dette".
 user_invocable: true
 ---
 

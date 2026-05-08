@@ -1,6 +1,6 @@
 ---
 name: report
-description: Compte rendu d'implémentation — compare l'intention prévue (spec+design pour une feature, plan pour un refacto/tech) au code réellement produit, documente les écarts et décisions dans docs/story/<NNN>-<f|r|t>-<slug>/report.md. Déclenche sur "documente ce qu'on a fait", "fais le bilan", "rapport post-implémentation", "raconter ce qu'on a livré", "le code a divergé de la spec / du plan" — même sans citer le skill.
+description: Compte rendu d'implémentation — compare l'intention (spec+design ou plan) au code livré, écarts et décisions dans docs/story/<NNN>-<f|r|t>-<slug>/report.md. Déclenche sur "fais le bilan", "rapport post-implémentation", "le code a divergé".
 
 user_invocable: true
 disable-model-invocation: true

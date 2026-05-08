@@ -1,6 +1,6 @@
 ---
 name: model
-description: Étend un modèle Sylius natif (Customer, Country, ShippingMethod…) : sous-classe `Sylius\Component\*\Model\Base*`, déclare sous `sylius_<bundle>.resources.<r>.classes.model`, génère la migration Doctrine. Cas régulier et translatable.
+description: Étend un modèle Sylius (Customer, Country, ShippingMethod…) — sous-classe `Base*`, déclaration sous `sylius_<bundle>.resources.<r>.classes.model`, migration. Déclenche sur "ajouter un champ sur Customer", "étendre Country", "modèle Sylius custom".
 user_invocable: true
 allowed-tools: Read, Write, Edit, Glob, Grep, Bash
 ---

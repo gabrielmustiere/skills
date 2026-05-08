@@ -1,6 +1,6 @@
 ---
 name: article-plan
-description: Cadrage d'un article de blog ou side-project AVANT rédaction — sujet, thèse, audience, recherche, chapitrage, tonalité, frontmatter adapté à la stack (Astro CC, Next.js MDX, Hugo, Jekyll, markdown brut). Produit `docs/story/a-<NNN>-<slug>/plan.md`. Première étape avant le skill `article`. Déclenche sur "j'ai une idée d'article", "écrire un billet sur X", "fais-moi un plan d'article", "structure cet article", "side-project à documenter", "chapitre un article", "thèse pour un article", "j'écris sur…". À utiliser dès qu'un sujet à écrire est mentionné, avant toute rédaction directe.
+description: Cadrage d'un article (sujet, thèse, audience, chapitrage, frontmatter). Détecte la stack (Astro, Hugo, Jekyll, MDX). Produit `docs/story/a-<NNN>-<slug>/plan.md`. Déclenche sur "idée d'article", "plan d'article", "j'écris sur…".
 metadata:
   version: 0.1.0
 ---

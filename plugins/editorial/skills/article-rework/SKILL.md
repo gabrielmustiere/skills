@@ -1,6 +1,6 @@
 ---
 name: article-rework
-description: Retouche chirurgicale d'une portion d'un article déjà publié — un chapitre, une section, un paragraphe — sans rejouer la rédaction complète. Resserrer, étoffer, changer le ton, restructurer, corriger un angle qui dévie de la thèse. Lit l'article cible dans la collection détectée (Astro CC, Next.js MDX, Hugo, Jekyll, markdown brut), lit le `plan.md` associé sous `docs/story/a-<NNN>-<slug>/`, applique la retouche en respectant la voix de l'article, met à jour le plan si la promesse de la section change, propage à la traduction si une version traduite existe. Déclenche sur "retravaille cette section", "réécris le chapitre X", "ce paragraphe est trop long resserre-le", "étoffe la section sur Y", "le ton dérape ici", "cette partie ne sert plus la thèse", "refonds le passage sur Z", "raccourcis l'intro de cet article", "remplace cet exemple". À utiliser dès que le user pointe une portion d'un article publié à modifier, pas à utiliser pour une rédaction from scratch (`article`) ni pour un cadrage initial (`article-plan`).
+description: Retouche chirurgicale d'une portion d'article publié (chapitre, section, paragraphe). Lit le `plan.md` associé, respecte la voix, propage à la traduction. Déclenche sur "retravaille cette section", "réécris ce chapitre", "resserre ce paragraphe".
 metadata:
   version: 0.1.0
 ---

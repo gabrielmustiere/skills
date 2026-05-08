@@ -12,14 +12,14 @@
       "name": "workflow",
       "source": "./plugins/workflow",
       "description": "Skills pour les différentes étapes de mon workflow de développement ",
-      "version": "0.11.0",
+      "version": "0.12.0",
       "category": "development"
     },
     {
       "name": "sylius",
       "source": "./plugins/sylius",
       "description": "Skills pour travailler avec Sylius",
-      "version": "0.24.0",
+      "version": "0.25.0",
       "category": "development"
     },
     {
@@ -33,7 +33,7 @@
       "name": "editorial",
       "source": "./plugins/editorial",
       "description": "Pipeline éditorial en trois étapes — article-plan (cadrage), article (rédaction guidée + vérifications + traduction) et article-rework (retouche chirurgicale d'une portion d'un article publié) — pour articles de blog et fiches side-project. Stack-agnostique : détecte Astro Content Collections, Next.js MDX, Hugo, Jekyll ou markdown brut. Artifacts unifiés sous docs/story/a-NNN-slug/.",
-      "version": "0.2.0",
+      "version": "0.3.0",
       "category": "writing"
     }
   ]

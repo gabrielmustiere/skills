@@ -1,6 +1,6 @@
 ---
 name: refactor
-description: Exécution guidée d'un refacto cadré — verrou tests de caractérisation AVANT de toucher au code, puis exécution étape par étape avec vérif continue de non-régression et checkpoints humains. Déclenche sur "déroule ce refacto", "exécute le plan de refacto", "on attaque <slug>", "lance le refacto" dès qu'un plan.md existe sous docs/story/NNN-r-slug/ — même sans citer le skill.
+description: Exécute un refacto cadré — verrou tests de caractérisation AVANT le code, étape par étape avec vérif de non-régression. Déclenche sur "déroule ce refacto", "exécute le plan de refacto", "on attaque <slug>" dès qu'un plan.md existe.
 user_invocable: true
 argument-hint: "[slug-refacto]"
 ---
