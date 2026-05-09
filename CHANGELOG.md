@@ -7,6 +7,15 @@ et ce projet adhère au [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+### Added
+- Skill `workflow:doc-feature` — généralisation stack-agnostique de l'ancien `sylius:doc-sylius`. Documente une feature déjà implémentée dans n'importe quel projet (PHP, Symfony, Sylius, autre) → `docs/feature-map/NNN-slug/feature.md`. Détection automatique du stack et chargement de la référence appropriée (`references/sylius.md`, `references/symfony.md`).
+
+### Removed
+- Skill `sylius:doc-sylius` — remplacée par `workflow:doc-feature` qui couvre le cas Sylius via `references/sylius.md` (Tabler, ThemeAlpha/Beta/TailwindTheme, Twig Hooks, grids, workflows, JWT, multi-channel) et fonctionne sur tout autre stack.
+
+### Changed
+- Plugin `workflow` bumpé à `0.13.0` (ajout `doc-feature`), plugin `sylius` bumpé à `0.26.0` (retrait `doc-sylius`) — synchronisés dans `marketplace.json`
+
 ## [1.1.0] - 2026-05-08
 
 ### Changed

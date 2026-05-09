@@ -36,7 +36,7 @@ Les skills d'un plugin sont toujours namespacées par le nom du plugin :
 ```
 /workflow:help
 /workflow:feature-pitch
-/sylius:doc-sylius
+/workflow:doc-feature
 /symfony:doctrine-entity
 /editorial:article-plan
 ```
@@ -47,14 +47,14 @@ Mettre à jour le catalogue : `/plugin marketplace update gabrielmustiere` puis 
 
 | Plugin | Version | Description |
 | --- | --- | --- |
-| `workflow` | `0.11.0` | Pipeline de développement stack-agnostique. **Phase 0** : `vision` produit `docs/vision.md` (problème, audience, North Star, principes, anti-objectifs) — document fondateur lu par `feature-pitch` pour challenger l'alignement de chaque feature. Trois tracks symétriques : **feature** (`feature-pitch` → `feature-design` → `feature`), **refacto** (`refactor-plan` → `refactor`), **évolution technique** (`tech-plan` → `tech`). Étapes communes : `review` → `commit` → `report` → `sync`. Outillage transverse : `migrate-legacy`, `import-external`, `release`. Détection auto du stack (Symfony, Sylius). |
-| `sylius` | `0.24.0` | Skills pour travailler avec Sylius (doc, conventions, entités traduisibles, customization de modèle/form/grid/template/styles/dynamic/validation/state-machine/translation/fixtures, commandes, e-mails, promotions panier, coupons, ajustements). |
+| `workflow` | `0.13.0` | Pipeline de développement stack-agnostique. **Phase 0** : `vision` produit `docs/vision.md` (problème, audience, North Star, principes, anti-objectifs) — document fondateur lu par `feature-pitch` pour challenger l'alignement de chaque feature. Trois tracks symétriques : **feature** (`feature-pitch` → `feature-design` → `feature`), **refacto** (`refactor-plan` → `refactor`), **évolution technique** (`tech-plan` → `tech`). Étapes communes : `review` → `commit` → `report` → `sync`. Outillage transverse : `migrate-legacy`, `import-external`, `release`, `doc-feature` (carte d'une feature existante, stack-aware). Détection auto du stack (Symfony, Sylius). |
+| `sylius` | `0.26.0` | Skills pour travailler avec Sylius (conventions, entités traduisibles, customization de modèle/form/grid/template/styles/dynamic/validation/state-machine/translation/fixtures, commandes, e-mails, promotions panier, coupons, ajustements). Pour la documentation d'une feature existante, voir `workflow:doc-feature`. |
 | `symfony` | `0.12.0` | 25 skills Symfony/Doctrine groupées par domaine : **doctrine** (entity, migration, query), **events** (dispatch, listen, subscribe), **forms** (type, handle, render, advanced), **http** (controller-action, routing-define), **http-client** (request, response, async, test), **messenger** (async), **serializer** (use), **object-mapper**, **services** (define, wire, tags), **validation** (constraints, groups, use). Relayées par `workflow` quand le stack détecté est Symfony/Sylius. |
 | `editorial` | `0.2.0` | Pipeline éditorial en trois étapes — `article-plan` (cadrage), `article` (rédaction guidée + vérifications + traduction) et `article-rework` (retouche chirurgicale d'une portion d'un article publié) — pour articles de blog et fiches side-project. Stack-agnostique : détecte Astro Content Collections, Next.js MDX, Hugo, Jekyll ou markdown brut. Artifacts unifiés sous `docs/story/a-NNN-slug/`. |
 
 ## Inventaire des skills
 
-### `workflow` — Pipeline de développement (17 skills)
+### `workflow` — Pipeline de développement (18 skills)
 
 | Skill | Rôle |
 | --- | --- |
@@ -75,12 +75,12 @@ Mettre à jour le catalogue : `/plugin marketplace update gabrielmustiere` puis 
 | [`migrate-legacy`](plugins/workflow/skills/migrate-legacy/SKILL.md) | Migre les anciens dossiers `<f\|r\|t>-NNN-<slug>/` vers `NNN-<f\|r\|t>-<slug>/` (compteur en tête) via `git mv` |
 | [`import-external`](plugins/workflow/skills/import-external/SKILL.md) | Importe une doc Spec Kit / BMAD-METHOD / GSD vers le format `docs/story/NNN-<f\|r\|t>-<slug>/` |
 | [`release`](plugins/workflow/skills/release/SKILL.md) | Tag annoté SemVer + `CHANGELOG.md` Keep a Changelog + release GitHub |
+| [`doc-feature`](plugins/workflow/skills/doc-feature/SKILL.md) | Documente une feature existante (stack-agnostique, détection Sylius/Symfony) → `docs/feature-map/NNN-slug/feature.md` |
 
-### `sylius` — Skills Sylius (18 skills)
+### `sylius` — Skills Sylius (17 skills)
 
 | Skill | Rôle |
 | --- | --- |
-| [`doc-sylius`](plugins/sylius/skills/doc-sylius/SKILL.md) | Documente une feature Sylius (custom ou vendor) → `docs/sylius-native/` |
 | [`model`](plugins/sylius/skills/model/SKILL.md) | Étend un modèle Sylius natif (`Country`, `Customer`, `ShippingMethod`…) — extends + `implements Interface`, config `sylius_<bundle>.resources…classes.model`, migration |
 | [`form`](plugins/sylius/skills/form/SKILL.md) | Étend un `FormType` Sylius via `AbstractTypeExtension` (shop vs admin vs base), priorité sur forms déjà étendus par le Core, Twig Hook pour le rendu, champs dynamiques via `PRE_SET_DATA` |
 | [`grid`](plugins/sylius/skills/grid/SKILL.md) | Customise une grid Sylius (liste admin) — YAML dans `_sylius.yaml` (disable/réordonner champs, filtres, actions), PHP event listener `sylius.grid.<name>` via `GridDefinitionConverterEvent`, nouvelle grid sur resource custom via `AbstractGrid` + `#[AsGrid]`, filtres sur relations via `setRepositoryMethod()` ou `DataProviderInterface`, tri, pagination |
