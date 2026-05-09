@@ -7,11 +7,13 @@ et ce projet adhère au [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+## [1.2.0] - 2026-05-09
+
 ### Added
 - Skill `workflow:doc-feature` — généralisation stack-agnostique de l'ancien `sylius:doc-sylius`. Documente une feature déjà implémentée dans n'importe quel projet (PHP, Symfony, Sylius, autre) → `docs/feature-map/NNN-slug/feature.md`. Détection automatique du stack et chargement de la référence appropriée (`references/sylius.md`, `references/symfony.md`).
 
 ### Removed
-- Skill `sylius:doc-sylius` — remplacée par `workflow:doc-feature` qui couvre le cas Sylius via `references/sylius.md` (Tabler, ThemeAlpha/Beta/TailwindTheme, Twig Hooks, grids, workflows, JWT, multi-channel) et fonctionne sur tout autre stack.
+- BREAKING : Skill `sylius:doc-sylius` — remplacée par `workflow:doc-feature` qui couvre le cas Sylius via `references/sylius.md` (Tabler, ThemeAlpha/Beta/TailwindTheme, Twig Hooks, grids, workflows, JWT, multi-channel) et fonctionne sur tout autre stack.
 
 ### Changed
 - Plugin `workflow` bumpé à `0.13.0` (ajout `doc-feature`), plugin `sylius` bumpé à `0.26.0` (retrait `doc-sylius`) — synchronisés dans `marketplace.json`
@@ -62,7 +64,8 @@ Première version stable de la marketplace `gabrielmustiere`. Le format des plug
 - Plugin `workflow` synchronisé à `0.10.0` dans `marketplace.json` et `README.md` (alignement avec `plugin.json`)
 - Inventaire workflow du `README.md` complété avec les skills `migrate-legacy`, `import-external` et `release`
 
-[Unreleased]: https://github.com/gabrielmustiere/skills/compare/v1.1.0...HEAD
+[Unreleased]: https://github.com/gabrielmustiere/skills/compare/v1.2.0...HEAD
+[1.2.0]: https://github.com/gabrielmustiere/skills/compare/v1.1.0...v1.2.0
 [1.1.0]: https://github.com/gabrielmustiere/skills/compare/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/gabrielmustiere/skills/compare/v0.7.0...v1.0.0
 [0.7.0]: https://github.com/gabrielmustiere/skills/compare/v0.6.0...v0.7.0
