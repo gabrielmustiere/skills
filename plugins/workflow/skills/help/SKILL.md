@@ -13,7 +13,13 @@ user_invocable: true
                        ┌────────┐
                        │vision │──▶ docs/vision.md (problème, audience, valeur,
                        └────────┘    North Star, principes, anti-objectifs)
-                                     Lu par feature-pitch pour challenger l'alignement.
+                                     Lu par product-backlog puis feature-pitch.
+
+                       PHASE 0.5 — PÉRIMÈTRE FONCTIONNEL & BACKLOG
+                       ┌──────────────┐
+                       │product-backlog│──▶ docs/product-backlog.md (domaines, capacités,
+                       └──────────────┘    parcours, règles transverses, backlog priorisé MVP/V2/V3)
+                                           Lu par feature-pitch pour situer chaque feature.
 
                         TRACK FEATURE (valeur utilisateur, structurante)
  ┌──────────────┐   ┌───────────────┐   ┌────────┐   ┌────────┐   ┌────────┐   ┌────────┐   ┌──────┐
@@ -70,7 +76,17 @@ Avant le premier track, en tout début de projet (ou lors d'un pivot stratégiqu
 |----|------------|-------------------------------------------------------------------|------------------|
 | 0  | `/vision` | Atelier challengeur sur problème, audience, valeur, North Star, principes, anti-objectifs | `docs/vision.md` |
 
-`docs/vision.md` est lu par `/feature-pitch` à chaque nouvelle feature pour challenger l'alignement (problème adressé, audience, principes, impact North Star). Pas de lancement à chaque feature : la vision est un document fondateur, révisé seulement lors d'un pivot.
+`docs/vision.md` est lu par `/product-backlog` (en phase 0.5) puis par `/feature-pitch` à chaque nouvelle feature pour challenger l'alignement (problème adressé, audience, principes, impact North Star). Pas de lancement à chaque feature : la vision est un document fondateur, révisé seulement lors d'un pivot.
+
+## Phase 0.5 — Périmètre fonctionnel et backlog
+
+Une fois la vision validée, traduire la vision en **carte des capacités fonctionnelles** + **backlog priorisé de features candidates**. Ce livrable est le pont entre la stratégie (vision) et le cadrage feature par feature (`/feature-pitch`).
+
+| #   | Skill              | Rôle                                                                                                | Produit                      |
+|-----|--------------------|-----------------------------------------------------------------------------------------------------|------------------------------|
+| 0.5 | `/product-backlog` | Atelier fonctionnel : domaines → capacités → parcours → règles transverses → backlog MVP/V2/V3       | `docs/product-backlog.md`    |
+
+`docs/product-backlog.md` est document **vivant** : on le révise quand le périmètre fonctionnel évolue (nouvelle capacité identifiée, repriorisation, pivot). `/feature-pitch` le lit pour reprendre le pitch initial d'une ligne de backlog, ses capacités couvertes et ses dépendances. Ce skill est facultatif (on peut aller direct vision → feature-pitch), mais recommandé dès qu'on a plus de 3-4 features pressenties.
 
 ## Choisir son track
 

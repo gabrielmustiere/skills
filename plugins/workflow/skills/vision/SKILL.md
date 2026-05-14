@@ -1,6 +1,6 @@
 ---
 name: vision
-description: Cadre la vision projet — problème, audience, valeur, North Star, principes, anti-objectifs. Phase 0, produit docs/vision.md (lu par feature-pitch). Déclenche sur "définir la vision", "démarrer un projet", "north star", "on pivote".
+description: Cadre la vision projet — problème, audience, valeur, North Star, principes, anti-objectifs. Phase 0, produit docs/vision.md (lu par product-backlog puis feature-pitch). Déclenche sur "définir la vision", "démarrer un projet", "north star", "on pivote".
 user_invocable: true
 ---
 
@@ -251,8 +251,8 @@ Après écriture, affiche un résumé et demande si des ajustements sont nécess
 Annonce :
 
 > Vision prête : `docs/vision.md`
-> Cette vision sera lue par `/feature-pitch` à chaque nouvelle feature pour challenger l'alignement.
-> Prochaine étape suggérée : `/feature-pitch` pour cadrer la première feature, ou continuer à explorer les hypothèses critiques en dehors du workflow code.
+> Cette vision sera lue par `/product-backlog` (pour dériver le périmètre fonctionnel et le backlog priorisé) puis par `/feature-pitch` à chaque nouvelle feature pour challenger l'alignement.
+> Prochaine étape suggérée : `/product-backlog` pour traduire la vision en domaines, capacités, parcours et backlog priorisé. Si tu veux cadrer immédiatement une feature précise sans passer par le backlog, `/feature-pitch` reste utilisable directement (mais sans vue d'ensemble du périmètre).
 
 ## Argument optionnel
 

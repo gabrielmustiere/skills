@@ -52,6 +52,14 @@ Pendant le challenge (phase 3), pose au moins une question d'alignement vision q
 
 Si `docs/vision.md` n'existe pas, ce n'est pas bloquant — note que l'alignement vision n'est pas vérifiable et propose au user de lancer `/vision` quand il le sentira utile.
 
+**Lecture du backlog produit** : si `docs/product-backlog.md` existe, lis-le. Il décrit les domaines fonctionnels, les capacités, les parcours utilisateurs et un backlog priorisé de features candidates.
+
+- **Si l'utilisateur a précisé une feature**, retrouve la ligne backlog correspondante (par slug ou par sujet). Récupère son pitch, ses capacités couvertes, ses parcours servis, ses dépendances et sa justification vision — ces éléments enrichissent directement le challenge (le pitch initial est déjà là, on attaque le détail). Si la feature n'apparaît dans aucun horizon, signale-le : soit le backlog est incomplet (proposer de revenir à `/product-backlog`), soit la feature est hors périmètre.
+- **Si l'utilisateur dit juste « cadrons la prochaine » ou équivalent**, propose-lui les 3 premières lignes MVP non encore cadrées (croise avec `docs/story/*-f-*` pour exclure celles déjà spécifiées) et demande laquelle attaquer.
+- **Vérifie les dépendances** : si la feature à cadrer dépend d'autres lignes backlog non livrées, signale-le et demande confirmation avant de continuer.
+
+Si `docs/product-backlog.md` n'existe pas, ce n'est pas bloquant — note l'absence et propose `/product-backlog` si l'utilisateur veut une vue consolidée du périmètre. Continue ensuite normalement.
+
 ### Phase 3 — Challenge (boucle interactive)
 
 Pour chaque idée, challenge sur ces axes (pas tous en même temps, 2-3 par tour, en piochant ce qui est pertinent) :
