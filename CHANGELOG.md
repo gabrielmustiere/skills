@@ -7,6 +7,18 @@ et ce projet adhère au [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+## [1.3.0] - 2026-05-14
+
+### Added
+- Skill `workflow:product-backlog` — **Phase 0.5** du pipeline : atelier de cadrage du périmètre fonctionnel qui traduit `docs/vision.md` en domaines, capacités, parcours utilisateur, règles transverses et backlog priorisé MVP/V2/V3 → `docs/product-backlog.md`. Document vivant lu par `feature-pitch` pour situer chaque feature dans le périmètre et reprendre son pitch initial.
+
+### Changed
+- Skill `workflow:vision` — propose désormais `/product-backlog` comme étape suivante naturelle après la vision
+- Skill `workflow:feature-pitch` — lit `docs/product-backlog.md` s'il existe pour récupérer le pitch initial d'une ligne backlog, ses capacités couvertes, ses dépendances et son alignement vision avant de challenger
+- Skill `workflow:help` — sommaire et diagramme du pipeline mis à jour avec la phase 0.5
+- Plugin `workflow` bumpé à `0.14.0` (ajout `product-backlog`) — synchronisé dans `marketplace.json`
+- README enrichi d'un tutoriel détaillé du pipeline workflow (philosophie, carte mentale, tour des skills par track, exemple de bout en bout)
+
 ## [1.2.0] - 2026-05-09
 
 ### Added
@@ -64,7 +76,8 @@ Première version stable de la marketplace `gabrielmustiere`. Le format des plug
 - Plugin `workflow` synchronisé à `0.10.0` dans `marketplace.json` et `README.md` (alignement avec `plugin.json`)
 - Inventaire workflow du `README.md` complété avec les skills `migrate-legacy`, `import-external` et `release`
 
-[Unreleased]: https://github.com/gabrielmustiere/skills/compare/v1.2.0...HEAD
+[Unreleased]: https://github.com/gabrielmustiere/skills/compare/v1.3.0...HEAD
+[1.3.0]: https://github.com/gabrielmustiere/skills/compare/v1.2.0...v1.3.0
 [1.2.0]: https://github.com/gabrielmustiere/skills/compare/v1.1.0...v1.2.0
 [1.1.0]: https://github.com/gabrielmustiere/skills/compare/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/gabrielmustiere/skills/compare/v0.7.0...v1.0.0
