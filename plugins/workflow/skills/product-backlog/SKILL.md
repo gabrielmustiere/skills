@@ -1,6 +1,6 @@
 ---
 name: product-backlog
-description: Traduit la vision en domaines, capacités, parcours et backlog priorisé MVP/V2/V3. Prérequis docs/vision.md, produit docs/product-backlog.md (lu par feature-pitch). Déclenche sur "backlog produit", "périmètre fonctionnel", "découper en features", "après la vision".
+description: Traduit, enrichit ou refond le périmètre fonctionnel — domaines, capacités, parcours, règles transverses, backlog priorisé MVP/V2/V3. Prérequis docs/vision.md, produit/met à jour docs/product-backlog.md (lu par feature-pitch). 4 modes — Création, Enrichir (nouvelle capacité/feature), Éditer (corriger un élément), Pivot (refonte). Déclenche sur "backlog produit", "périmètre fonctionnel", "découper en features", "après la vision", "ajouter une capacité au backlog", "enrichir le backlog", "nouvelle feature à intégrer".
 user_invocable: true
 ---
 
@@ -31,12 +31,14 @@ Si l'utilisateur dérive vers la conception d'une feature pendant l'atelier, rec
 
 ## Quand lancer ce skill
 
-- **Après `/vision`** la première fois — pour traduire la vision en capacités concrètes et obtenir un backlog initial.
-- **À mi-parcours** quand le projet a accumulé des features et qu'on veut une vue consolidée du périmètre.
-- **Lors d'un pivot** — après mise à jour de la vision, refondre le backlog pour réaligner le backlog.
-- **En import** quand un backlog informel existe ailleurs (Notion, tickets, post-its) et qu'on veut le poser proprement dans le repo en cohérence avec la vision.
+Quatre modes, alignés avec ceux de `/vision`. Le mode pilote tout le déroulement :
 
-Si `docs/product-backlog.md` existe déjà, propose : **édition incrémentale** (modifs ciblées, historique git) ou **refonte complète** (l'ancien fichier est archivé sous `docs/product-backlog.md.archive-AAAA-MM-JJ`).
+- **Création** — premier passage après `/vision`, ou reprise d'un projet qui n'a jamais formalisé son backlog. Aussi pour un import depuis un backlog informel (Notion, tickets, post-its) qu'on veut poser proprement.
+- **Enrichir** — un projet vivant ajoute une nouvelle capacité, un nouveau parcours, une nouvelle règle transverse, ou de nouvelles features au backlog (souvent suite à un `/vision` en mode Enrichir, ou en réponse à un besoin émergent). On insère sans tout reprendre.
+- **Éditer** — un élément existant doit être corrigé (reformulation d'une capacité, ajustement d'un parcours, repriorisation d'une ligne du backlog, retrait d'une feature devenue obsolète).
+- **Pivot** — refonte complète, typiquement suite à un `/vision` en mode Pivot. L'ancien fichier est archivé sous `docs/product-backlog.md.archive-AAAA-MM-JJ`.
+
+Une application a un cycle de vie long. Le backlog est un **document vivant** que l'on revient enrichir et éditer à chaque cycle ; il ne doit pas exiger une session marathon pour ajouter une seule capacité.
 
 ## Règles du mode interactif
 
@@ -50,19 +52,64 @@ Si `docs/product-backlog.md` existe déjà, propose : **édition incrémentale**
 
 ## Déroulement
 
-### Phase 0 — Lecture du contexte
+### Phase 0 — Lecture du contexte et choix du mode
 
 Avant de challenger, fais l'inventaire :
 
-1. **Vision** : lire `docs/vision.md` intégralement. Si absent → arrêter et proposer `/vision`. Mémoriser : problème central, audience principale, principes, anti-objectifs, North Star, horizons.
-2. **Blueprint existant** : lire `docs/product-backlog.md` s'il existe. Demander : édition incrémentale ou refonte (pivot) ?
-3. **Stories existantes** : scanner `docs/story/` (juste les noms de dossiers et titres `feature.md` / `plan.md`) pour repérer ce qui a déjà été cadré ou livré. Le backlog ne doit pas réinventer ce qui existe.
+1. **Vision** : lire `docs/vision.md` intégralement, **y compris son changelog**. Si absent → arrêter et proposer `/vision`. Mémoriser : problème central, audience principale, principes, anti-objectifs, North Star, horizons, et les évolutions récentes (un enrichissement de vision non répercuté sur le backlog est un signal fort).
+2. **Blueprint existant** : lire `docs/product-backlog.md` s'il existe (domaines, capacités, parcours, règles transverses, backlog, changelog).
+3. **Stories existantes** : scanner `docs/story/` (juste les noms de dossiers et titres `feature.md` / `plan.md`) pour repérer ce qui a déjà été cadré ou livré. Le backlog ne doit pas réinventer ce qui existe — au contraire, l'enrichissement doit s'inscrire dans l'historique.
 4. **Stack** : lire `${CLAUDE_SKILL_DIR}/../../references/stacks/_detection.md` et appliquer la procédure. Le backlog reste **fonctionnel**, mais le stack oriente le découpage en domaines (ex: e-commerce Sylius → suggérer catalogue / panier / commande / paiement / promotion / fidélité).
 5. **Contexte projet** : `CLAUDE.md` racine + `README.md` si présents — conventions, contraintes métier, stakeholders.
 
-Si aucun de ces artifacts existe à part la vision, c'est normal : on construit le backlog à partir de zéro à partir de la vision.
+#### Choix du mode
 
-### Phase 1 — Domaines fonctionnels
+- **Si `docs/product-backlog.md` n'existe pas** : mode **Création** imposé, enchaîne sur Phase 1.
+- **Si `docs/product-backlog.md` existe** : demander explicitement à l'utilisateur via `AskUserQuestion` :
+
+  - **Création** — recommencer le backlog de zéro alors qu'il existe, sans déclarer un pivot stratégique. *Rare — préférer Pivot.*
+  - **Enrichir** — ajouter de nouveaux éléments (nouveau domaine, nouvelle capacité, nouveau parcours, nouvelle règle transverse, nouvelle ligne de backlog) sans toucher au reste. *Le cas le plus fréquent sur un projet vivant.*
+  - **Éditer** — corriger / reformuler / retirer un élément existant (renommer une capacité trop vague, ajuster un parcours, repriorisation MVP→V2, retrait d'une feature obsolète).
+  - **Pivot** — refonte complète, typiquement après un `/vision` en mode Pivot. L'ancien fichier est archivé.
+
+Si le changelog de `docs/vision.md` montre une évolution récente non encore répercutée ici, signale-le explicitement à l'utilisateur — ça oriente souvent vers le mode Enrichir ou Éditer ciblé sur les axes de vision modifiés.
+
+Note le mode choisi : il pilote toute la suite. Si aucun de ces artifacts existe à part la vision, c'est normal : on est en mode Création, et on construit le backlog à partir de la vision.
+
+### Phase 0bis — Cibler l'évolution *(modes Enrichir et Éditer uniquement)*
+
+En **Création** ou **Pivot**, ignore cette phase et déroule les Phases 1 → 5 complètement.
+
+En **Enrichir** ou **Éditer**, l'utilisateur ne re-déroule pas tout l'atelier : on cible l'élément concerné.
+
+Via `AskUserQuestion`, demande :
+
+1. **Quel(s) élément(s) sont concernés ?** Propose ces choix (multi-sélection) :
+   - Domaine (nouveau bloc métier, ou renommage/retrait d'un domaine)
+   - Capacité (dans un domaine existant ou nouveau)
+   - Parcours utilisateur
+   - Règle métier transverse (permissions, workflow d'état, contrainte, conformité, convention)
+   - Ligne de backlog (nouvelle feature, repriorisation, retrait)
+   - Couverture / dépendances (réorganisation des liens entre éléments)
+
+2. **Pour chaque élément ciblé**, demande la nature précise :
+   - En **Enrichir** : « Quel nouvel élément ajouter ? À quel domaine / parcours / capacité se rattache-t-il ? »
+   - En **Éditer** : « Quel élément existant veux-tu corriger / reformuler / retirer, et pourquoi ? »
+
+3. **Contrôle de cohérence** systématique avant rédaction :
+   - **Alignement vision** : l'ajout pointe-t-il vers un problème, une audience, un principe ou une North Star de `docs/vision.md` ? Sinon refus ou retour au mode Pivot (signal qu'on dérive).
+   - **Conflit anti-objectifs** : l'ajout contredit-il un anti-objectif de la vision ?
+   - **Rattachement** : une nouvelle feature s'accroche-t-elle à au moins une capacité existante (ou à une capacité elle-même ajoutée dans la même session) ? Une nouvelle capacité se rattache-t-elle à un domaine ? Un nouveau parcours référence-t-il des capacités identifiées ?
+   - **Doublon** : l'élément existe-t-il déjà sous un autre nom ?
+   - **Trou laissé par un retrait** : si on retire une capacité, vérifier qu'elle ne casse pas un parcours ou ne laisse pas une feature orpheline (proposer alors un retrait en cascade ou un renommage).
+   - **Priorisation cohérente** : une feature MVP qui dépend d'une capacité ajoutée en V2 = incohérence ; signaler.
+   - **Cohérence avec features livrées** : si une capacité a déjà été livrée (vérifier `docs/story/`), un Éditer doit refléter la réalité du code, pas la réécrire en silence.
+
+Quand l'évolution ciblée est claire et cohérente, **saute les Phases 1 → 5** (atelier complet inutile) et passe directement à la Phase 6 pour mettre à jour le doc.
+
+Si l'utilisateur cumule trop d'évolutions au fil de la discussion (plusieurs domaines retouchés, MVP/V2 réorganisé en profondeur), propose de basculer en mode Pivot plutôt que d'empiler des enrichissements jusqu'à perdre la cohérence.
+
+### Phase 1 — Domaines fonctionnels *(modes Création et Pivot)*
 
 Identifier les **3 à 8 grands blocs métier** qui structurent le produit. Un domaine = un ensemble cohérent de capacités liées par un même objet, acteur ou processus métier.
 
@@ -78,7 +125,7 @@ Pour chaque proposition de domaine, challenge :
 
 Reformule jusqu'à ce que chaque domaine soit nommé en 1-3 mots, immédiatement parlant pour un membre de l'équipe.
 
-### Phase 2 — Capacités par domaine
+### Phase 2 — Capacités par domaine *(modes Création et Pivot)*
 
 Pour chaque domaine identifié, lister les **capacités** : 3 à 10 par domaine. Une capacité = une chose que le produit doit savoir faire, exprimée sous forme de **verbe d'action utilisateur**.
 
@@ -99,7 +146,7 @@ Challenge sur :
 - **Acteur explicite** : qui peut le faire ? Tous ? Un rôle précis ? Le système lui-même ?
 - **Doublon** : la capacité figure-t-elle déjà dans un autre domaine sous un autre nom ?
 
-### Phase 3 — Parcours utilisateurs principaux
+### Phase 3 — Parcours utilisateurs principaux *(modes Création et Pivot)*
 
 Identifier les **3 à 7 parcours bout-en-bout** qui traversent les capacités. Un parcours = une histoire utilisateur complète, déclenchée par un événement, qui produit un état final.
 
@@ -120,7 +167,7 @@ Exemple :
 
 Les parcours servent à **prioriser** : si un parcours est central et très fréquent, ses capacités sont MVP. S'il est rare ou marginal, ses capacités peuvent attendre.
 
-### Phase 4 — Règles métier transverses
+### Phase 4 — Règles métier transverses *(modes Création et Pivot)*
 
 Lister les **règles applicables à plusieurs capacités ou parcours** (les règles spécifiques à une feature unique restent pour `/feature-pitch`). Catégories :
 
@@ -132,7 +179,7 @@ Lister les **règles applicables à plusieurs capacités ou parcours** (les règ
 
 Une règle transverse doit pouvoir être citée dans plusieurs specs de feature à venir. Si elle ne concerne qu'une capacité unique, elle ne va **pas** dans le backlog — elle ira dans la spec de la feature correspondante.
 
-### Phase 5 — Backlog dérivé
+### Phase 5 — Backlog dérivé *(modes Création et Pivot)*
 
 À partir des capacités (phase 2) et des parcours (phase 3), construire un **backlog priorisé de features candidates**.
 
@@ -156,11 +203,14 @@ Itérer la phase 5 jusqu'à ce que le backlog soit cohérent : pas de capacité 
 
 ### Phase 6 — Synthèse et rédaction
 
-Quand l'utilisateur valide explicitement, rédige `docs/product-backlog.md`.
+Quand l'utilisateur valide explicitement, rédige (ou met à jour) `docs/product-backlog.md` selon le mode :
 
-**Si `docs/product-backlog.md` existe déjà** :
-- Mode édition : modifier directement, garder l'historique git.
-- Mode refonte : `mv docs/product-backlog.md docs/product-backlog.md.archive-$(date +%Y-%m-%d)` puis créer le nouveau.
+- **Création** : créer le fichier complet à partir du format ci-dessous. Le changelog contient une seule ligne : `AAAA-MM-JJ — Création — backlog initial dérivé de la vision`.
+- **Enrichir** : insérer uniquement les éléments nouveaux dans les sections concernées (préserver tout le reste à l'identique). Mettre à jour les sections « Couverture » impactées. Ajouter une ligne au changelog : date, nature `Enrichir`, éléments ciblés, motif court (« nouvelle capacité C3.6 : un admin peut exporter le journal d'audit », « ajout features V2 paiement-en-ligne / abonnement-mensuel »).
+- **Éditer** : modifier en place les passages concernés, mettre à jour la couverture si l'édition affecte le rattachement capacité↔feature ou parcours↔capacité. Ajouter une ligne au changelog : date, nature `Éditer`, éléments ciblés, motif (« C2.4 reformulée », « slug-feature-X repriorisé MVP → V2 », « retrait feature obsolète slug-Y »).
+- **Pivot** : `mv docs/product-backlog.md docs/product-backlog.md.archive-$(date +%Y-%m-%d)` puis créer le nouveau fichier. Première ligne du nouveau changelog : `AAAA-MM-JJ — Pivot — refonte depuis docs/product-backlog.md.archive-AAAA-MM-JJ — motif : <résumé>`.
+
+Mets à jour la date « dernière mise à jour » dans le sous-titre du document dans tous les modes.
 
 **Format du fichier** :
 
@@ -169,7 +219,18 @@ Quand l'utilisateur valide explicitement, rédige `docs/product-backlog.md`.
 
 > Carte des capacités fonctionnelles et backlog priorisé dérivé de `docs/vision.md`.
 
-_Document vivant — révisé quand le périmètre fonctionnel évolue. Date de dernière mise à jour : AAAA-MM-JJ._
+_Document vivant — enrichi/édité au fil du cycle de vie, refondu lors d'un pivot. Date de dernière mise à jour : AAAA-MM-JJ._
+
+## Changelog
+
+Historique des évolutions structurantes (création, enrichissements, éditions ciblées, pivots). Lecture chronologique. Détails fins dans `git log`.
+
+| Date | Nature | Éléments | Motif |
+|------|--------|----------|-------|
+| AAAA-MM-JJ | Création | — | Backlog initial dérivé de la vision |
+| AAAA-MM-JJ | Enrichir | C3.6, V2/`export-audit-log` | Demande d'export audit (audience admin) |
+| AAAA-MM-JJ | Éditer | `slug-feature-X` | Repriorisation MVP → V2 (dépendance externe) |
+| AAAA-MM-JJ | Pivot | — | Refonte suite au pivot de la vision du AAAA-MM-JJ |
 
 ## Domaines fonctionnels
 
@@ -272,12 +333,18 @@ Après écriture, affiche un résumé (nombre de domaines, capacités, parcours,
 
 ### Phase 7 — Clôture
 
-Annonce :
+Adapte le message au mode :
 
-> Blueprint prêt : `docs/product-backlog.md`
-> Ce backlog sera lu par `/feature-pitch` à chaque nouvelle feature pour situer la spec dans le périmètre et reprendre le pitch du backlog.
-> Prochaine étape suggérée : `/feature-pitch <slug-mvp>` pour cadrer la première feature MVP du backlog.
+- **Création** ou **Pivot** :
+  > Blueprint prêt : `docs/product-backlog.md`
+  > Ce backlog sera lu par `/feature-pitch` à chaque nouvelle feature pour situer la spec dans le périmètre et reprendre le pitch du backlog.
+  > Prochaine étape suggérée : `/feature-pitch <slug-mvp>` pour cadrer la première feature MVP du backlog.
+  > *(Mode Pivot)* L'ancien backlog est archivé sous `docs/product-backlog.md.archive-AAAA-MM-JJ`. Les features en cours de cadrage (`docs/story/<NNN>-f-*/`) doivent être revues à la lumière du nouveau périmètre — certaines peuvent devenir obsolètes.
+
+- **Enrichir** ou **Éditer** :
+  > Backlog mis à jour : `docs/product-backlog.md` (mode <Enrichir|Éditer>, éléments : <liste>). Changelog enrichi.
+  > Prochaine étape suggérée : si une nouvelle ligne de backlog a été ajoutée en MVP, lance `/feature-pitch <slug>` pour la cadrer. Si une feature en cours s'appuie sur un élément que tu viens de modifier (capacité reformulée, parcours réorganisé), relis son `feature.md` pour vérifier la cohérence.
 
 ## Argument optionnel
 
-Si l'utilisateur lance `/product-backlog [intention]`, utilise l'intention comme angle d'attaque (ex: « focus sur le domaine paiements ») pour orienter les premières questions, puis applique la phase 0 normalement.
+Si l'utilisateur lance `/product-backlog [intention]`, utilise l'intention comme angle d'attaque (ex: « focus sur le domaine paiements », « ajouter capacités fidélité »). Applique toujours la Phase 0 complète (lecture des artifacts + choix explicite du mode), puis enchaîne sur la phase adaptée. **Ne devine jamais le mode à partir de l'argument** — toujours demander.

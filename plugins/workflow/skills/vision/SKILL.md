@@ -1,6 +1,6 @@
 ---
 name: vision
-description: Cadre la vision projet — problème, audience, valeur, North Star, principes, anti-objectifs. Phase 0, produit docs/vision.md (lu par product-backlog puis feature-pitch). Déclenche sur "définir la vision", "démarrer un projet", "north star", "on pivote".
+description: Cadre, enrichit ou pivote la vision projet — problème, audience, valeur, North Star, principes, anti-objectifs. Phase 0, produit/met à jour docs/vision.md (lu par product-backlog puis feature-pitch). 4 modes — Création, Enrichir (nouveau besoin/audience), Éditer (corriger un point), Pivot (refonte). Déclenche sur "définir la vision", "démarrer un projet", "north star", "on pivote", "ajouter une audience à la vision", "enrichir la vision", "nouveau besoin stratégique".
 user_invocable: true
 ---
 
@@ -20,11 +20,12 @@ Si l'utilisateur dérive vers une feature spécifique pendant l'atelier, recadre
 
 **Quand lancer ce skill** :
 
-- Démarrage d'un nouveau projet, avant même la première feature.
-- Pivot stratégique d'un projet existant (changement d'audience, de modèle, d'objectif).
-- Reprise d'un projet legacy dont la vision n'a jamais été écrite et qui dérive.
+- **Création** — démarrage d'un nouveau projet, avant même la première feature, ou reprise d'un projet legacy dont la vision n'a jamais été écrite.
+- **Enrichir** — un projet vivant accumule de nouveaux besoins stratégiques (nouvelle audience, nouvelle valeur, nouvel anti-objectif, nouvelle hypothèse à tracer) ; on les ajoute sans tout reprendre.
+- **Éditer** — un point précis de la vision est devenu imprécis ou faux (reformulation d'un principe, clarification d'un seuil, ajustement d'une métrique) ; on corrige en place.
+- **Pivot** — changement stratégique majeur (audience, modèle, objectif) ; l'ancienne vision est archivée et on en rédige une nouvelle.
 
-Si `docs/vision.md` existe déjà, propose au user soit de le **réviser** (mode édition), soit de **repartir de zéro** (mode pivot — l'ancien fichier est archivé sous `docs/vision.md.archive-AAAA-MM-JJ`).
+Une application a un cycle de vie long. La vision n'est pas un document gravé une fois pour toutes : elle est **vivante**. Les modes Enrichir et Éditer sont conçus pour que revenir poser un ajout ciblé prenne quelques minutes, pas une demi-journée d'atelier.
 
 ## Règles du mode interactif
 
@@ -37,20 +38,34 @@ Si `docs/vision.md` existe déjà, propose au user soit de le **réviser** (mode
 
 ## Déroulement
 
-### Phase 0 — État du projet et du document
+### Phase 0 — Inventaire et choix du mode
 
 Avant de challenger, fais l'inventaire :
 
-1. **Document existant** : lire `docs/vision.md` s'il existe. S'il existe, demander : édition incrémentale ou refonte complète (pivot) ?
+1. **Document existant** : vérifier la présence de `docs/vision.md`. S'il existe, le lire intégralement (problème, audience, valeur, métriques, principes, anti-objectifs, hypothèses, horizons, éventuel changelog).
 2. **Contexte projet** : lire le `CLAUDE.md` à la racine (et tout `README.md` ou `docs/README.md`) pour comprendre ce qui existe déjà.
 3. **Stack** : lire `${CLAUDE_SKILL_DIR}/../../references/stacks/_detection.md` et appliquer la procédure. La vision reste **non technique**, mais connaître le stack permet d'orienter les questions (ex: un projet Sylius oriente naturellement vers du e-commerce, un projet Symfony pur peut couvrir des cas plus variés).
-4. **Stories existantes** : si `docs/story/` contient déjà des entrées, les survoler (juste les titres et résumés). Si la vision est rédigée après plusieurs features livrées, elle doit être cohérente avec ce qui a été fait — pas le réécrire.
+4. **Stories existantes** : si `docs/story/` contient déjà des entrées, les survoler (juste les titres et résumés). Si la vision est révisée après plusieurs features livrées, l'enrichissement doit être cohérent avec ce qui a été fait — pas le contredire en silence.
 
-Si le projet est totalement vierge (ni `CLAUDE.md`, ni `README.md`, ni `docs/`), c'est normal : on construit la vision en partant du pitch user.
+#### Choix du mode
 
-### Phase 1 — Pitch initial
+- **Si `docs/vision.md` n'existe pas** : mode **Création** imposé, enchaîne directement sur Phase 1.
+- **Si `docs/vision.md` existe** : demander explicitement à l'utilisateur quel mode il vise. Utilise `AskUserQuestion` avec ces 4 options (descriptions à expliciter pour qu'il n'y ait pas d'ambiguïté) :
 
-Demande à l'utilisateur de pitcher son projet en **une phrase** :
+  - **Création** — la vision existante est obsolète au point qu'on préfère la reconstruire from scratch sans pour autant la déclarer comme un pivot stratégique. *Rare — préférer Pivot.*
+  - **Enrichir** — un ou plusieurs axes existants gagnent un nouvel élément (nouvelle audience secondaire, nouvelle hypothèse, nouvel anti-objectif, nouveau seuil de réussite, nouveau principe, nouvel horizon…) sans contredire ce qui est déjà écrit. *Le cas le plus fréquent sur un projet vivant.*
+  - **Éditer** — un élément existant doit être corrigé, reformulé ou affiné (clarifier un principe trop vague, ajuster une métrique, retirer une hypothèse invalidée, supprimer un anti-objectif devenu obsolète…). Pas d'ajout net : on retouche l'existant.
+  - **Pivot** — changement stratégique majeur (nouvelle audience principale, nouveau modèle économique, abandon d'un problème pour un autre). L'ancien fichier est archivé sous `docs/vision.md.archive-AAAA-MM-JJ` et on rédige une nouvelle vision.
+
+Note le mode choisi : il pilote toute la suite. Tout le reste du déroulement (quelles phases jouer, quoi écrire, quoi archiver) en dépend.
+
+Si le projet est totalement vierge (ni `CLAUDE.md`, ni `README.md`, ni `docs/`), c'est normal : on est en mode Création, et on construit la vision en partant du pitch user.
+
+### Phase 1 — Pitch initial *(modes Création et Pivot uniquement)*
+
+En **Enrichir** ou **Éditer**, le pitch est déjà figé dans `docs/vision.md` — saute directement à la Phase 1bis.
+
+En **Création** ou **Pivot**, demande à l'utilisateur de pitcher son projet en **une phrase** :
 
 > « Mon projet, c'est [ce que c'est] pour [pour qui], qui résout [quel problème] en [comment]. »
 
@@ -58,9 +73,41 @@ Si la phrase contient des mots vagues (« plateforme », « solution », « exp�
 
 Si l'utilisateur a déjà donné un pitch dans son message ou via l'argument `$ARGUMENTS`, repars de là directement.
 
-### Phase 2 — Challenge (boucle interactive)
+### Phase 1bis — Cibler l'évolution *(modes Enrichir et Éditer uniquement)*
 
-Pour chaque axe, challenge sur ces angles. **Pioche 1-2 axes par tour**, ne déroule pas tout d'un coup. Adapte l'ordre selon ce qui est le plus flou dans le pitch.
+L'utilisateur ne re-déroule pas tout l'atelier : on cible l'axe (ou les axes) concerné(s).
+
+Demande explicitement, via `AskUserQuestion` :
+
+1. **Quel(s) axe(s) sont concernés ?** Propose ces choix (multi-sélection) :
+   - Problème
+   - Audience (principale, secondaire, hors-cible)
+   - Proposition de valeur
+   - Métriques (North Star, secondaires, seuils, signal d'arrêt)
+   - Principes produit
+   - Anti-objectifs
+   - Hypothèses critiques
+   - Risques externes
+   - Horizons
+
+2. **Pour chaque axe ciblé**, demande la nature précise de l'évolution :
+   - En **Enrichir** : « Quel nouvel élément veux-tu ajouter à cet axe ? » (et reformule comme un ajout cohérent, pas comme une réécriture).
+   - En **Éditer** : « Quel élément existant veux-tu corriger / reformuler / retirer, et pourquoi ? »
+
+3. **Contrôle de cohérence** — avant d'écrire, challenge systématiquement :
+   - L'ajout contredit-il un anti-objectif déjà énoncé ? Un principe ?
+   - L'ajout reste-t-il aligné sur le problème central et l'audience principale ? Si non, est-ce qu'on est en train de faire un Pivot déguisé ? (Si oui, repropose le mode Pivot.)
+   - L'élément retiré laisse-t-il un trou (un anti-objectif retiré était-il invoqué par un principe ?) ?
+
+Quand l'évolution ciblée est claire et cohérente, **saute la Phase 2** (challenge complet inutile) et passe directement à la Phase 3 pour mettre à jour le doc.
+
+Si en cours de discussion l'utilisateur veut en fait revisiter plusieurs axes en profondeur, propose-lui de basculer en mode Pivot pour faire les choses proprement plutôt que d'empiler des enrichissements jusqu'à perdre la cohérence.
+
+### Phase 2 — Challenge (boucle interactive) *(modes Création et Pivot uniquement)*
+
+En **Enrichir** ou **Éditer**, cette phase a été remplacée par la Phase 1bis (ciblée sur l'axe concerné). Ne déroule **pas** le challenge complet — ce serait infliger à l'utilisateur un atelier qu'il a déjà passé.
+
+En **Création** ou **Pivot**, pour chaque axe, challenge sur ces angles. **Pioche 1-2 axes par tour**, ne déroule pas tout d'un coup. Adapte l'ordre selon ce qui est le plus flou dans le pitch.
 
 #### Axe 1 — Le problème (le « pourquoi »)
 
@@ -122,12 +169,14 @@ Continue à itérer tant que l'utilisateur n'a pas signalé qu'il est satisfait.
 
 ### Phase 3 — Synthèse et rédaction
 
-Quand l'utilisateur valide, rédige `docs/vision.md`.
+Quand l'utilisateur valide, rédige (ou met à jour) `docs/vision.md` selon le mode :
 
-**Si `docs/vision.md` existe déjà** :
+- **Création** : créer le fichier complet à partir du format ci-dessous. Le changelog contient une seule ligne : `AAAA-MM-JJ — Création — vision initiale`.
+- **Enrichir** : modifier uniquement les sections concernées (préserver tout le reste à l'identique). Ajouter une ligne au changelog avec la date, la nature `Enrichir`, l'axe ciblé et un motif court (« nouvelle audience secondaire : fleet manager », « anti-objectif : pas de marketplace », etc.). Garder l'historique git.
+- **Éditer** : modifier en place les passages concernés. Ajouter une ligne au changelog avec la date, la nature `Éditer`, l'axe ciblé et un motif court (« reformulation du principe P2 », « seuil 1 an ramené de 5000 à 2000 utilisateurs actifs »).
+- **Pivot** : `mv docs/vision.md docs/vision.md.archive-$(date +%Y-%m-%d)` puis créer le nouveau fichier. Dans le nouveau changelog, première ligne = `AAAA-MM-JJ — Pivot — refonte depuis docs/vision.md.archive-AAAA-MM-JJ — motif : <résumé du pivot>`.
 
-- Mode édition : modifier directement, garder l'historique git.
-- Mode pivot : `mv docs/vision.md docs/vision.md.archive-$(date +%Y-%m-%d)` puis créer le nouveau.
+Mets à jour la date « dernière mise à jour » dans le sous-titre du document dans tous les modes.
 
 **Format du fichier** :
 
@@ -136,7 +185,18 @@ Quand l'utilisateur valide, rédige `docs/vision.md`.
 
 > Pitch en une phrase : [ce que c'est] pour [audience] qui résout [problème] en [comment].
 
-_Document fondateur — révisé uniquement lors d'un pivot stratégique. Date de dernière mise à jour : AAAA-MM-JJ._
+_Document vivant — enrichi au fil du cycle de vie, refondu lors d'un pivot stratégique. Date de dernière mise à jour : AAAA-MM-JJ._
+
+## Changelog
+
+Historique des évolutions structurantes (création, enrichissements, éditions ciblées, pivots). Lecture du haut vers le bas = ordre chronologique. Détails fins dans `git log`.
+
+| Date | Nature | Axe | Motif |
+|------|--------|-----|-------|
+| AAAA-MM-JJ | Création | — | Vision initiale |
+| AAAA-MM-JJ | Enrichir | Audience | Ajout audience secondaire « fleet manager » |
+| AAAA-MM-JJ | Éditer | Principes | Reformulation du principe P2 (trop vague) |
+| AAAA-MM-JJ | Pivot | — | Refonte : changement d'audience principale (cf. archive du AAAA-MM-JJ) |
 
 ## Le problème
 
@@ -248,12 +308,18 @@ Après écriture, affiche un résumé et demande si des ajustements sont nécess
 
 ### Phase 4 — Clôture
 
-Annonce :
+Adapte le message au mode :
 
-> Vision prête : `docs/vision.md`
-> Cette vision sera lue par `/product-backlog` (pour dériver le périmètre fonctionnel et le backlog priorisé) puis par `/feature-pitch` à chaque nouvelle feature pour challenger l'alignement.
-> Prochaine étape suggérée : `/product-backlog` pour traduire la vision en domaines, capacités, parcours et backlog priorisé. Si tu veux cadrer immédiatement une feature précise sans passer par le backlog, `/feature-pitch` reste utilisable directement (mais sans vue d'ensemble du périmètre).
+- **Création** ou **Pivot** :
+  > Vision prête : `docs/vision.md`
+  > Cette vision sera lue par `/product-backlog` (pour dériver le périmètre fonctionnel et le backlog priorisé) puis par `/feature-pitch` à chaque nouvelle feature pour challenger l'alignement.
+  > Prochaine étape suggérée : `/product-backlog` pour traduire la vision en domaines, capacités, parcours et backlog priorisé. Si tu veux cadrer immédiatement une feature précise sans passer par le backlog, `/feature-pitch` reste utilisable directement (mais sans vue d'ensemble du périmètre).
+  > *(Mode Pivot)* L'ancienne vision est archivée sous `docs/vision.md.archive-AAAA-MM-JJ`. Le backlog devrait probablement être refondu également (`/product-backlog` en mode Pivot) pour réaligner sur cette nouvelle vision.
+
+- **Enrichir** ou **Éditer** :
+  > Vision mise à jour : `docs/vision.md` (mode <Enrichir|Éditer>, axe(s) : <liste>). Changelog enrichi.
+  > Impact possible sur le backlog : si l'évolution introduit/modifie une audience, une capacité attendue, un principe ou un anti-objectif, lance `/product-backlog` en mode Enrichir ou Éditer pour répercuter. Si une feature en cours s'appuie sur un point que tu viens de modifier, vérifie son `feature.md`.
 
 ## Argument optionnel
 
-Si l'utilisateur lance `/vision [pitch initial]`, utilise la description comme pitch de phase 1, applique la phase 0 (lecture des artifacts existants), puis enchaîne directement sur le challenge phase 2.
+Si l'utilisateur lance `/vision [intention libre]`, utilise la description comme pitch initial (mode Création/Pivot) ou comme angle d'attaque (mode Enrichir/Éditer). Applique toujours la Phase 0 (lecture des artifacts existants + choix explicite du mode), puis enchaîne sur la phase adaptée. **Ne devine jamais le mode à partir de l'argument** — toujours demander.
