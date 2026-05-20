@@ -64,13 +64,22 @@ Avant tout, tape `/workflow:help` dans Claude Code. Tu obtiens le sommaire du pi
 
 ### Tour des skills, dans l'ordre où tu les rencontreras
 
-#### Phase 0 — Poser le décor (une fois par projet)
+#### Phase 0 — Poser le décor (documents vivants)
 
-Ces deux skills se lancent en tout début de projet, et seulement lors d'un pivot stratégique ensuite. Ils sont facultatifs au sens strict (tu peux sauter direct au track feature), mais fortement recommandés dès que le projet dépasse 3-4 features.
+Ces deux skills se lancent en tout début de projet. Ils sont facultatifs au sens strict (tu peux sauter direct au track feature), mais fortement recommandés dès que le projet dépasse 3-4 features. **Leur particularité : ce sont des documents vivants** que tu reviendras enrichir, éditer ou pivoter tout au long de la vie du projet — pas des artefacts gravés une fois pour toutes.
 
-- **`/workflow:vision`** — Atelier de cadrage qui produit `docs/vision.md`. Claude joue le rôle d'un sparring partner et challenge tes réponses : *quel problème exactement, pour qui, comment mesure-t-on le succès (North Star), quels principes non-négociables, et qu'est-ce qu'on refuse explicitement de faire (anti-objectifs) ?* Le document devient le verrou d'alignement de toutes les features futures.
+Les deux skills partagent les **mêmes 4 modes d'usage**, et maintiennent chacun un **changelog interne** qui trace l'historique des évolutions (date, mode, axe ciblé, motif court) :
 
-- **`/workflow:product-backlog`** — Une fois la vision validée, ce skill la traduit en carte des **domaines fonctionnels** → **capacités** → **parcours utilisateur** → **règles transverses** → **backlog priorisé MVP/V2/V3**. Il pose le périmètre fonctionnel et l'ordre de bataille. Le document est vivant : tu le révises à chaque repriorisation ou nouvelle capacité identifiée.
+- **Création** — premier passage, fichier vierge. Atelier complet.
+- **Enrichir** — ajout d'un élément sans toucher au reste (nouvelle audience, nouvel anti-objectif, nouvelle capacité, nouvelle ligne de backlog…). *Le cas le plus fréquent sur un projet vivant — quelques minutes au lieu d'une demi-journée.*
+- **Éditer** — correction ou reformulation d'un élément existant (préciser un principe vague, ajuster une métrique, reformuler une capacité, repriorisation).
+- **Pivot** — refonte complète. L'ancien fichier est archivé sous `docs/<nom>.md.archive-AAAA-MM-JJ` et un nouveau est rédigé. Typiquement, un pivot de vision entraîne un pivot du backlog.
+
+Si l'évolution est ciblée (`Enrichir` ou `Éditer`), le skill saute la phase de challenge complète et déroule une mini-procédure dédiée. Le mode est **toujours demandé explicitement** quand le fichier existe — jamais deviné.
+
+- **`/workflow:vision`** — Atelier de cadrage qui produit `docs/vision.md`. Claude joue le rôle d'un sparring partner et challenge tes réponses : *quel problème exactement, pour qui, comment mesure-t-on le succès (North Star), quels principes non-négociables, et qu'est-ce qu'on refuse explicitement de faire (anti-objectifs) ?* Le document devient le verrou d'alignement de toutes les features futures. Relance-le en mode `Enrichir` quand une nouvelle audience ou un nouvel anti-objectif émerge, en mode `Éditer` pour corriger un point, en mode `Pivot` lors d'un changement stratégique majeur.
+
+- **`/workflow:product-backlog`** — Une fois la vision validée, ce skill la traduit en carte des **domaines fonctionnels** → **capacités** → **parcours utilisateur** → **règles transverses** → **backlog priorisé MVP/V2/V3**. Il pose le périmètre fonctionnel et l'ordre de bataille. Relance-le en mode `Enrichir` à chaque nouvelle capacité ou feature à intégrer au backlog, en mode `Éditer` pour repriorisation, en mode `Pivot` (typiquement après un pivot de vision). Un enrichissement de vision non répercuté sur le backlog est un signal fort à corriger.
 
 #### Track feature — Apporter de la valeur utilisateur
 
@@ -152,7 +161,7 @@ Session 2 — Première feature
 
 | Plugin | Version | Description |
 | --- | --- | --- |
-| `workflow` | `0.17.0` | Pipeline de développement stack-agnostique. **Phase 0** : `vision` produit `docs/vision.md` (problème, audience, North Star, principes, anti-objectifs). **Phase 0.5** : `product-backlog` traduit la vision en domaines, capacités, parcours et backlog priorisé MVP/V2/V3 → `docs/product-backlog.md`. Ces deux documents fondateurs sont lus par `feature-pitch` pour challenger l'alignement et reprendre le pitch backlog. Trois tracks symétriques : **feature** (`feature-pitch` → `feature-design` → `feature`), **refacto** (`refactor-plan` → `refactor`), **évolution technique** (`tech-plan` → `tech`). Étapes communes : `review` → `commit` → `report` → `sync`. Outillage transverse : `migrate-legacy`, `import-external`, `release`, `doc-feature` (carte d'une feature existante, stack-aware). Détection auto du stack (Symfony, Sylius). |
+| `workflow` | `0.17.0` | Pipeline de développement stack-agnostique. **Phase 0** : `vision` produit `docs/vision.md` (problème, audience, North Star, principes, anti-objectifs). **Phase 0.5** : `product-backlog` traduit la vision en domaines, capacités, parcours et backlog priorisé MVP/V2/V3 → `docs/product-backlog.md`. Ces deux documents fondateurs sont **vivants**, maintenus via 4 modes (Création / Enrichir / Éditer / Pivot) avec changelog interne, et lus par `feature-pitch` pour challenger l'alignement et reprendre le pitch depuis le backlog. Trois tracks symétriques : **feature** (`feature-pitch` → `feature-design` → `feature`), **refacto** (`refactor-plan` → `refactor`), **évolution technique** (`tech-plan` → `tech`). Étapes communes : `review` → `commit` → `report` → `sync`. Outillage transverse : `migrate-legacy`, `import-external`, `release`, `doc-feature` (carte d'une feature existante, stack-aware). Détection auto du stack (Symfony, Sylius). |
 | `sylius` | `0.26.0` | Skills pour travailler avec Sylius (conventions, entités traduisibles, customization de modèle/form/grid/template/styles/dynamic/validation/state-machine/translation/fixtures, commandes, e-mails, promotions panier, coupons, ajustements). Pour la documentation d'une feature existante, voir `workflow:doc-feature`. |
 | `symfony` | `0.12.0` | 25 skills Symfony/Doctrine groupées par domaine : **doctrine** (entity, migration, query), **events** (dispatch, listen, subscribe), **forms** (type, handle, render, advanced), **http** (controller-action, routing-define), **http-client** (request, response, async, test), **messenger** (async), **serializer** (use), **object-mapper**, **services** (define, wire, tags), **validation** (constraints, groups, use). Relayées par `workflow` quand le stack détecté est Symfony/Sylius. |
 | `editorial` | `0.3.0` | Pipeline éditorial en trois étapes — `article-plan` (cadrage), `article` (rédaction guidée + vérifications + traduction) et `article-rework` (retouche chirurgicale d'une portion d'un article publié) — pour articles de blog et fiches side-project. Stack-agnostique : détecte Astro Content Collections, Next.js MDX, Hugo, Jekyll ou markdown brut. Artifacts unifiés sous `docs/story/a-NNN-slug/`. |
@@ -164,8 +173,8 @@ Session 2 — Première feature
 | Skill | Rôle |
 | --- | --- |
 | [`help`](plugins/workflow/skills/help/SKILL.md) | Sommaire du workflow, tracks, skills et artifacts |
-| [`vision`](plugins/workflow/skills/vision/SKILL.md) | **Phase 0** — atelier de cadrage de la vision projet (problème, audience, valeur, North Star, principes, anti-objectifs) → `docs/vision.md` |
-| [`product-backlog`](plugins/workflow/skills/product-backlog/SKILL.md) | **Phase 0.5** — traduit la vision en domaines, capacités, parcours et backlog priorisé MVP/V2/V3 → `docs/product-backlog.md` |
+| [`vision`](plugins/workflow/skills/vision/SKILL.md) | **Phase 0** — atelier de cadrage de la vision projet (problème, audience, valeur, North Star, principes, anti-objectifs) → `docs/vision.md`. Document vivant, 4 modes (Création / Enrichir / Éditer / Pivot) avec changelog. |
+| [`product-backlog`](plugins/workflow/skills/product-backlog/SKILL.md) | **Phase 0.5** — traduit la vision en domaines, capacités, parcours et backlog priorisé MVP/V2/V3 → `docs/product-backlog.md`. Document vivant, 4 modes (Création / Enrichir / Éditer / Pivot) avec changelog. |
 | [`feature-pitch`](plugins/workflow/skills/feature-pitch/SKILL.md) | Atelier de cadrage d'une idée de feature → `feature.md` |
 | [`feature-design`](plugins/workflow/skills/feature-design/SKILL.md) | Design technique d'une feature cadrée → `design.md` |
 | [`feature`](plugins/workflow/skills/feature/SKILL.md) | Implémentation guidée à partir du design |
