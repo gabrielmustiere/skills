@@ -1,9 +1,20 @@
 ---
 name: commit
-description: Commit Conventional Commits v1.0.0 en français depuis le diff courant — propose le message, commit + push après validation. Déclenche sur "commit", "push", "envoie ce changement", "finis ce truc", "c'est prêt tu peux pusher".
+description: Commit Conventional Commits v1.0.0 en français depuis le diff courant — analyse les fichiers stagés et non-stagés, génère un message respectant le format `type(scope): sujet` (avec corps si pertinent), demande validation explicite puis exécute commit + push. Refuse de commit les secrets et alerte sur les fichiers sensibles (.env, credentials).
 user_invocable: true
 disable-model-invocation: true
 argument-hint: "[--no-push] [--amend]"
+model: haiku
+allowed-tools:
+  - Read
+  - Bash(git status:*)
+  - Bash(git diff:*)
+  - Bash(git log:*)
+  - Bash(git add:*)
+  - Bash(git commit:*)
+  - Bash(git push:*)
+  - Bash(git rev-parse:*)
+  - Bash(git config:*)
 ---
 
 # /commit — Commit & push conventionnel

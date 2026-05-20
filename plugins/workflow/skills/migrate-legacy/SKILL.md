@@ -1,7 +1,17 @@
 ---
 name: migrate-legacy
-description: Migre `docs/story/<f|r|t>-NNN-<slug>/` (workflow < 0.8) vers `docs/story/NNN-<f|r|t>-<slug>/` (compteur en tête, ordre chronologique). Renommage via `git mv` pour préserver l'historique. Déclenche sur "migre l'ancien format", "renomme docs/story/".
+description: Migre l'ancien format `docs/story/<f|r|t>-NNN-<slug>/` (workflow < 0.8) vers le nouveau format `docs/story/NNN-<f|r|t>-<slug>/` avec compteur global en tête pour un tri chronologique lexicographique. Renomme via `git mv` pour préserver l'historique git des fichiers et liste les références à mettre à jour dans la doc.
 user_invocable: true
+disable-model-invocation: true
+model: haiku
+allowed-tools:
+  - Read
+  - Glob
+  - Bash(ls:*)
+  - Bash(find:*)
+  - Bash(git status:*)
+  - Bash(git mv:*)
+  - Bash(git log:*)
 ---
 
 # /migrate-legacy — Migration de l'ancien format de dossiers `docs/story/`

@@ -1,8 +1,18 @@
 ---
 name: test-scenario
-description: Joue un scénario utilisateur via Playwright MCP — pilote un vrai navigateur pour valider un parcours, reproduire un bug. Déclenche sur "teste manuellement le checkout", "vérifie ce parcours en live", "reproduis ce bug", "simule un user".
+description: Joue un scénario utilisateur via Playwright ou Chrome DevTools MCP — pilote un vrai navigateur pour valider un parcours fonctionnel de bout en bout, reproduire un bug ou simuler un comportement utilisateur. Capture les états visuels, erreurs console et requêtes réseau au fil du scénario pour produire un constat exploitable.
 user_invocable: true
+disable-model-invocation: true
 argument-hint: "[scénario ou url]"
+model: sonnet
+allowed-tools:
+  - Read
+  - Grep
+  - Glob
+  - Bash(ls:*)
+  - Bash(curl:*)
+  - mcp__chrome-devtools__*
+  - mcp__playwright__*
 ---
 
 # /test-scenario — Test de scénario via Playwright MCP

@@ -1,7 +1,18 @@
 ---
 name: doc-feature
-description: Documente une feature déjà implémentée dans n'importe quel projet — produit `docs/feature-map/NNN-slug/feature.md` avec entités, flux, routes, services, templates, points d'extension. Stack-agnostique avec détection auto (Sylius, Symfony, autre). Déclenche sur "comment marche X", "trace cette feature", "documente le module Y", "carte du code", "onboarding sur Z".
+description: Documente une feature déjà implémentée en lisant le code — trace les entités, flux, routes, services, templates et points d'extension dans `docs/feature-map/NNN-slug/feature.md`. Stack-agnostique avec détection automatique (Sylius, Symfony, autre). Utile pour l'onboarding sur un module existant ou la cartographie d'un domaine du code.
 user_invocable: true
+disable-model-invocation: true
+model: sonnet
+allowed-tools:
+  - Read
+  - Grep
+  - Glob
+  - Write
+  - Edit
+  - Bash(ls:*)
+  - Bash(find:*)
+  - Bash(git log:*)
 ---
 
 # /doc-feature — Documentation d'une feature existante

@@ -1,8 +1,19 @@
 ---
 name: sync
-description: Réaligne la doc d'intention (feature.md + design.md, ou plan.md) avec le code réellement livré — applique les écarts validés et trace dans un changelog. Déclenche sur "synchronise la doc", "réaligne la spec", "la doc n'est plus à jour".
+description: Réaligne la doc d'intention (`feature.md`+`design.md` ou `plan.md`) sur le code réellement livré — applique à la spec ou au plan les écarts validés dans le `report.md`, et trace chaque modification dans un changelog en fin de document pour garder l'historique des décisions. À lancer après `report` quand le code a divergé.
 user_invocable: true
 disable-model-invocation: true
+model: sonnet
+allowed-tools:
+  - Read
+  - Write
+  - Edit
+  - Grep
+  - Glob
+  - Bash(git log:*)
+  - Bash(git diff:*)
+  - Bash(git show:*)
+  - Bash(ls:*)
 ---
 
 # /sync — Réalignement de la documentation

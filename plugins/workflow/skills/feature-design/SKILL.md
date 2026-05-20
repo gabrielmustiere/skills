@@ -1,7 +1,17 @@
 ---
 name: feature-design
-description: Conception technique d'une feature déjà cadrée — produit docs/story/<NNN>-f-<slug>/design.md. Déclenche sur "designe cette feature", "comment on code ça", "quelle approche technique", "passe de la spec au plan" dès qu'un feature.md existe.
+description: Conçoit techniquement une feature déjà cadrée — choix d'architecture, modèle de données, points d'intégration, contrats d'API, stratégie de test, impacts sur l'existant. Prérequis un feature.md validé. Produit `docs/story/<NNN>-f-<slug>/design.md`, lu ensuite par la skill `feature` pour l'implémentation.
 user_invocable: true
+disable-model-invocation: true
+model: opus
+allowed-tools:
+  - Read
+  - Grep
+  - Glob
+  - Write
+  - Edit
+  - Bash(ls:*)
+  - Bash(find:*)
 ---
 
 # /feature-design — Atelier de conception technique

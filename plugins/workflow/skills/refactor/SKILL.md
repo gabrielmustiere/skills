@@ -1,8 +1,17 @@
 ---
 name: refactor
-description: Exécute un refacto cadré — verrou tests de caractérisation AVANT le code, étape par étape avec vérif de non-régression. Déclenche sur "déroule ce refacto", "exécute le plan de refacto", "on attaque <slug>" dès qu'un plan.md existe.
+description: Exécute un refacto cadré — vérifie d'abord que les tests de caractérisation sont en place et passent (verrou bloquant), puis applique le plan étape par étape avec une vérification de non-régression après chaque modification. Prérequis un `plan.md` existant sous `docs/story/<NNN>-r-<slug>/`. Argument optionnel : le slug à reprendre.
 user_invocable: true
+disable-model-invocation: true
 argument-hint: "[slug-refacto]"
+model: opus
+allowed-tools:
+  - Read
+  - Write
+  - Edit
+  - Grep
+  - Glob
+  - Bash
 ---
 
 # /refactor — Exécution guidée d'un refacto
