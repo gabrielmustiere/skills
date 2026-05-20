@@ -1,7 +1,16 @@
 ---
 name: vision
-description: Cadre, enrichit ou pivote la vision projet — problème, audience, valeur, North Star, principes, anti-objectifs. Phase 0, produit/met à jour docs/vision.md (lu par product-backlog puis feature-pitch). 4 modes — Création, Enrichir (nouveau besoin/audience), Éditer (corriger un point), Pivot (refonte). Déclenche sur "définir la vision", "démarrer un projet", "north star", "on pivote", "ajouter une audience à la vision", "enrichir la vision", "nouveau besoin stratégique".
+description: Définit la vision projet (phase 0 du workflow) — problème adressé, audiences, valeur, North Star mesurable, principes directeurs, anti-objectifs explicites. Quatre modes d'usage : Création (initial), Enrichir (nouveau besoin/audience), Éditer (correction d'un point), Pivot (refonte). Produit ou met à jour `docs/vision.md` avec changelog, lu ensuite par `product-backlog` puis `feature-pitch`.
 user_invocable: true
+disable-model-invocation: true
+model: opus
+allowed-tools:
+  - Read
+  - Write
+  - Edit
+  - Glob
+  - Bash(ls:*)
+  - Bash(mkdir:*)
 ---
 
 # /vision — Atelier de cadrage de la vision projet
@@ -75,97 +84,15 @@ Si l'utilisateur a déjà donné un pitch dans son message ou via l'argument `$A
 
 ### Phase 1bis — Cibler l'évolution *(modes Enrichir et Éditer uniquement)*
 
-L'utilisateur ne re-déroule pas tout l'atelier : on cible l'axe (ou les axes) concerné(s).
+En **Enrichir** ou **Éditer**, charge `${CLAUDE_SKILL_DIR}/references/mode-evolution.md` et déroule la procédure (3 étapes : identifier l'axe, préciser la nature, contrôle de cohérence). En sortie, saute la Phase 2 et va directement à la Phase 3.
 
-Demande explicitement, via `AskUserQuestion` :
-
-1. **Quel(s) axe(s) sont concernés ?** Propose ces choix (multi-sélection) :
-   - Problème
-   - Audience (principale, secondaire, hors-cible)
-   - Proposition de valeur
-   - Métriques (North Star, secondaires, seuils, signal d'arrêt)
-   - Principes produit
-   - Anti-objectifs
-   - Hypothèses critiques
-   - Risques externes
-   - Horizons
-
-2. **Pour chaque axe ciblé**, demande la nature précise de l'évolution :
-   - En **Enrichir** : « Quel nouvel élément veux-tu ajouter à cet axe ? » (et reformule comme un ajout cohérent, pas comme une réécriture).
-   - En **Éditer** : « Quel élément existant veux-tu corriger / reformuler / retirer, et pourquoi ? »
-
-3. **Contrôle de cohérence** — avant d'écrire, challenge systématiquement :
-   - L'ajout contredit-il un anti-objectif déjà énoncé ? Un principe ?
-   - L'ajout reste-t-il aligné sur le problème central et l'audience principale ? Si non, est-ce qu'on est en train de faire un Pivot déguisé ? (Si oui, repropose le mode Pivot.)
-   - L'élément retiré laisse-t-il un trou (un anti-objectif retiré était-il invoqué par un principe ?) ?
-
-Quand l'évolution ciblée est claire et cohérente, **saute la Phase 2** (challenge complet inutile) et passe directement à la Phase 3 pour mettre à jour le doc.
-
-Si en cours de discussion l'utilisateur veut en fait revisiter plusieurs axes en profondeur, propose-lui de basculer en mode Pivot pour faire les choses proprement plutôt que d'empiler des enrichissements jusqu'à perdre la cohérence.
+En **Création** ou **Pivot**, ignore cette phase.
 
 ### Phase 2 — Challenge (boucle interactive) *(modes Création et Pivot uniquement)*
 
-En **Enrichir** ou **Éditer**, cette phase a été remplacée par la Phase 1bis (ciblée sur l'axe concerné). Ne déroule **pas** le challenge complet — ce serait infliger à l'utilisateur un atelier qu'il a déjà passé.
+En **Enrichir** ou **Éditer**, cette phase a été remplacée par la Phase 1bis — ne déroule **pas** le challenge complet.
 
-En **Création** ou **Pivot**, pour chaque axe, challenge sur ces angles. **Pioche 1-2 axes par tour**, ne déroule pas tout d'un coup. Adapte l'ordre selon ce qui est le plus flou dans le pitch.
-
-#### Axe 1 — Le problème (le « pourquoi »)
-
-- Quel **irritant concret** ce projet résout ? Décris une situation réelle où quelqu'un perd du temps, de l'argent, ou est frustré.
-- Comment ce problème est-il **résolu aujourd'hui** ? (Concurrent, bricolage Excel, n'est pas résolu du tout ?)
-- Pourquoi les solutions existantes sont **insuffisantes** ? Sois précis — « elles sont mal foutues » ne compte pas.
-- Quelle est l'**ampleur** du problème ? Combien de fois par jour/semaine/an quelqu'un le rencontre ?
-
-Test de pertinence : si tu enlèves le projet, est-ce que quelqu'un remarque ? Qui ? Quand ?
-
-#### Axe 2 — L'audience cible
-
-- Qui est l'**utilisateur principal** ? Pas « les PME », pas « les développeurs » — un **persona précis** : rôle, contexte, ce qu'il fait dans sa journée, ce qui le bloque.
-- Combien sont-ils, à la louche ? (10, 1 000, 100 000 ?)
-- Y a-t-il des **utilisateurs secondaires** (admin, partenaire, intégrateur) avec des besoins distincts ?
-- Quel utilisateur **n'est pas** la cible ? Ce qu'on n'adresse pas est aussi important que ce qu'on adresse.
-
-Test de pertinence : si tu mets ton produit dans les mains de la cible, qu'est-ce qu'elle dit dans les 5 premières minutes ?
-
-#### Axe 3 — La proposition de valeur
-
-- Qu'est-ce que l'utilisateur **gagne** concrètement (temps, argent, sécurité, sérénité, statut) ?
-- Pourquoi te **choisir** plutôt qu'une alternative existante ? Une raison concrète, pas « parce qu'on est mieux ».
-- Quel est le **« unfair advantage »** : qu'est-ce que tu as / fais que d'autres ne peuvent pas reproduire facilement (donnée propriétaire, expertise, distribution, intégration) ?
-- Si tu devais le **vendre en 30 secondes** à un sceptique, qu'est-ce que tu dirais ?
-
-Test de pertinence : la valeur s'exprime-t-elle en chiffre ou en bénéfice nommé ? « Tu fais ta compta de fin de mois en 20 min au lieu de 4h » est utile, « tu gagnes du temps » non.
-
-#### Axe 4 — North Star metric et métriques de succès
-
-- Quelle est **LA** métrique unique qui dit « ce projet réussit » ? (Pas du vanity metric type « nombre d'inscrits », mais une métrique qui reflète la valeur livrée — ex: « nombre de factures émises par utilisateur actif chaque mois ».)
-- Quelles **métriques secondaires** indiquent qu'on construit bien le funnel (acquisition, activation, rétention, monétisation) ?
-- Quel **seuil minimum** indique qu'on a réussi à 1 an, à 3 ans ?
-- Quel **signal d'échec** te ferait dire « ce projet ne marche pas, on arrête » ?
-
-Test de pertinence : la métrique peut-elle être mesurée aujourd'hui ? Si non, comment compte-t-on la mesurer ?
-
-#### Axe 5 — Principes produit (do's & don'ts)
-
-- Quels **3 à 5 principes** doivent guider toutes les décisions produit ? (Ex: « toujours préférer l'automatisation à un nouveau formulaire », « pas de feature qu'un comptable ne comprend pas en 30 secondes ».)
-- Quelles **anti-features** refuses-tu explicitement ? (Ex: « pas de chat IA », « pas de mode hors-ligne », « pas de version mobile native ».)
-- Quelle est la **personnalité du produit** (sérieuse, joueuse, technique, accessible) et comment ça se traduit en UI / copy ?
-
-Test de pertinence : un principe utile doit pouvoir **trancher un débat**. Si « être centré utilisateur » est un principe, c'est trop vague — qui n'est pas centré utilisateur ?
-
-#### Axe 6 — Hypothèses critiques et risques
-
-- Quelles **hypothèses** non vérifiées tiennent toute la vision ? (« Les utilisateurs sont prêts à payer 20€/mois », « Les comptables veulent vraiment automatiser ça », « On peut accéder à l'API X ».)
-- Comment **invalider** rapidement chaque hypothèse critique ? (Test, interview, MVP, prototype.)
-- Quels **risques externes** peuvent tout faire capoter (réglementaire, plateforme tierce qui change ses CGU, concurrent qui sort une feature majeure) ?
-
-#### Axe 7 — Horizons et anti-roadmap
-
-- À 3-6 mois, qu'est-ce qui doit exister pour valider que la vision tient ? (Pas un Gantt, juste les jalons.)
-- À 1 an ? À 3 ans ?
-- Qu'est-ce qu'on **refuse de faire à court terme** même si c'est tentant (extensions, marchés adjacents, features sympa mais hors cœur) ?
-
-Continue à itérer tant que l'utilisateur n'a pas signalé qu'il est satisfait. Pour chaque axe, si une réponse est encore floue, repose la question sous un autre angle plutôt que de passer au suivant.
+En **Création** ou **Pivot**, charge `${CLAUDE_SKILL_DIR}/references/axes-challenge.md` qui contient les 7 axes (problème, audience, valeur, métriques, principes, hypothèses, horizons) avec leurs questions et tests de pertinence. Pioche 1-2 axes par tour, adapte l'ordre selon ce qui est le plus flou dans le pitch.
 
 ### Phase 3 — Synthèse et rédaction
 
@@ -178,131 +105,7 @@ Quand l'utilisateur valide, rédige (ou met à jour) `docs/vision.md` selon le m
 
 Mets à jour la date « dernière mise à jour » dans le sous-titre du document dans tous les modes.
 
-**Format du fichier** :
-
-```markdown
-# Vision — [Nom du projet]
-
-> Pitch en une phrase : [ce que c'est] pour [audience] qui résout [problème] en [comment].
-
-_Document vivant — enrichi au fil du cycle de vie, refondu lors d'un pivot stratégique. Date de dernière mise à jour : AAAA-MM-JJ._
-
-## Changelog
-
-Historique des évolutions structurantes (création, enrichissements, éditions ciblées, pivots). Lecture du haut vers le bas = ordre chronologique. Détails fins dans `git log`.
-
-| Date | Nature | Axe | Motif |
-|------|--------|-----|-------|
-| AAAA-MM-JJ | Création | — | Vision initiale |
-| AAAA-MM-JJ | Enrichir | Audience | Ajout audience secondaire « fleet manager » |
-| AAAA-MM-JJ | Éditer | Principes | Reformulation du principe P2 (trop vague) |
-| AAAA-MM-JJ | Pivot | — | Refonte : changement d'audience principale (cf. archive du AAAA-MM-JJ) |
-
-## Le problème
-
-L'irritant concret que ce produit résout, au présent, avec une situation typique.
-
-**Comment c'est résolu aujourd'hui** : [alternative ou bricolage actuel].
-**Pourquoi c'est insuffisant** : [limites concrètes].
-**Ampleur** : [fréquence, volume, coût pour l'utilisateur].
-
-## L'audience
-
-### Utilisateur principal
-
-- **Persona** : [rôle, contexte, journée type].
-- **Volume cible** : ordre de grandeur.
-- **Ce qui le bloque aujourd'hui** : [verbatim ou observation].
-
-### Utilisateurs secondaires
-
-- [Rôle 1] — [besoin distinct].
-- [Rôle 2] — [besoin distinct].
-
-### Hors cible explicite
-
-[Qui on n'adresse pas et pourquoi.]
-
-## La proposition de valeur
-
-### Bénéfice utilisateur
-
-[Ce que l'utilisateur gagne, exprimé en chiffre ou en bénéfice nommé concret.]
-
-### Pourquoi nous, plutôt qu'eux
-
-[Raison concrète vs alternatives existantes.]
-
-### Unfair advantage
-
-[Ce qu'on a/fait qui n'est pas reproductible facilement.]
-
-## Métriques de succès
-
-### North Star
-
-[La métrique unique qui dit « ça marche ». Définition + comment elle se mesure.]
-
-### Métriques secondaires
-
-- **Acquisition** : [...]
-- **Activation** : [...]
-- **Rétention** : [...]
-- **Monétisation** : [...]
-
-### Seuils
-
-- À 6 mois : [...]
-- À 1 an : [...]
-- À 3 ans : [...]
-
-### Signal d'arrêt
-
-[À quel signe on dit « on arrête, ça ne marche pas ».]
-
-## Principes produit
-
-1. **[Principe 1]** — [explication courte, exemple de décision tranchée].
-2. **[Principe 2]** — ...
-3. ...
-
-## Anti-objectifs
-
-Ce qu'on **refuse explicitement** de faire, et pourquoi :
-
-- [Anti-feature ou anti-marché 1] — [raison].
-- ...
-
-## Hypothèses critiques
-
-| # | Hypothèse | Comment l'invalider | Statut |
-|---|-----------|---------------------|--------|
-| 1 | ... | ... | À tester / Validée / Invalidée |
-| 2 | ... | ... | ... |
-
-## Risques externes
-
-- **[Risque 1]** : [description, mitigation envisagée].
-- ...
-
-## Horizons
-
-### 3-6 mois
-
-[Jalons clés. Pas un Gantt.]
-
-### 1 an
-
-[...]
-
-### 3 ans
-
-[...]
-
-## Notes pour les features à venir
-
-Pointeurs bruts pour `/feature-pitch` : grandes initiatives évoquées, parcours pressentis, dépendances identifiées. **Ne pas concevoir de feature ici** — juste lister.
-```
+**Format du fichier** : voir `${CLAUDE_SKILL_DIR}/references/template.md`. À charger au moment de la rédaction (Création/Pivot rédigent tout, Enrichir/Éditer s'en servent pour situer la section à modifier).
 
 Après écriture, affiche un résumé et demande si des ajustements sont nécessaires.
 

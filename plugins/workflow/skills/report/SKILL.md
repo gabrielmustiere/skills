@@ -1,9 +1,19 @@
 ---
 name: report
-description: Compte rendu d'implémentation — compare l'intention (spec+design ou plan) au code livré, écarts et décisions dans docs/story/<NNN>-<f|r|t>-<slug>/report.md. Déclenche sur "fais le bilan", "rapport post-implémentation", "le code a divergé".
-
+description: Produit un compte rendu d'implémentation après livraison — compare l'intention initiale (`feature.md`+`design.md` ou `plan.md`) au code réellement livré, liste les écarts, les décisions prises en cours de route, les dettes contractées et les suites à prévoir. Écrit `docs/story/<NNN>-<f|r|t>-<slug>/report.md`. À lancer typiquement avant `sync`.
 user_invocable: true
 disable-model-invocation: true
+model: sonnet
+allowed-tools:
+  - Read
+  - Grep
+  - Glob
+  - Write
+  - Edit
+  - Bash(git log:*)
+  - Bash(git diff:*)
+  - Bash(git show:*)
+  - Bash(ls:*)
 ---
 
 # /report — Compte rendu d'implémentation
@@ -108,163 +118,15 @@ Quand la revue est complète et validée, écris le fichier.
 
 **Nom du fichier** : `docs/story/NNN-<f|r|t>-slug/report.md` (dans le même dossier que l'intention).
 
-#### Template pour un report `f-` (feature)
+**Template à utiliser selon le type** — charge **uniquement** celui qui correspond au préfixe du dossier :
 
-```markdown
-# Report — [Nom de la fonctionnalité]
+| Préfixe | Template à lire                                                |
+|---------|----------------------------------------------------------------|
+| `f-`    | `${CLAUDE_SKILL_DIR}/references/templates/feature.md`          |
+| `r-`    | `${CLAUDE_SKILL_DIR}/references/templates/refactor.md`         |
+| `t-`    | `${CLAUDE_SKILL_DIR}/references/templates/tech.md`             |
 
-> Feature spec : `docs/story/NNN-f-slug/feature.md`
-> Design : `docs/story/NNN-f-slug/design.md`
-> Date d'implémentation : YYYY-MM-DD
-> Commits liés : `abc1234`, `def5678` (si identifiables)
-
-## Résumé
-
-En 2-3 phrases : ce qui a été livré, l'état global (conforme / écarts mineurs / écarts majeurs).
-
-## Ce qui a été implémenté
-
-### Fichiers créés
-
-| Fichier | Rôle | Prévu dans le design |
-|---------|------|----------------------|
-| `src/...` | Description | Oui / Non (ajout) |
-
-### Fichiers modifiés
-
-| Fichier | Modification | Prévu dans le design |
-|---------|--------------|----------------------|
-| `src/...` | Description | Oui / Non (ajout) |
-
-## Écarts avec le design
-
-### Écarts volontaires
-
-| Prévu | Réalisé | Raison |
-|-------|---------|--------|
-| Description du design | Ce qui a été fait à la place | Pourquoi |
-
-### Non implémenté
-
-| Élément prévu | Raison | Action requise |
-|---------------|--------|----------------|
-| Description | Pourquoi pas fait | TODO / Hors scope / Ticket séparé |
-
-### Ajouts non prévus
-
-| Élément ajouté | Raison |
-|----------------|--------|
-| Description | Pourquoi c'était nécessaire |
-
-## Tests
-
-| Code | Type prévu | Type réalisé | Statut |
-|------|------------|--------------|--------|
-| `src/...` | Unit | Unit | Fait / Manquant |
-
-## Dette technique identifiée
-
-- Description de la dette et impact potentiel.
-
-## Critères d'acceptation
-
-Reprise des critères de la `feature.md` avec statut :
-
-- [x] Critère validé
-- [ ] Critère non validé — raison
-
-## Leçons apprises
-
-Points utiles pour les prochaines implémentations : ce qui a bien marché, ce qui a posé problème, ce qu'on ferait différemment.
-```
-
-#### Template pour un report `r-` (refacto)
-
-```markdown
-# Report — [Nom du refacto]
-
-> Plan : `docs/story/NNN-r-slug/plan.md`
-> Date d'exécution : YYYY-MM-DD
-> Commits liés : `abc1234`, `def5678`
-
-## Résumé
-
-En 2-3 phrases : ce qui a été restructuré, état de la non-régression (tests caractérisation verts avant/après), étapes couvertes.
-
-## Périmètre refactoré
-
-### Fichiers restructurés
-
-| Fichier | Nature du changement | Prévu dans le plan |
-|---------|----------------------|--------------------|
-| `src/...` | Déplacement / extraction / renommage / simplification | Oui / Non (ajout) |
-
-## Comportement externe
-
-- [x] Signature publique préservée (API, commandes, events)
-- [x] Réponses / effets de bord identiques
-- [x] Tests de caractérisation écrits avant le refacto : `tests/...`
-- [x] Suite complète verte avant / après : ✅ NNN tests
-
-**Effets de bord constatés** : aucun / [décrire si détecté]
-
-## Étapes du plan
-
-| Étape | Prévu | Réalisé | Écart |
-|-------|-------|---------|-------|
-| 1. [...] | Décrit dans le plan | Fait / Partiel / Non fait | — / Raison |
-
-## Dette résiduelle
-
-- Code legacy encore en place à nettoyer plus tard (et raison du report).
-
-## Leçons apprises
-
-Ce qui a bien marché, les pièges rencontrés, ce qu'on ferait différemment sur un refacto similaire.
-```
-
-#### Template pour un report `t-` (évolution technique)
-
-```markdown
-# Report — [Nom de l'évolution technique]
-
-> Plan : `docs/story/NNN-t-slug/plan.md`
-> Date d'exécution : YYYY-MM-DD
-> Commits liés : `abc1234`, `def5678`
-
-## Résumé
-
-En 2-3 phrases : brique introduite, critères de succès atteints, rollback en place.
-
-## Brique livrée
-
-| Composant | Rôle | Point d'intégration | Config |
-|-----------|------|---------------------|--------|
-| `...` | ... | ... | ... |
-
-## Critères de succès
-
-| Critère | Cible (plan) | Mesuré | Statut |
-|---------|--------------|--------|--------|
-| Latence p95 | < 100 ms | 78 ms | ✅ |
-
-## Effets transverses
-
-- Modules clients impactés.
-- Compatibilité vérifiée.
-- Migration de données exécutée (oui / non / N/A).
-
-## Rollback
-
-- Mécanisme : feature flag / env var / kill switch (préciser).
-- Testé : oui / non.
-
-## Dette résiduelle
-
-- Points à finir plus tard.
-
-## Leçons apprises
-```
+Ne charge pas les deux autres — un seul est utile pour le report en cours.
 
 ### Phase 5 — Clôture
 

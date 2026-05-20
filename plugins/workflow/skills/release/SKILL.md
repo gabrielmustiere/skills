@@ -1,9 +1,25 @@
 ---
 name: release
-description: Crée une release versionnée — bump SemVer depuis les Conventional Commits, MAJ CHANGELOG.md (Keep a Changelog), tag annoté vX.Y.Z, push, release GitHub via gh. Déclenche sur "release", "tag", "publier une version", "bump version", "changelog".
+description: Crée une release versionnée de bout en bout — détermine le bump SemVer (major/minor/patch) depuis les Conventional Commits depuis le dernier tag, met à jour `CHANGELOG.md` au format Keep a Changelog, crée un tag annoté `vX.Y.Z`, pousse, puis publie la release sur GitHub via `gh`. Demande validation avant toute action publique.
 user_invocable: true
 disable-model-invocation: true
 argument-hint: "[major|minor|patch] [--no-push] [--draft] [--pre <suffix>]"
+model: sonnet
+allowed-tools:
+  - Read
+  - Write
+  - Edit
+  - Bash(git status:*)
+  - Bash(git log:*)
+  - Bash(git diff:*)
+  - Bash(git tag:*)
+  - Bash(git push:*)
+  - Bash(git add:*)
+  - Bash(git commit:*)
+  - Bash(git describe:*)
+  - Bash(git rev-parse:*)
+  - Bash(gh release:*)
+  - Bash(gh repo:*)
 ---
 
 # /release — Tag annoté + CHANGELOG + release GitHub
@@ -25,75 +41,10 @@ Ce skill **versionne, tagge et publie** uniquement. Il ne commit pas le code app
 7. **Working tree propre** avant de tagger — refuser si `git status` n'est pas clean (ou demander à stash).
 8. **Ne jamais `--force` un tag**. Si un tag local diverge du remote, c'est une anomalie à remonter.
 
-## Format SemVer & règles de bump
+## Références à charger
 
-| Bump    | Quand                                                              | Exemple        |
-|---------|--------------------------------------------------------------------|----------------|
-| `MAJOR` | Au moins un `BREAKING CHANGE:` dans le footer ou un type avec `!`  | 1.4.2 → 2.0.0  |
-| `MINOR` | Au moins un `feat` (et aucun breaking)                             | 1.4.2 → 1.5.0  |
-| `PATCH` | Uniquement `fix`, `perf`, `refactor`, `docs`, `chore`, `style`     | 1.4.2 → 1.4.3  |
-
-Pré-release : suffixe `-alpha.N`, `-beta.N`, `-rc.N` (ex: `v1.5.0-rc.1`). Utiliser `--pre <suffix>` pour les générer (ex: `/release minor --pre rc.1`).
-
-**Avant 1.0.0** : projet considéré instable. Toute évolution peut casser. Convention : `0.MINOR.PATCH` où `MINOR` bump pour les features **et** les breaking changes.
-
-## Format Keep a Changelog
-
-`CHANGELOG.md` à la racine du repo. Structure :
-
-```markdown
-# Changelog
-
-Toutes les modifications notables de ce projet sont documentées dans ce fichier.
-
-Le format est basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/),
-et ce projet adhère au [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
-
-## [Unreleased]
-
-## [1.5.0] - 2026-04-27
-
-### Added
-- Description courte à l'impératif passé/présent
-
-### Changed
-- ...
-
-### Fixed
-- ...
-
-### Removed
-- ...
-
-### Deprecated
-- ...
-
-### Security
-- ...
-
-[Unreleased]: https://github.com/owner/repo/compare/v1.5.0...HEAD
-[1.5.0]: https://github.com/owner/repo/compare/v1.4.2...v1.5.0
-[1.4.2]: https://github.com/owner/repo/releases/tag/v1.4.2
-```
-
-### Mapping Conventional Commits → sections Keep a Changelog
-
-| Type commit                              | Section CHANGELOG |
-|------------------------------------------|-------------------|
-| `feat`                                   | Added             |
-| `fix`                                    | Fixed             |
-| `perf`, `refactor`                       | Changed           |
-| `BREAKING CHANGE` ou `type!`             | Changed (+ noter "BREAKING:" en préfixe de la ligne) |
-| `docs`, `chore`, `style`, `test`, `ci`   | Omis du CHANGELOG (sauf si l'utilisateur insiste) |
-
-Suppressions explicites → `Removed`. Dépréciations annoncées → `Deprecated`. Failles corrigées → `Security`.
-
-### Règles de rédaction
-
-- **Une ligne = un changement utilisateur-perceptible**, à l'impératif présent en français.
-- **Pas de hash de commit** dans le CHANGELOG — c'est de la doc humaine, pas un git log déguisé.
-- **Regrouper** plusieurs commits qui touchent la même feature en une ligne lisible.
-- **Ignorer** les commits triviaux (typos, fix CI, bump deps cosmétique) sauf s'ils sont visibles utilisateur.
+- **Règles SemVer + table de bump** : `${CLAUDE_SKILL_DIR}/references/semver.md` — à lire en Phase 2 quand on classe les commits et qu'on décide du bump.
+- **Format Keep a Changelog + mapping commits → sections** : `${CLAUDE_SKILL_DIR}/references/keep-a-changelog.md` — à lire en Phase 3/4 quand on rédige l'entrée du CHANGELOG.
 
 ## Déroulement
 
@@ -270,6 +221,4 @@ Exemples :
 ## Pièges fréquents
 
 - **Commit oublié non poussé** avant `/release` → le tag pointera sur HEAD local mais le remote ne l'aura pas. La Phase 1 vérifie ça.
-- **CHANGELOG en désordre** → toujours insérer les nouvelles entrées **en haut** (après `[Unreleased]`), pas en bas. Les humains lisent du plus récent au plus ancien.
-- **Bump trop bas malgré un breaking** → un seul `BREAKING CHANGE:` impose `MAJOR` (ou `MINOR` avant 1.0.0). Si l'utilisateur insiste pour un patch, alerter mais respecter — c'est sa décision finale.
-- **Re-tagger une version** → refuser. Créer un nouveau patch avec une note "corrige la release vX.Y.Z".
+- Autres pièges (SemVer, Keep a Changelog) : voir les références chargées en Phase 2-3.

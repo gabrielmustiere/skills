@@ -1,8 +1,17 @@
 ---
 name: tech
-description: Exécute une évolution technique cadrée — baseline AVANT, kill switch, étapes incrémentales, mesure après chaque étape. Déclenche sur "déroule ce plan tech", "on attaque <slug>" dès qu'un plan.md existe sous docs/story/NNN-t-slug/.
+description: Exécute une évolution technique cadrée — capture la baseline mesurée AVANT toute modification, installe un kill switch activable à chaud, applique les étapes du plan une par une avec mesure d'impact et vérification de non-régression après chacune. Prérequis un `plan.md` existant sous `docs/story/<NNN>-t-<slug>/`. Argument optionnel : le slug à reprendre.
 user_invocable: true
+disable-model-invocation: true
 argument-hint: "[slug-tech]"
+model: opus
+allowed-tools:
+  - Read
+  - Write
+  - Edit
+  - Grep
+  - Glob
+  - Bash
 ---
 
 # /tech — Exécution guidée d'une évolution technique
@@ -65,21 +74,7 @@ Exécute-la intégralement : poser les métriques, les logs, les traces qui perm
 
 #### 2.2 — Mesure de la baseline
 
-Utilise la **méthode de mesure décrite dans le plan** pour chaque métrique cible. Commandes typiques selon le cas (à adapter au projet) :
-
-```bash
-# Bench de latence
-k6 run bench/scenario.js
-wrk -t4 -c100 -d30s http://...
-
-# Requête Prometheus / observabilité
-curl -sG http://prometheus/api/v1/query --data-urlencode 'query=histogram_quantile(0.95, rate(http_request_duration_seconds_bucket{...}[5m]))'
-
-# Script applicatif
-symfony console app:bench:pricing
-```
-
-Si une métrique ne peut pas être mesurée (outillage absent, env non représentatif), **stop** — remonter à l'utilisateur : "On ne peut pas lire [métrique] aujourd'hui. Le plan demande soit qu'on instrumente, soit qu'on change la cible, soit qu'on change d'env de mesure."
+Charge `${CLAUDE_SKILL_DIR}/references/measurement-toolkit.md` qui contient les commandes typiques de bench (k6, wrk, Prometheus, scripts applicatifs), la procédure de test du kill switch (OFF/ON/OFF) et la QA standard à relancer après chaque étape. Applique la méthode de mesure décrite dans le plan pour chaque métrique cible.
 
 #### 2.3 — Consigner la baseline dans le plan
 
@@ -125,23 +120,7 @@ Coder en respectant :
 
 #### 3.4 — QA + test du kill switch
 
-```bash
-# Style / analyse statique (adapter au stack)
-vendor/bin/ecs check --fix
-vendor/bin/phpstan analyse
-
-# Tests existants — aucune régression sur les autres chemins
-vendor/bin/phpunit
-npm run test:e2e
-```
-
-Test explicite du kill switch :
-
-1. Flag OFF → comportement identique à avant (requête, trace, réponse). Le vérifier via un test ciblé ou un appel manuel.
-2. Flag ON → nouveau chemin emprunté.
-3. Flag OFF à nouveau → retour au comportement initial, aucun résidu.
-
-Si le kill switch ne fonctionne pas dans les trois sens, **on n'active rien en prod**. On corrige d'abord.
+Applique la QA standard et la séquence OFF/ON/OFF documentées dans `${CLAUDE_SKILL_DIR}/references/measurement-toolkit.md` (déjà chargée en Phase 2.2). Si le kill switch ne fonctionne pas dans les trois sens, **on n'active rien en prod** — corriger d'abord.
 
 #### 3.5 — Mesure après
 

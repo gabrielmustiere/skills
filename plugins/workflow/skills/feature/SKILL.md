@@ -1,8 +1,17 @@
 ---
 name: feature
-description: Implémente une feature depuis un design validé — sous-tâche par sous-tâche, qualité continue, checkpoints humains. Déclenche sur "implémente cette feature", "déroule le design", "on attaque <slug>" dès qu'un design.md existe.
+description: Implémente une feature depuis un design validé — découpe le travail en sous-tâches trackées, applique la qualité continue (lint, types, tests à chaque étape) et impose des checkpoints humains avant les choix structurants. Prérequis un `design.md` existant sous `docs/story/<NNN>-f-<slug>/`. Argument optionnel : le slug de la feature à reprendre.
 user_invocable: true
+disable-model-invocation: true
 argument-hint: "[slug-feature]"
+model: opus
+allowed-tools:
+  - Read
+  - Write
+  - Edit
+  - Grep
+  - Glob
+  - Bash
 ---
 
 # /feature — Implémentation guidée
@@ -92,32 +101,11 @@ npm run build                                # assets (si front)
 
 ##### Checklist migration (si schéma touché)
 
-S'active dès qu'une sous-tâche touche le modèle (entité, mapping, relation). Doctrine est commun à Symfony et Sylius.
-
-```bash
-symfony console make:migration                        # générer (JAMAIS à la main)
-symfony console doctrine:migrations:migrate --dry-run # vérifier le SQL généré
-symfony console doctrine:migrations:migrate           # appliquer
-symfony console doctrine:schema:validate              # cohérence schema/mapping
-```
-
-**Règle absolue** : ne JAMAIS modifier manuellement le contenu d'un fichier de migration. Si la migration générée ne convient pas, supprimer le fichier, corriger le mapping/entité, et regénérer avec `make:migration`. Une migration commitée n'est jamais modifiée — on en crée une nouvelle.
-
-Points de vérification manuels :
-
-- **`down()`** réversible ? Sinon, documenter pourquoi dans la migration.
-- **Colonnes NOT NULL** sur table non vide : DEFAULT prévu, ou ALTER en deux temps (nullable → backfill → NOT NULL) ?
-- **Suppressions** (DROP COLUMN/TABLE) : données en prod ? backup ou migration de données préalable ?
-- **Index** sur les colonnes utilisées en WHERE/JOIN/ORDER BY ?
-- **Fixtures** à mettre à jour pour le nouveau schéma ?
+Si la sous-tâche touche le modèle (entité, mapping, relation), charge `${CLAUDE_SKILL_DIR}/references/migration-checklist.md` (commandes Doctrine + règle "jamais à la main" + points de vérif `down()` / NOT NULL / DROP / index / fixtures).
 
 ##### Checklists spécifiques Sylius
 
-Si le stack détecté est **sylius**, activer en plus les axes multi-channel et multi-thème documentés dans `references/stacks/sylius.md` :
-
-- Cloisonnement channel (entités, repositories, fixtures, grids admin).
-- Overrides de thèmes (chercher via `Glob` dans `themes/*/templates/` avant de clôturer une sous-tâche qui touche un template shop de base).
-- Piège FormTypeExtension + Twig Hooks symétriques (422 silencieux si un hook manque — cas classique `ProductVariantType` → hooks product et product_variant).
+Si le stack détecté est **sylius**, charge `${CLAUDE_SKILL_DIR}/references/sylius-checklists.md` (cloisonnement channel, overrides de thèmes, FormTypeExtension + Twig Hooks symétriques).
 
 ##### Tests ciblés en cours d'implémentation
 
@@ -150,26 +138,7 @@ Attendre validation ("ok", "go", "c") avant la sous-tâche suivante.
 
 Une fois toutes les sous-tâches implémentées, écrire les tests selon la stratégie du design.
 
-| Code écrit                | Test requis                             |
-|---------------------------|-----------------------------------------|
-| Service / Command Handler | Unit (mocks des dépendances)            |
-| Repository custom         | Functional avec BDD de test             |
-| EventSubscriber / Listener| Unit                                    |
-| Workflow callback         | Unit ou fonctionnel                     |
-| Commande Console          | CommandTester                           |
-| Template / UI / parcours  | E2E (Playwright ou équivalent)          |
-
-**Conventions E2E Playwright** (si utilisé — généralisables quel que soit le framework) :
-
-- Nommage : `e2e/{feature}-{area}.spec.ts` (ex: `articles-admin.spec.ts`, `checkout-shop.spec.ts`).
-- Login via `storageState` (projet `setup` dans `playwright.config.ts`), pas de `beforeEach` login.
-- Sessions non authentifiées : `test.use({ storageState: { cookies: [], origins: [] } })` en haut du fichier.
-- Pas de `waitForTimeout` — utiliser `toBeVisible({ timeout })`, `toHaveCount()`, `waitForURL()`.
-- CRUD séquentiel dans `test.describe.serial` avec identifiants uniques (`Date.now().toString(36)`).
-- Sélecteurs `data-test-*` plutôt que sélecteurs CSS fragiles.
-- Ajouter le projet Playwright dans `playwright.config.ts` et le script npm dans `package.json`.
-
-Les patterns spécifiques au framework (par exemple la suppression via modale Bootstrap en admin Sylius) sont documentés dans `references/stacks/<stack>.md`.
+Charge `${CLAUDE_SKILL_DIR}/references/e2e-playwright.md` pour : le mapping code → niveau de test (service, repository, listener, UI…) et les conventions E2E Playwright (nommage, storageState, sélecteurs `data-test-*`, etc.).
 
 **Lancer la suite complète** :
 
