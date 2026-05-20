@@ -7,6 +7,18 @@ et ce projet adhère au [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+## [1.4.0] - 2026-05-20
+
+### Added
+- Skills `workflow:vision` et `workflow:product-backlog` — quatre modes explicites (Création, Enrichir, Éditer, Pivot) demandés via `AskUserQuestion` quand le document existe déjà, pour éviter une session marathon quand on ne touche qu'un axe
+- Phase de ciblage dédiée pour les modes Enrichir/Éditer (Phase 1bis vision, Phase 0bis backlog) — saute l'atelier complet et se concentre sur le delta
+- Contrôles de cohérence systématiques avant rédaction : alignement vision, conflit anti-objectifs, rattachement, doublon, trous laissés par retrait, bascule auto vers Pivot si l'évolution dérive
+- Archivage de l'ancien fichier sous `*.archive-AAAA-MM-JJ` en mode Pivot
+
+### Changed
+- Descriptions des skills `vision` et `product-backlog` enrichies de phrases déclencheurs adaptées aux nouveaux modes (« ajouter une audience à la vision », « enrichir le backlog », etc.)
+- Plugin `workflow` bumpé `0.14.0` → `0.15.0` — synchronisé dans `marketplace.json`
+
 ## [1.3.0] - 2026-05-14
 
 ### Added
@@ -76,7 +88,8 @@ Première version stable de la marketplace `gabrielmustiere`. Le format des plug
 - Plugin `workflow` synchronisé à `0.10.0` dans `marketplace.json` et `README.md` (alignement avec `plugin.json`)
 - Inventaire workflow du `README.md` complété avec les skills `migrate-legacy`, `import-external` et `release`
 
-[Unreleased]: https://github.com/gabrielmustiere/skills/compare/v1.3.0...HEAD
+[Unreleased]: https://github.com/gabrielmustiere/skills/compare/v1.4.0...HEAD
+[1.4.0]: https://github.com/gabrielmustiere/skills/compare/v1.3.0...v1.4.0
 [1.3.0]: https://github.com/gabrielmustiere/skills/compare/v1.2.0...v1.3.0
 [1.2.0]: https://github.com/gabrielmustiere/skills/compare/v1.1.0...v1.2.0
 [1.1.0]: https://github.com/gabrielmustiere/skills/compare/v1.0.0...v1.1.0
