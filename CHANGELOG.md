@@ -7,6 +7,13 @@ et ce projet adhère au [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+## [1.4.1] - 2026-05-20
+
+### Changed
+- Skills `workflow` : externalisation du contenu volumineux (templates, cheatsheets, procédures conditionnelles) vers `references/*.md` chargés à la demande — SKILL.md réduits de 2508 → 1503 lignes (-40 % sur 9 skills), tokens à l'invocation diminués d'autant
+- Frontmatter normalisé sur les 19 skills `workflow` : descriptions reformulées (verbes à l'indicatif, résumé orienté usage), ajout systématique de `model:` (haiku/sonnet/opus selon la skill) et `allowed-tools:` explicite, `disable-model-invocation: true` sur les skills user-only
+- Plugin `workflow` bumpé `0.15.0` → `0.17.0`, synchronisé dans `marketplace.json` et `README.md`
+
 ## [1.4.0] - 2026-05-20
 
 ### Added
@@ -88,7 +95,8 @@ Première version stable de la marketplace `gabrielmustiere`. Le format des plug
 - Plugin `workflow` synchronisé à `0.10.0` dans `marketplace.json` et `README.md` (alignement avec `plugin.json`)
 - Inventaire workflow du `README.md` complété avec les skills `migrate-legacy`, `import-external` et `release`
 
-[Unreleased]: https://github.com/gabrielmustiere/skills/compare/v1.4.0...HEAD
+[Unreleased]: https://github.com/gabrielmustiere/skills/compare/v1.4.1...HEAD
+[1.4.1]: https://github.com/gabrielmustiere/skills/compare/v1.4.0...v1.4.1
 [1.4.0]: https://github.com/gabrielmustiere/skills/compare/v1.3.0...v1.4.0
 [1.3.0]: https://github.com/gabrielmustiere/skills/compare/v1.2.0...v1.3.0
 [1.2.0]: https://github.com/gabrielmustiere/skills/compare/v1.1.0...v1.2.0
