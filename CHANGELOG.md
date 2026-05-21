@@ -7,6 +7,8 @@ et ce projet adhère au [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+## [1.5.0] - 2026-05-21
+
 ### Added
 - Skill `workflow:adr` — atelier interactif de rédaction d'Architecture Decision Records au format MADR léger (Contexte, Decision drivers, Options considérées, Décision, Conséquences, Links) → `docs/adr/NNNN-<slug>.md`. Trois modes d'entrée : depuis un artifact existant (`design.md`, `plan.md`, `review.md`, `report.md`), depuis un slug de story, ou depuis un topic libre. Phase d'exploration du code et du contexte, challenge minimum de 2 options sérieuses par décision, gestion du statut (`proposed` / `accepted` / `superseded`).
 - Backlinks automatiques : ajout d'une ligne `> ADR :` dans l'artifact source, mise à jour de l'index `docs/adr/README.md` (table triée par numéro avec statut et story liée), section "Décisions architecturales" dans le `report.md` de la story si présent. Gestion du `superseded` en édition croisée de l'ancien ADR.
@@ -104,7 +106,8 @@ Première version stable de la marketplace `gabrielmustiere`. Le format des plug
 - Plugin `workflow` synchronisé à `0.10.0` dans `marketplace.json` et `README.md` (alignement avec `plugin.json`)
 - Inventaire workflow du `README.md` complété avec les skills `migrate-legacy`, `import-external` et `release`
 
-[Unreleased]: https://github.com/gabrielmustiere/skills/compare/v1.4.1...HEAD
+[Unreleased]: https://github.com/gabrielmustiere/skills/compare/v1.5.0...HEAD
+[1.5.0]: https://github.com/gabrielmustiere/skills/compare/v1.4.1...v1.5.0
 [1.4.1]: https://github.com/gabrielmustiere/skills/compare/v1.4.0...v1.4.1
 [1.4.0]: https://github.com/gabrielmustiere/skills/compare/v1.3.0...v1.4.0
 [1.3.0]: https://github.com/gabrielmustiere/skills/compare/v1.2.0...v1.3.0
