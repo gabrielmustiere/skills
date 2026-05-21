@@ -123,6 +123,7 @@ Pour les modifs qui cochent **toutes** ces cases : moins de 3 fichiers, pas de m
 ### Utilitaires hors pipeline
 
 - **`/workflow:test-scenario`** — Joue un scénario utilisateur en live dans un navigateur piloté par Playwright MCP. Utile pour valider une feature en bout de chaîne.
+- **`/workflow:adr`** — Rédige un Architecture Decision Record (`docs/adr/NNNN-<slug>.md`, format MADR léger) sur une décision technique structurante. Trois modes d'entrée : depuis un artifact existant (`design.md`, `plan.md`, `review.md`, `report.md`), depuis un slug de story, ou depuis un topic libre. Mode atelier (contexte, drivers, options, conséquences) avec validation explicite avant écriture, puis backlinks automatiques dans l'artifact source, dans l'index `docs/adr/README.md` et dans le `report.md` de la story si applicable.
 - **`/workflow:doc-feature`** — Cartographie une feature **existante** (legacy non documentée) en un `feature.md` rétro-ingénierié. Stack-aware (Symfony, Sylius).
 - **`/workflow:migrate-legacy`** — Migre les anciens dossiers `docs/story/<f|r|t>-NNN-<slug>/` vers le format `NNN-<f|r|t>-<slug>/` (compteur en tête) via `git mv`.
 - **`/workflow:import-external`** — Importe une doc produite par Spec Kit, BMAD-METHOD ou GSD vers le format workflow.
@@ -161,14 +162,14 @@ Session 2 — Première feature
 
 | Plugin | Version | Description |
 | --- | --- | --- |
-| `workflow` | `0.17.0` | Pipeline de développement stack-agnostique. **Phase 0** : `vision` produit `docs/vision.md` (problème, audience, North Star, principes, anti-objectifs). **Phase 0.5** : `product-backlog` traduit la vision en domaines, capacités, parcours et backlog priorisé MVP/V2/V3 → `docs/product-backlog.md`. Ces deux documents fondateurs sont **vivants**, maintenus via 4 modes (Création / Enrichir / Éditer / Pivot) avec changelog interne, et lus par `feature-pitch` pour challenger l'alignement et reprendre le pitch depuis le backlog. Trois tracks symétriques : **feature** (`feature-pitch` → `feature-design` → `feature`), **refacto** (`refactor-plan` → `refactor`), **évolution technique** (`tech-plan` → `tech`). Étapes communes : `review` → `commit` → `report` → `sync`. Outillage transverse : `migrate-legacy`, `import-external`, `release`, `doc-feature` (carte d'une feature existante, stack-aware). Détection auto du stack (Symfony, Sylius). |
+| `workflow` | `0.18.0` | Pipeline de développement stack-agnostique. **Phase 0** : `vision` produit `docs/vision.md` (problème, audience, North Star, principes, anti-objectifs). **Phase 0.5** : `product-backlog` traduit la vision en domaines, capacités, parcours et backlog priorisé MVP/V2/V3 → `docs/product-backlog.md`. Ces deux documents fondateurs sont **vivants**, maintenus via 4 modes (Création / Enrichir / Éditer / Pivot) avec changelog interne, et lus par `feature-pitch` pour challenger l'alignement et reprendre le pitch depuis le backlog. Trois tracks symétriques : **feature** (`feature-pitch` → `feature-design` → `feature`), **refacto** (`refactor-plan` → `refactor`), **évolution technique** (`tech-plan` → `tech`). Étapes communes : `review` → `commit` → `report` → `sync`. Outillage transverse : `adr` (Architecture Decision Records MADR léger dans `docs/adr/` avec backlinks automatiques), `migrate-legacy`, `import-external`, `release`, `doc-feature` (carte d'une feature existante, stack-aware). Détection auto du stack (Symfony, Sylius). |
 | `sylius` | `0.26.0` | Skills pour travailler avec Sylius (conventions, entités traduisibles, customization de modèle/form/grid/template/styles/dynamic/validation/state-machine/translation/fixtures, commandes, e-mails, promotions panier, coupons, ajustements). Pour la documentation d'une feature existante, voir `workflow:doc-feature`. |
 | `symfony` | `0.12.0` | 25 skills Symfony/Doctrine groupées par domaine : **doctrine** (entity, migration, query), **events** (dispatch, listen, subscribe), **forms** (type, handle, render, advanced), **http** (controller-action, routing-define), **http-client** (request, response, async, test), **messenger** (async), **serializer** (use), **object-mapper**, **services** (define, wire, tags), **validation** (constraints, groups, use). Relayées par `workflow` quand le stack détecté est Symfony/Sylius. |
 | `editorial` | `0.3.0` | Pipeline éditorial en trois étapes — `article-plan` (cadrage), `article` (rédaction guidée + vérifications + traduction) et `article-rework` (retouche chirurgicale d'une portion d'un article publié) — pour articles de blog et fiches side-project. Stack-agnostique : détecte Astro Content Collections, Next.js MDX, Hugo, Jekyll ou markdown brut. Artifacts unifiés sous `docs/story/a-NNN-slug/`. |
 
 ## Inventaire des skills
 
-### `workflow` — Pipeline de développement (19 skills)
+### `workflow` — Pipeline de développement (20 skills)
 
 | Skill | Rôle |
 | --- | --- |
@@ -187,6 +188,7 @@ Session 2 — Première feature
 | [`report`](plugins/workflow/skills/report/SKILL.md) | Compte rendu intention vs code réel |
 | [`sync`](plugins/workflow/skills/sync/SKILL.md) | Réaligne la doc d'intention avec le code livré |
 | [`test-scenario`](plugins/workflow/skills/test-scenario/SKILL.md) | Joue un scénario utilisateur via Playwright MCP |
+| [`adr`](plugins/workflow/skills/adr/SKILL.md) | Rédige un Architecture Decision Record MADR léger (`docs/adr/NNNN-slug.md`) depuis un artifact (`design.md` / `plan.md` / `review.md` / `report.md`) ou un topic libre — atelier interactif (contexte, drivers, options, conséquences), backlinks automatiques dans l'artifact source, index `docs/adr/README.md` et `report.md` de la story |
 | [`migrate-legacy`](plugins/workflow/skills/migrate-legacy/SKILL.md) | Migre les anciens dossiers `<f\|r\|t>-NNN-<slug>/` vers `NNN-<f\|r\|t>-<slug>/` (compteur en tête) via `git mv` |
 | [`import-external`](plugins/workflow/skills/import-external/SKILL.md) | Importe une doc Spec Kit / BMAD-METHOD / GSD vers le format `docs/story/NNN-<f\|r\|t>-<slug>/` |
 | [`release`](plugins/workflow/skills/release/SKILL.md) | Tag annoté SemVer + `CHANGELOG.md` Keep a Changelog + release GitHub |

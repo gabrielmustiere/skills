@@ -7,6 +7,15 @@ et ce projet adhère au [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+### Added
+- Skill `workflow:adr` — atelier interactif de rédaction d'Architecture Decision Records au format MADR léger (Contexte, Decision drivers, Options considérées, Décision, Conséquences, Links) → `docs/adr/NNNN-<slug>.md`. Trois modes d'entrée : depuis un artifact existant (`design.md`, `plan.md`, `review.md`, `report.md`), depuis un slug de story, ou depuis un topic libre. Phase d'exploration du code et du contexte, challenge minimum de 2 options sérieuses par décision, gestion du statut (`proposed` / `accepted` / `superseded`).
+- Backlinks automatiques : ajout d'une ligne `> ADR :` dans l'artifact source, mise à jour de l'index `docs/adr/README.md` (table triée par numéro avec statut et story liée), section "Décisions architecturales" dans le `report.md` de la story si présent. Gestion du `superseded` en édition croisée de l'ancien ADR.
+- Template `references/template.md` chargé à la demande pour rester en progressive disclosure (SKILL.md d'environ 12 K, template d'environ 3 K).
+
+### Changed
+- Skill `workflow:help` — schéma utilitaires et tableau mis à jour avec `/adr`.
+- Plugin `workflow` bumpé `0.17.0` → `0.18.0`, synchronisé dans `marketplace.json` et `README.md` (table plugins + inventaire 19 → 20 skills).
+
 ## [1.4.1] - 2026-05-20
 
 ### Changed

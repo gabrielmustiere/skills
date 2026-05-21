@@ -53,10 +53,14 @@ allowed-tools:
                 + étapes mesurées
 
                        UTILITAIRES (hors pipeline, à la demande)
- ┌─────────────────┐    ┌──────┐
- │ test-scenario │    │ help │  ← tu y es
- └─────────────────┘    └──────┘
- Playwright MCP live    ce sommaire
+ ┌─────────────────┐    ┌─────┐    ┌──────┐
+ │ test-scenario │    │ adr │    │ help │  ← tu y es
+ └─────────────────┘    └──┬──┘    └──────┘
+ Playwright MCP live       │       ce sommaire
+                           ▼
+                  docs/adr/NNNN-slug.md
+                  (depuis design/plan/review/report
+                   ou topic libre)
 ```
 
 Règle d'or : ne jamais passer à l'étape suivante sans validation explicite du user ("ok", "go", "validé", "c", etc.).
@@ -169,6 +173,7 @@ En cas de doute → partir sur le track approprié (feature, refacto ou tech). I
 | Skill                | Rôle                                                                                       |
 |----------------------|--------------------------------------------------------------------------------------------|
 | `/test-scenario`     | Tester un scénario utilisateur via Playwright MCP (navigateur piloté en live)              |
+| `/adr`               | Rédiger un Architecture Decision Record (`docs/adr/NNNN-slug.md`) depuis un artifact (design, plan, review, report) ou un topic libre — format MADR léger, backlinks et index automatiques |
 | `/migrate-legacy`    | Renommer les anciens dossiers `docs/story/<f\|r\|t>-NNN-<slug>/` vers `NNN-<f\|r\|t>-<slug>/` |
 | `/import-external`   | Importer une doc produite par Spec Kit, BMAD-METHOD ou GSD vers le format workflow         |
 | `/help`              | Ce sommaire — pour se rappeler le workflow et les skills disponibles                       |
