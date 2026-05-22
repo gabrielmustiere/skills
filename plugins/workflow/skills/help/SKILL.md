@@ -208,6 +208,27 @@ Met à jour `feature.md`, `design.md` ou `plan.md` quand l'implémentation a obl
 
 Des plugins complémentaires (ex: `sylius`, `symfony`) peuvent exposer des skills plus tactiques (procédures spécifiques au framework : créer une Resource, diagnostiquer un Twig Hook, etc.). Ils se combinent naturellement avec le workflow via l'auto-découverte de Claude Code.
 
+## Agents (orchestrateurs multi-skills)
+
+Les **agents** sont des orchestrateurs invocables via le tool `Agent` (pas via `/`). Ils enchaînent plusieurs skills ou pilotent une boucle d'exécution sans surveillance interactive permanente. Contrairement aux skills, ils ne s'utilisent pas en frappant un slash command — c'est Claude (ou toi, en demandant explicitement "lance l'agent X") qui les déclenche.
+
+| Agent              | Rôle                                                                                                  | Quand l'utiliser                                                                                  |
+|--------------------|-------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------|
+| `report-and-sync`  | Enchaîne `/workflow:report` puis `/workflow:sync` pour une story livrée                              | Après livraison d'une feature/refacto/tech, pour produire le compte rendu **et** réaligner la doc d'intention en une seule passe |
+| `autopilot`        | Pilote autonome des skills `/workflow:feature`, `/workflow:refactor`, `/workflow:tech` — délègue chaque sous-tâche à un sous-agent isolé, trace l'avancement dans `.autopilot.json` (reprise possible), ne s'arrête qu'aux stop-points stratégiques (verrou caractérisation, baseline, écart majeur, tests finaux) | Quand l'implémentation est longue et que tu veux laisser tourner sans valider chaque sous-tâche — typiquement features structurées en 5+ sous-tâches, gros refactos Strangler Fig multi-étapes, évolutions tech avec mesure post-étape |
+
+**Invocation type** :
+
+```
+Agent({
+  subagent_type: "autopilot",
+  description: "Pilote autonome story <slug>",
+  prompt: "Pilote en autopilot la story `<slug>`."
+})
+```
+
+ou demander en langage naturel : *"Lance l'agent autopilot sur `checkout-express`"*.
+
 ## Règles framework
 
 Le workflow détecte automatiquement le stack du projet (Symfony, Sylius) via `composer.json` / `package.json` et charge les règles correspondantes. Voir :
