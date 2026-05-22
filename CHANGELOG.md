@@ -7,6 +7,13 @@ et ce projet adhère au [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+## [1.6.0] - 2026-05-22
+
+### Changed
+- Plugin `workflow` : retrait du `model:` pinné dans le frontmatter de tous les skills — Claude utilise désormais le modèle par défaut du contexte, ce qui rend le plugin plus flexible pour les utilisateurs et leurs harnesses
+- Guide `/help` : ajout des skills `doc-feature` et `release` (oubliés du sommaire), nouvelle section « Clôture de track » détaillant `/commit`, `/report`, `/sync` et clarification de la complémentarité `/report` vs `/sync`
+- Plugin `workflow` bumpé de `0.18.0` à `0.20.0`
+
 ## [1.5.0] - 2026-05-21
 
 ### Added
@@ -106,7 +113,8 @@ Première version stable de la marketplace `gabrielmustiere`. Le format des plug
 - Plugin `workflow` synchronisé à `0.10.0` dans `marketplace.json` et `README.md` (alignement avec `plugin.json`)
 - Inventaire workflow du `README.md` complété avec les skills `migrate-legacy`, `import-external` et `release`
 
-[Unreleased]: https://github.com/gabrielmustiere/skills/compare/v1.5.0...HEAD
+[Unreleased]: https://github.com/gabrielmustiere/skills/compare/v1.6.0...HEAD
+[1.6.0]: https://github.com/gabrielmustiere/skills/compare/v1.5.0...v1.6.0
 [1.5.0]: https://github.com/gabrielmustiere/skills/compare/v1.4.1...v1.5.0
 [1.4.1]: https://github.com/gabrielmustiere/skills/compare/v1.4.0...v1.4.1
 [1.4.0]: https://github.com/gabrielmustiere/skills/compare/v1.3.0...v1.4.0
