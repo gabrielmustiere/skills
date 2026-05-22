@@ -7,6 +7,12 @@ et ce projet adhère au [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+## [1.7.1] - 2026-05-22
+
+### Changed
+- Documentation : extraction de l'inventaire des skills dans des fichiers dédiés `documentation/<plugin>.md` (un fichier par plugin, tableau 2 colonnes skill / rôle). Le `README.md` ne contient plus que le tableau des plugins disponibles enrichi d'une colonne « Inventaire » pointant vers chaque fichier, et la version du plugin `workflow` est passée de `0.18.0` à `0.20.0` (alignement avec `marketplace.json`).
+- `CLAUDE.md` : ajout de `documentation/<plugin>.md` à la source de vérité et intégration de la maintenance de ces fichiers dans les procédures « ajouter une skill » et « créer un nouveau plugin ».
+
 ## [1.7.0] - 2026-05-22
 
 ### Added
@@ -124,7 +130,8 @@ Première version stable de la marketplace `gabrielmustiere`. Le format des plug
 - Plugin `workflow` synchronisé à `0.10.0` dans `marketplace.json` et `README.md` (alignement avec `plugin.json`)
 - Inventaire workflow du `README.md` complété avec les skills `migrate-legacy`, `import-external` et `release`
 
-[Unreleased]: https://github.com/gabrielmustiere/skills/compare/v1.7.0...HEAD
+[Unreleased]: https://github.com/gabrielmustiere/skills/compare/v1.7.1...HEAD
+[1.7.1]: https://github.com/gabrielmustiere/skills/compare/v1.7.0...v1.7.1
 [1.7.0]: https://github.com/gabrielmustiere/skills/compare/v1.6.0...v1.7.0
 [1.6.0]: https://github.com/gabrielmustiere/skills/compare/v1.5.0...v1.6.0
 [1.5.0]: https://github.com/gabrielmustiere/skills/compare/v1.4.1...v1.5.0
