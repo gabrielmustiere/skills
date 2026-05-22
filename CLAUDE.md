@@ -10,6 +10,7 @@ Source de vérité :
 - `.claude-plugin/marketplace.json` → catalogue listant les plugins publiés
 - `plugins/<nom>/.claude-plugin/plugin.json` → manifeste d'un plugin
 - `plugins/<nom>/skills/<skill>/SKILL.md` → une skill (frontmatter YAML + instructions Markdown)
+- `documentation/<plugin>.md` → inventaire lisible (2 colonnes skill / rôle) d'un plugin, un fichier par plugin. À mettre à jour à chaque ajout/retrait/renommage de skill.
 
 Références externes : [docs plugins](https://code.claude.com/docs/fr/plugins), [docs skills](https://code.claude.com/docs/fr/skills), [docs marketplaces](https://code.claude.com/docs/fr/plugin-marketplaces).
 
@@ -35,14 +36,16 @@ Résolution des `source` dans `marketplace.json` : `metadata.pluginRoot: "./plug
 ### Ajouter une skill à un plugin existant
 1. Créer `plugins/<plugin>/skills/<nouveau-skill>/SKILL.md` avec frontmatter `name` + `description`
 2. Bumper `version` dans `plugins/<plugin>/.claude-plugin/plugin.json` (semver)
-3. `git push`
-4. Aucune modif de `marketplace.json` — les skills sont auto-découvertes dans le plugin
+3. Ajouter une ligne (skill / rôle) dans `documentation/<plugin>.md` et mettre à jour le compteur de skills du `README.md` (colonne « Inventaire »)
+4. `git push`
+5. Aucune modif de `marketplace.json` — les skills sont auto-découvertes dans le plugin
 
 ### Créer un nouveau plugin thématique
 1. `plugins/<nouveau>/.claude-plugin/plugin.json` (copier `workflow/` comme base)
 2. Au moins une skill dans `plugins/<nouveau>/skills/<skill>/SKILL.md`
 3. Ajouter une entrée au tableau `plugins` de `.claude-plugin/marketplace.json`
-4. `git push`
+4. Créer `documentation/<nouveau>.md` (inventaire 2 colonnes) et ajouter la ligne correspondante dans le tableau « Plugins disponibles » du `README.md`
+5. `git push`
 
 ### Tester localement avant push
 Depuis n'importe quel projet :
