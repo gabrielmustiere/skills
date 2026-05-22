@@ -16,19 +16,19 @@ allowed-tools:
 ```
                        PHASE 0 — VISION PROJET (une fois, ou pivot)
                        ┌────────┐
-                       │vision │──▶ docs/vision.md (problème, audience, valeur,
+                       │ vision │──▶ docs/vision.md (problème, audience, valeur,
                        └────────┘    North Star, principes, anti-objectifs)
                                      Lu par product-backlog puis feature-pitch.
 
                        PHASE 0.5 — PÉRIMÈTRE FONCTIONNEL & BACKLOG
-                       ┌──────────────┐
-                       │product-backlog│──▶ docs/product-backlog.md (domaines, capacités,
-                       └──────────────┘    parcours, règles transverses, backlog priorisé MVP/V2/V3)
+                       ┌────────────────┐
+                       │ product-backlog│──▶ docs/product-backlog.md (domaines, capacités,
+                       └────────────────┘    parcours, règles transverses, backlog priorisé MVP/V2/V3)
                                            Lu par feature-pitch pour situer chaque feature.
 
                         TRACK FEATURE (valeur utilisateur, structurante)
  ┌──────────────┐   ┌───────────────┐   ┌────────┐   ┌────────┐   ┌────────┐   ┌────────┐   ┌──────┐
- │feature-pitch │──▶│feature-design│──▶│feature│──▶│review │──▶│commit │──▶│report │──▶│sync │
+ │feature-pitch │──▶│ feature-design│──▶│ feature│──▶│ review │──▶│ commit │──▶│ report │──▶│ sync │
  └──────┬───────┘   └───────┬───────┘   └───┬────┘   └───┬────┘   └───┬────┘   └───┬────┘   └──┬───┘
         │                    │              │            │            │            │           │
         feature.md        design.md   code+migrations review.md    commit       report.md   doc sync
@@ -36,7 +36,7 @@ allowed-tools:
 
                     TRACK REFACTO (comportement figé, code restructuré)
  ┌──────────────┐   ┌─────────┐   ┌────────┐   ┌────────┐   ┌────────┐   ┌──────┐
- │refactor-plan │──▶│refactor│──▶│review │──▶│commit │──▶│report │──▶│sync │
+ │refactor-plan │──▶│ refactor│──▶│ review │──▶│ commit │──▶│ report │──▶│ sync │
  └──────┬───────┘   └────┬────┘   └───┬────┘   └───┬────┘   └───┬────┘   └──┬───┘
         │                │             │            │            │           │
         plan.md     verrou tests    review.md    commit        report.md   doc sync
@@ -45,7 +45,7 @@ allowed-tools:
 
                TRACK TECH (perf, résilience, observabilité, sécu — non user-facing)
  ┌──────────┐   ┌─────┐   ┌────────┐   ┌────────┐   ┌────────┐   ┌──────┐
- │tech-plan│──▶│tech │──▶│review │──▶│commit │──▶│report │──▶│sync │
+ │ tech-plan│──▶│tech │──▶│ review │──▶│ commit │──▶│ report │──▶│ sync │
  └────┬─────┘   └──┬──┘   └───┬────┘   └───┬────┘   └───┬────┘   └──┬───┘
       │            │           │            │            │           │
       plan.md   baseline    review.md   commit       report.md   doc sync
@@ -54,13 +54,23 @@ allowed-tools:
 
                        UTILITAIRES (hors pipeline, à la demande)
  ┌─────────────────┐    ┌─────┐    ┌──────┐
- │ test-scenario │    │ adr │    │ help │  ← tu y es
+ │  test-scenario  │    │ adr │    │ help │  ← tu y es
  └─────────────────┘    └──┬──┘    └──────┘
  Playwright MCP live       │       ce sommaire
                            ▼
                   docs/adr/NNNN-slug.md
                   (depuis design/plan/review/report
                    ou topic libre)
+
+ ┌──────────────┐    ┌─────────┐
+ │  doc-feature │    │ release │
+ └──────┬───────┘    └────┬────┘
+        │                 │
+        ▼                 ▼
+ docs/feature-map/    vX.Y.Z + CHANGELOG.md
+ NNN-slug/feature.md  + tag annoté + GitHub release
+ (rétro-doc à partir   (SemVer depuis Conventional
+  du code livré)        Commits, push, gh release)
 ```
 
 Règle d'or : ne jamais passer à l'étape suivante sans validation explicite du user ("ok", "go", "validé", "c", etc.).
@@ -168,12 +178,31 @@ coder → QA du stack → tests ciblés → /review (optionnel) → /commit
 
 En cas de doute → partir sur le track approprié (feature, refacto ou tech). Il est toujours possible de basculer du structurant vers le fast si l'analyse révèle que c'est trivial.
 
+## Clôture de track — `/commit`, `/report`, `/sync`
+
+Les trois tracks (feature, refacto, tech) partagent les mêmes étapes de clôture après l'implémentation et la review. Ce sont des skills communs : seuls le contenu et le ton des artifacts changent selon le track.
+
+### `/commit` — Construire et pousser les commits
+Lit le diff git, regroupe les changements en lots cohérents, propose des messages au format **Conventional Commits en français** (`feat(scope): …`, `fix(scope): …`, `refactor(scope): …`, etc.), demande validation, commit et push. Sur un track refacto, on a souvent **un commit par étape** pour préserver la réversibilité.
+
+### `/report` — Documenter la livraison réelle
+Crée `report.md` dans le dossier de track (`docs/story/NNN-<f|r|t>-slug/`). Documente **ce qui a été fait vs ce qui était prévu** : écart entre intention (`feature.md`/`design.md`/`plan.md`) et exécution réelle — ajouts non prévus, choix qui ont dévié, dette laissée, métriques effectivement obtenues (en track tech : valeur cible vs mesurée, kill switch armé ou non). C'est la **mémoire factuelle** de la livraison, utile pour les rétros, l'onboarding futur et la traçabilité produit.
+
+### `/sync` — Réaligner la doc d'intention avec le code
+Met à jour `feature.md`, `design.md` ou `plan.md` quand l'implémentation a obligé à dévier (modèle de données ajusté, route renommée, lib remplacée, étape rajoutée…). Le but : que la doc d'intention **se lise comme si elle avait été écrite correctement dès le départ**, sans cicatrice de l'historique de décisions.
+
+**Différence `/report` vs `/sync`** : `/report` raconte l'histoire de la livraison **une fois pour toutes** (document figé, lecture chronologique). `/sync` met à jour le document d'intention **en place**, comme une révision documentaire. Les deux sont complémentaires : on garde la trace dans `report.md` et on rend les specs à nouveau fiables pour les futurs lecteurs.
+
+> **Ne pas confondre `/sync` avec `/doc-feature`** : `/sync` recale un document d'intention récent que tu viens de modifier dans un track structuré. `/doc-feature` (voir Utilitaires) cartographie une feature **ancienne ou jamais passée par le pipeline**, en partant du code livré, sans dossier de track préalable.
+
 ## Utilitaires (hors pipeline)
 
 | Skill                | Rôle                                                                                       |
 |----------------------|--------------------------------------------------------------------------------------------|
 | `/test-scenario`     | Tester un scénario utilisateur via Playwright MCP (navigateur piloté en live)              |
 | `/adr`               | Rédiger un Architecture Decision Record (`docs/adr/NNNN-slug.md`) depuis un artifact (design, plan, review, report) ou un topic libre — format MADR léger, backlinks et index automatiques |
+| `/doc-feature`       | **Cartographier une feature existante** en lisant le code (entités, flux, routes, services, templates, points d'extension) — stack-agnostique avec détection auto (Sylius, Symfony, autre). Produit `docs/feature-map/NNN-slug/feature.md`. Utile pour onboarder sur un module legacy ou documenter une zone du code jamais passée par le pipeline. À distinguer de `/sync` (qui met à jour une doc d'intention récente). |
+| `/release`           | **Créer une release versionnée bout en bout** — détermine le bump SemVer (major/minor/patch) depuis les Conventional Commits depuis le dernier tag, met à jour `CHANGELOG.md` (format Keep a Changelog), crée un tag annoté `vX.Y.Z`, push, puis publie la release sur GitHub via `gh`. Demande validation avant toute action publique. Argument-hint : `[major\|minor\|patch] [--no-push] [--draft] [--pre <suffix>]`. |
 | `/migrate-legacy`    | Renommer les anciens dossiers `docs/story/<f\|r\|t>-NNN-<slug>/` vers `NNN-<f\|r\|t>-<slug>/` |
 | `/import-external`   | Importer une doc produite par Spec Kit, BMAD-METHOD ou GSD vers le format workflow         |
 | `/help`              | Ce sommaire — pour se rappeler le workflow et les skills disponibles                       |
