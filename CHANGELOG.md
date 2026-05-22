@@ -7,6 +7,17 @@ et ce projet adhère au [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+## [1.7.0] - 2026-05-22
+
+### Added
+- Plugin `workflow` : agent `autopilot` pour piloter en autonomie les skills `/workflow:feature`, `/workflow:refactor`, `/workflow:tech` — délègue chaque sous-tâche à un sous-agent isolé (contexte propre, scalable), trace l'avancement dans `.autopilot.json` (reprise possible après interruption), s'arrête uniquement aux stop-points stratégiques (verrou caractérisation, baseline mesurée, écart majeur détecté, avant tests finaux). Critères mineur/majeur explicites pour gérer les déviations sans bruit inutile.
+- Plugin `workflow` : agent `report-and-sync` pour enchaîner `/workflow:report` puis `/workflow:sync` en une passe — clôture documentaire complète d'une story livrée.
+- Guide `/help` : nouvelle section « Agents (orchestrateurs multi-skills) » documentant `report-and-sync` et `autopilot` avec leur rôle, leur cas d'usage et l'exemple d'invocation via le tool `Agent`.
+
+### Changed
+- Skill `/workflow:commit` rendu autonome : commit et push sans validation interactive du message ni du push. Sync systématique par `git fetch` + `git rebase` avant push (zéro merge commit), conflit de rebase → arrêt sans auto-résolution, push sûr via `--force-with-lease` uniquement après rebase effectué dans la session. Garanties bloquantes resserrées sur secrets, debug, fichiers temporaires, `--amend` déjà publié, `--no-verify`, `--force` nu.
+- Plugin `workflow` bumpé de `0.20.0` à `0.23.0` (cumul des releases 0.21.0 → 0.22.0 → 0.23.0 livrées dans cette version).
+
 ## [1.6.0] - 2026-05-22
 
 ### Changed
@@ -113,7 +124,8 @@ Première version stable de la marketplace `gabrielmustiere`. Le format des plug
 - Plugin `workflow` synchronisé à `0.10.0` dans `marketplace.json` et `README.md` (alignement avec `plugin.json`)
 - Inventaire workflow du `README.md` complété avec les skills `migrate-legacy`, `import-external` et `release`
 
-[Unreleased]: https://github.com/gabrielmustiere/skills/compare/v1.6.0...HEAD
+[Unreleased]: https://github.com/gabrielmustiere/skills/compare/v1.7.0...HEAD
+[1.7.0]: https://github.com/gabrielmustiere/skills/compare/v1.6.0...v1.7.0
 [1.6.0]: https://github.com/gabrielmustiere/skills/compare/v1.5.0...v1.6.0
 [1.5.0]: https://github.com/gabrielmustiere/skills/compare/v1.4.1...v1.5.0
 [1.4.1]: https://github.com/gabrielmustiere/skills/compare/v1.4.0...v1.4.1
