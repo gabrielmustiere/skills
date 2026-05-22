@@ -3,7 +3,6 @@ name: refactor-plan
 description: Cadre un refacto avant son exécution — motivation (douleur actuelle, gain attendu), périmètre exact (fichiers/modules touchés), tests de caractérisation à mettre en place avant tout changement, plan incrémental par étapes vérifiables. Produit `docs/story/<NNN>-r-<slug>/plan.md`, lu ensuite par la skill `refactor` pour l'exécution.
 user_invocable: true
 disable-model-invocation: true
-model: opus
 allowed-tools:
   - Read
   - Grep

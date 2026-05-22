@@ -4,7 +4,6 @@ description: Crée une release versionnée de bout en bout — détermine le bum
 user_invocable: true
 disable-model-invocation: true
 argument-hint: "[major|minor|patch] [--no-push] [--draft] [--pre <suffix>]"
-model: opus
 allowed-tools:
   - Read
   - Write

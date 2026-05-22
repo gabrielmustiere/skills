@@ -3,7 +3,6 @@ name: review
 description: Relit un diff avant merge — vérifie la sécurité (injections, secrets, droits), la qualité du code, la performance, la conformité au `design.md` ou au `plan.md`, et la robustesse des migrations. Produit `docs/story/<NNN>-<f|r|t>-<slug>/review.md` avec verdict go/no-go et liste de points d'action priorisés.
 user_invocable: true
 disable-model-invocation: true
-model: opus
 allowed-tools:
   - Read
   - Grep

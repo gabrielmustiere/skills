@@ -4,7 +4,6 @@ description: Joue un scénario utilisateur via Playwright ou Chrome DevTools MCP
 user_invocable: true
 disable-model-invocation: true
 argument-hint: "[scénario ou url]"
-model: sonnet
 allowed-tools:
   - Read
   - Grep

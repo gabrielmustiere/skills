@@ -4,7 +4,6 @@ description: Implémente une feature depuis un design validé — découpe le tr
 user_invocable: true
 disable-model-invocation: true
 argument-hint: "[slug-feature]"
-model: opus
 allowed-tools:
   - Read
   - Write

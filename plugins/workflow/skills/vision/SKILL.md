@@ -3,7 +3,6 @@ name: vision
 description: Définit la vision projet (phase 0 du workflow) — problème adressé, audiences, valeur, North Star mesurable, principes directeurs, anti-objectifs explicites. Quatre modes d'usage : Création (initial), Enrichir (nouveau besoin/audience), Éditer (correction d'un point), Pivot (refonte). Produit ou met à jour `docs/vision.md` avec changelog, lu ensuite par `product-backlog` puis `feature-pitch`.
 user_invocable: true
 disable-model-invocation: true
-model: opus
 allowed-tools:
   - Read
   - Write

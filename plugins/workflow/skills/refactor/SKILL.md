@@ -4,7 +4,6 @@ description: Exécute un refacto cadré — vérifie d'abord que les tests de ca
 user_invocable: true
 disable-model-invocation: true
 argument-hint: "[slug-refacto]"
-model: opus
 allowed-tools:
   - Read
   - Write

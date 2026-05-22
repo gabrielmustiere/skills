@@ -3,7 +3,6 @@ name: tech-plan
 description: Cadre une évolution technique transverse (performance, résilience, observabilité, sécurité, scalabilité) avant son exécution — motivation, baseline à mesurer AVANT, options envisagées et option retenue, plan incrémental avec kill switch et métriques de validation à chaque étape. Produit `docs/story/<NNN>-t-<slug>/plan.md`, lu ensuite par la skill `tech`.
 user_invocable: true
 disable-model-invocation: true
-model: opus
 allowed-tools:
   - Read
   - Grep

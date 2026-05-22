@@ -3,7 +3,6 @@ name: feature-pitch
 description: Cadre, challenge et documente une feature avant développement — problème adressé, utilisateurs ciblés, valeur attendue, parcours principal, critères d'acceptation, hors-périmètre explicite. S'aligne sur `docs/vision.md` et `docs/product-backlog.md` quand ils existent. Produit `docs/story/<NNN>-f-<slug>/feature.md`, lu ensuite par `feature-design`.
 user_invocable: true
 disable-model-invocation: true
-model: opus
 allowed-tools:
   - Read
   - Write

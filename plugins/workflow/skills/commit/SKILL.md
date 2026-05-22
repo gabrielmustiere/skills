@@ -4,7 +4,6 @@ description: Commit Conventional Commits v1.0.0 en français depuis le diff cour
 user_invocable: true
 disable-model-invocation: true
 argument-hint: "[--no-push] [--amend]"
-model: haiku
 allowed-tools:
   - Read
   - Bash(git status:*)

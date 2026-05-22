@@ -4,7 +4,6 @@ description: Exécute une évolution technique cadrée — capture la baseline m
 user_invocable: true
 disable-model-invocation: true
 argument-hint: "[slug-tech]"
-model: opus
 allowed-tools:
   - Read
   - Write

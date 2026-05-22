@@ -3,7 +3,6 @@ name: migrate-legacy
 description: Migre l'ancien format `docs/story/<f|r|t>-NNN-<slug>/` (workflow < 0.8) vers le nouveau format `docs/story/NNN-<f|r|t>-<slug>/` avec compteur global en tête pour un tri chronologique lexicographique. Renomme via `git mv` pour préserver l'historique git des fichiers et liste les références à mettre à jour dans la doc.
 user_invocable: true
 disable-model-invocation: true
-model: haiku
 allowed-tools:
   - Read
   - Glob

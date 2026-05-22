@@ -3,7 +3,6 @@ name: feature-design
 description: Conçoit techniquement une feature déjà cadrée — choix d'architecture, modèle de données, points d'intégration, contrats d'API, stratégie de test, impacts sur l'existant. Prérequis un feature.md validé. Produit `docs/story/<NNN>-f-<slug>/design.md`, lu ensuite par la skill `feature` pour l'implémentation.
 user_invocable: true
 disable-model-invocation: true
-model: opus
 allowed-tools:
   - Read
   - Grep

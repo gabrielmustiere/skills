@@ -3,7 +3,6 @@ name: product-backlog
 description: Traduit la vision projet en périmètre fonctionnel structuré — domaines métier, capacités, parcours utilisateurs, règles transverses et backlog priorisé (MVP/V2/V3). Quatre modes d'usage : Création (initial), Enrichir (nouvelle capacité), Éditer (correction), Pivot (refonte). Prérequis `docs/vision.md`. Produit ou met à jour `docs/product-backlog.md` avec changelog, lu ensuite par `feature-pitch`.
 user_invocable: true
 disable-model-invocation: true
-model: opus
 allowed-tools:
   - Read
   - Write

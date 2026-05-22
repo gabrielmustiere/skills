@@ -3,7 +3,6 @@ name: help
 description: Affiche le sommaire du workflow et oriente vers le bon skill à appeler — détaille les phases amont (vision, product-backlog), les trois tracks d'exécution (feature, refacto, tech), l'enchaînement des skills dans chaque track et les artifacts produits à chaque étape. À utiliser quand tu ne sais pas par où commencer ou quel skill correspond à ton besoin.
 user_invocable: true
 disable-model-invocation: true
-model: haiku
 allowed-tools:
   - Read
   - Glob

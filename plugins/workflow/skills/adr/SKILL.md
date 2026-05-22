@@ -3,7 +3,6 @@ name: adr
 description: Rédige un Architecture Decision Record (ADR) sur un sujet précis — choix techno, pattern, infra, contrat d'API, dette assumée — à partir d'un artifact existant (`design.md`, `plan.md`, `review.md`, `report.md`) ou d'une revue à chaud d'une feature ou d'une base de code. Co-construit la décision en mode atelier (contexte, drivers, options, conséquences), puis produit `docs/adr/NNNN-<slug>.md` au format MADR léger. Ajoute le backlink dans l'artifact source et met à jour l'index `docs/adr/README.md`. À déclencher quand l'utilisateur dit "documente cette décision", "ADR", "trace la décision archi", "pourquoi on a choisi X".
 user_invocable: true
 disable-model-invocation: true
-model: opus
 allowed-tools:
   - Read
   - Grep

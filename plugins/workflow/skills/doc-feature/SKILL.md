@@ -3,7 +3,6 @@ name: doc-feature
 description: Documente une feature déjà implémentée en lisant le code — trace les entités, flux, routes, services, templates et points d'extension dans `docs/feature-map/NNN-slug/feature.md`. Stack-agnostique avec détection automatique (Sylius, Symfony, autre). Utile pour l'onboarding sur un module existant ou la cartographie d'un domaine du code.
 user_invocable: true
 disable-model-invocation: true
-model: sonnet
 allowed-tools:
   - Read
   - Grep

@@ -3,7 +3,6 @@ name: import-external
 description: Importe une documentation externe (Spec Kit, BMAD-METHOD, GSD) vers le format `docs/story/NNN-<f|r|t>-<slug>/`. Détecte automatiquement la source, propose un mapping des sections vers `feature.md` / `design.md` / `plan.md`, demande validation puis copie via `git mv` pour préserver l'historique.
 user_invocable: true
 disable-model-invocation: true
-model: sonnet
 allowed-tools:
   - Read
   - Write
