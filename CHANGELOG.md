@@ -7,6 +7,16 @@ et ce projet adhère au [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+## [1.8.0] - 2026-05-25
+
+### Added
+- Plugin `workflow` : skills `autopilot` et `report-and-sync` — points d'entrée slash explicites (`/workflow:autopilot`, `/workflow:report-and-sync`) qui délèguent aux subagents homonymes pour préserver l'isolation de contexte (l'orchestration vit dans l'agent, pas dans la session principale).
+
+### Changed
+- Plugin `workflow` : agent `autopilot` durci sur la gestion des outils manquants — arrêt explicite si `ToolSearch` est indisponible plutôt que tentative d'enchaînement en violation de la règle d'isolation.
+- Plugin `workflow` : nettoyage du frontmatter des agents `autopilot` et `report-and-sync` (ligne `tools:` orpheline retirée).
+- Plugin `workflow` bumpé de `0.23.1` à `0.25.0`, inventaire 20 → 22 skills.
+
 ## [1.7.2] - 2026-05-25
 
 ### Changed
@@ -137,7 +147,8 @@ Première version stable de la marketplace `gabrielmustiere`. Le format des plug
 - Plugin `workflow` synchronisé à `0.10.0` dans `marketplace.json` et `README.md` (alignement avec `plugin.json`)
 - Inventaire workflow du `README.md` complété avec les skills `migrate-legacy`, `import-external` et `release`
 
-[Unreleased]: https://github.com/gabrielmustiere/skills/compare/v1.7.2...HEAD
+[Unreleased]: https://github.com/gabrielmustiere/skills/compare/v1.8.0...HEAD
+[1.8.0]: https://github.com/gabrielmustiere/skills/compare/v1.7.2...v1.8.0
 [1.7.2]: https://github.com/gabrielmustiere/skills/compare/v1.7.1...v1.7.2
 [1.7.1]: https://github.com/gabrielmustiere/skills/compare/v1.7.0...v1.7.1
 [1.7.0]: https://github.com/gabrielmustiere/skills/compare/v1.6.0...v1.7.0
