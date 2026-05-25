@@ -7,6 +7,11 @@ et ce projet adhère au [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+## [1.8.1] - 2026-05-25
+
+### Fixed
+- Plugin `workflow` : frontmatter `tools:` explicite restauré sur les agents `autopilot` et `report-and-sync`. Sans cette ligne, Claude Code distribuait au sous-agent un set minimal (Read/Write/Edit/Bash) qui privait l'autopilot de `Agent` et `AskUserQuestion` — il s'arrêtait immédiatement via sa propre règle 6 (« outils manquants »). Le nettoyage opéré en 0.25.0 était donc une régression : la ligne n'était pas orpheline, elle était nécessaire. Plugin `workflow` bumpé de `0.25.0` à `0.25.1`.
+
 ## [1.8.0] - 2026-05-25
 
 ### Added

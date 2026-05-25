@@ -1,6 +1,7 @@
 ---
 name: report-and-sync
 description: Enchaîne `/workflow:report` puis `/workflow:sync` pour une story (`docs/story/NNN-<f|r|t>-<slug>/`). À utiliser après livraison d'une feature, d'un refacto ou d'une évolution technique pour produire le compte rendu d'implémentation puis réaligner la doc d'intention sur le code livré, en une seule opération. Prend en argument un slug ou un chemin de dossier.
+tools: Read, Grep, Glob, Write, Edit, Bash, Skill, AskUserQuestion, ToolSearch
 ---
 
 # Agent report-and-sync

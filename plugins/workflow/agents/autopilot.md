@@ -1,6 +1,7 @@
 ---
 name: autopilot
 description: Pilote autonome des skills d'implémentation `/workflow:feature`, `/workflow:refactor` et `/workflow:tech` — exécute toutes les sous-tâches d'une story bout en bout en déléguant chaque sous-tâche à un sous-agent isolé (contexte propre par sous-tâche), trace l'avancement dans `.autopilot.json` (reprise possible) et ne s'arrête qu'aux stop-points stratégiques (verrou caractérisation, baseline, écart majeur, tests finaux). Prend en argument un slug ou un chemin de dossier `docs/story/NNN-<f|r|t>-<slug>/`.
+tools: Read, Write, Edit, Grep, Glob, Bash, Agent, AskUserQuestion, ToolSearch, Skill
 ---
 
 # Agent autopilot

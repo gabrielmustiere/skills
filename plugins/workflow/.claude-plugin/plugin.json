@@ -1,7 +1,7 @@
 {
   "name": "workflow",
   "description": "Pipeline de développement stack-agnostique avec nomenclature symétrique : phase 0 vision projet (vision → docs/vision.md), phase 0.5 périmètre fonctionnel (product-backlog → docs/product-backlog.md avec domaines, capacités, parcours et backlog priorisé MVP/V2/V3), track feature (feature-pitch → feature-design → feature), track refacto (refactor-plan → refactor), track évolution technique (tech-plan → tech), puis review → commit → report → sync communs. Artifacts unifiés dans docs/story/ avec format NNN-<f|r|t>-<slug> (compteur global d'abord) pour une timeline lexicographiquement triée. docs/vision.md et docs/product-backlog.md sont des documents vivants supportant 4 modes (Création, Enrichir, Éditer, Pivot) avec changelog intégré, lus par feature-pitch pour challenger l'alignement et reprendre le pitch backlog. Skill adr transverse pour graver des Architecture Decision Records (docs/adr/NNNN-slug.md, format MADR léger) depuis n'importe quel artifact (design, plan, review, report) ou un topic libre, avec backlinks et index automatiques. Inclut migrate-legacy (migration de l'ancien format <f|r|t>-NNN-<slug>) et import-external (import depuis Spec Kit, BMAD-METHOD, GSD). Détection automatique du stack (Symfony, Sylius) et chargement des règles framework adaptées.",
-  "version": "0.25.0",
+  "version": "0.25.1",
   "author": {
     "name": "Gabriel Mustiere"
   },
