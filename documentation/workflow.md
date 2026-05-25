@@ -1,6 +1,6 @@
 # Inventaire — plugin `workflow`
 
-Pipeline de développement stack-agnostique (20 skills).
+Pipeline de développement stack-agnostique (22 skills).
 
 | Skill | Rôle |
 | --- | --- |
@@ -18,6 +18,8 @@ Pipeline de développement stack-agnostique (20 skills).
 | [`commit`](../plugins/workflow/skills/commit/SKILL.md) | Génère un Conventional Commit FR et push |
 | [`report`](../plugins/workflow/skills/report/SKILL.md) | Compte rendu intention vs code réel |
 | [`sync`](../plugins/workflow/skills/sync/SKILL.md) | Réaligne la doc d'intention avec le code livré |
+| [`report-and-sync`](../plugins/workflow/skills/report-and-sync/SKILL.md) | Point d'entrée slash qui délègue au subagent `workflow:report-and-sync` (enchaîne `report` puis `sync` en contexte isolé) |
+| [`autopilot`](../plugins/workflow/skills/autopilot/SKILL.md) | Point d'entrée slash qui délègue au subagent `workflow:autopilot` (pilotage autonome bout-en-bout d'une story avec stop-points stratégiques et reprise via `.autopilot.json`) |
 | [`test-scenario`](../plugins/workflow/skills/test-scenario/SKILL.md) | Joue un scénario utilisateur via Playwright MCP |
 | [`adr`](../plugins/workflow/skills/adr/SKILL.md) | Rédige un Architecture Decision Record MADR léger (`docs/adr/NNNN-slug.md`) depuis un artifact (`design.md` / `plan.md` / `review.md` / `report.md`) ou un topic libre — atelier interactif (contexte, drivers, options, conséquences), backlinks automatiques dans l'artifact source, index `docs/adr/README.md` et `report.md` de la story |
 | [`migrate-legacy`](../plugins/workflow/skills/migrate-legacy/SKILL.md) | Migre les anciens dossiers `<f\|r\|t>-NNN-<slug>/` vers `NNN-<f\|r\|t>-<slug>/` (compteur en tête) via `git mv` |
