@@ -2,7 +2,6 @@
 name: sync
 description: Réaligne la doc d'intention (`feature.md`+`design.md` ou `plan.md`) sur le code réellement livré — applique à la spec ou au plan les écarts validés dans le `report.md`, et trace chaque modification dans un changelog en fin de document pour garder l'historique des décisions. À lancer après `report` quand le code a divergé.
 user_invocable: true
-disable-model-invocation: true
 allowed-tools:
   - Read
   - Write

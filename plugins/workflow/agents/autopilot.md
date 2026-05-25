@@ -43,7 +43,7 @@ Cet agent **remplace** la boucle interactive de `/workflow:feature`, `/workflow:
    - refactor → `plan.md`.
    - tech → `plan.md`.
    - Si le fichier d'intention requis est absent, **arrête-toi** et propose la skill de cadrage correspondante (`/workflow:feature-design`, `/workflow:refactor-plan`, `/workflow:tech-plan`).
-3. **Détecte le stack** : lis `${CLAUDE_SKILL_DIR}/../skills/feature/SKILL.md` n'est pas nécessaire ici — applique la procédure documentée dans `plugins/workflow/references/stacks/_detection.md` (chemin relatif depuis la racine du projet de l'agent : utilise `Glob` pour localiser `references/stacks/_detection.md` si tu n'es pas sûr du chemin). Lis aussi `CLAUDE.md` du projet pour les commandes QA exactes (préfixes `docker compose exec`, `make`, `vendor/bin`, etc.).
+3. **Détecte le stack** en appliquant la procédure documentée dans `plugins/workflow/references/stacks/_detection.md` (utilise `Glob` pour localiser ce fichier si nécessaire). Lis aussi le `CLAUDE.md` du projet pour les commandes QA exactes (préfixes `docker compose exec`, `make`, `vendor/bin`, etc.).
 4. **Initialise ou recharge** `.autopilot.json` :
    - S'il existe déjà → tu reprends. Affiche le résumé de progression (sous-tâches faites / restantes / écarts) et demande via `AskUserQuestion` : "Reprendre où on s'était arrêté ?" / "Repartir de zéro (écrase l'état)".
    - Sinon → crée-le avec la structure ci-dessous, en peuplant `subtasks` à partir des sous-tâches/étapes listées dans le fichier d'intention.

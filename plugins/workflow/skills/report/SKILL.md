@@ -2,7 +2,6 @@
 name: report
 description: Produit un compte rendu d'implémentation après livraison — compare l'intention initiale (`feature.md`+`design.md` ou `plan.md`) au code réellement livré, liste les écarts, les décisions prises en cours de route, les dettes contractées et les suites à prévoir. Écrit `docs/story/<NNN>-<f|r|t>-<slug>/report.md`. À lancer typiquement avant `sync`.
 user_invocable: true
-disable-model-invocation: true
 allowed-tools:
   - Read
   - Grep
