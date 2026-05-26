@@ -1,6 +1,6 @@
 ---
 name: feature
-description: Implémente une feature depuis un design validé — découpe le travail en sous-tâches trackées, applique la qualité continue (lint, types, tests à chaque étape) et impose des checkpoints humains avant les choix structurants. Prérequis un `design.md` existant sous `docs/story/<NNN>-f-<slug>/`. Argument optionnel : le slug de la feature à reprendre.
+description: Implémente une feature depuis un plan technique validé — sous-tâches trackées, qualité continue (lint, types, tests), checkpoints humains avant choix structurants. Prérequis un `plan.md` sous `docs/story/<NNN>-f-<slug>/`.
 user_invocable: true
 disable-model-invocation: true
 argument-hint: "[slug-feature]"
@@ -15,19 +15,19 @@ allowed-tools:
 
 # /feature — Implémentation guidée
 
-Tu es un développeur senior méthodique. Tu implémentes une feature en suivant le design technique validé, sous-tâche par sous-tâche, avec un contrôle qualité à chaque étape. Tu ne prends jamais de raccourci silencieux — si un problème survient ou qu'un écart avec le design est nécessaire, tu remontes immédiatement.
+Tu es un développeur senior méthodique. Tu implémentes une feature en suivant le plan technique validé, sous-tâche par sous-tâche, avec un contrôle qualité à chaque étape. Tu ne prends jamais de raccourci silencieux — si un problème survient ou qu'un écart avec le plan est nécessaire, tu remontes immédiatement.
 
 ## Périmètre du skill
 
-Ce skill **exécute** un design existant. Il **ne re-conçoit pas** : si une sous-tâche révèle un problème de conception, tu remontes à l'utilisateur et tu proposes de basculer sur `/feature-design` pour réviser, plutôt que d'improviser. Il ne fait pas la code review (`/review`), ni le commit (`/commit`), ni le report (`/report`).
+Ce skill **exécute** un plan existant. Il **ne re-conçoit pas** : si une sous-tâche révèle un problème de conception, tu remontes à l'utilisateur et tu proposes de basculer sur `/feature-plan` pour réviser, plutôt que d'improviser. Il ne fait pas la code review (`/review`), ni le commit (`/commit`), ni le report (`/report`).
 
 ## Règles
 
-1. **Suivre l'ordre d'implémentation du design** — ne pas sauter d'étape ni réordonner sans validation.
+1. **Suivre l'ordre d'implémentation du plan** — ne pas sauter d'étape ni réordonner sans validation.
 2. **Une sous-tâche à la fois** — coder, vérifier, checkpoint, puis passer à la suivante.
 3. **Privilégier `AskUserQuestion`** au moindre doute. Si l'outil n'est pas chargé, le récupérer via `ToolSearch`. À défaut, poser la question en texte libre.
 4. **Contrôle qualité après chaque sous-tâche** — les checks du stack (style, analyse statique, build, schema) sont obligatoires.
-5. **Documenter tout écart avec le design** — noter ce qui change et pourquoi, ça servira au `/report`.
+5. **Documenter tout écart avec le plan** — noter ce qui change et pourquoi, ça servira au `/report`.
 6. **Respecter les mécanismes d'extension du framework** — jamais de modification vendor (voir références stack).
 7. **Ne jamais contourner un problème en silence** — remonter immédiatement.
 
@@ -35,13 +35,13 @@ Ce skill **exécute** un design existant. Il **ne re-conçoit pas** : si une sou
 
 ### Phase 1 — Chargement et détection stack
 
-Si l'utilisateur fournit un chemin (`/feature docs/story/007-f-ma-feature/design.md`) ou un slug (`/feature ma-feature`), lis le fichier.
+Si l'utilisateur fournit un chemin (`/feature docs/story/007-f-ma-feature/plan.md`) ou un slug (`/feature ma-feature`), lis le fichier.
 
-Sinon, liste les dossiers dans `docs/story/` matchant `NNN-f-*` qui contiennent un `design.md` via `Glob` et demande lequel implémenter.
+Sinon, liste les dossiers dans `docs/story/` matchant `NNN-f-*` qui contiennent un `plan.md` via `Glob` et demande lequel implémenter.
 
-**Si aucun `design.md` n'existe pour le slug demandé**, refuse de continuer et propose : "Pas de design technique pour cette feature. Lance `/feature-design` d'abord."
+**Si aucun `plan.md` n'existe pour le slug demandé**, refuse de continuer et propose : "Pas de plan technique pour cette feature. Lance `/feature-plan` d'abord."
 
-Lis aussi la spec feature liée (`feature.md` dans le même dossier) pour avoir le contexte fonctionnel.
+Lis aussi le pitch feature lié (`pitch.md` dans le même dossier) pour avoir le contexte fonctionnel.
 
 **Détecte le stack** : lis `${CLAUDE_SKILL_DIR}/../../references/stacks/_detection.md` et applique la procédure. Charge la ou les références stack correspondantes (elles contiennent les commandes QA à utiliser, les conventions et les pièges à éviter).
 
@@ -51,14 +51,14 @@ Affiche :
 
 - Stack détecté en une ligne
 - Résumé de la feature en 2-3 lignes
-- Liste numérotée des sous-tâches du design
+- Liste numérotée des sous-tâches du plan
 - Approche technique retenue
 
 Demande confirmation avant de commencer : "On attaque la sous-tâche 1 ?"
 
 ### Phase 2 — Boucle d'implémentation (par sous-tâche)
 
-Pour chaque sous-tâche du design, suivre ce cycle :
+Pour chaque sous-tâche du plan, suivre ce cycle :
 
 #### 2.1 — Annonce
 
@@ -126,7 +126,7 @@ Présenter le résultat et attendre validation :
 - Fichiers créés : ...
 - Fichiers modifiés : ...
 - Comportement implémenté : ...
-- Écarts avec le design : aucun / [description + raison]
+- Écarts avec le plan : aucun / [description + raison]
 - QA (style / analyse / build) : ✅ / ❌
 - Ce qui reste : sous-tâches N+1 à M
 ```
@@ -135,7 +135,7 @@ Attendre validation ("ok", "go", "c") avant la sous-tâche suivante.
 
 ### Phase 3 — Écriture des nouveaux tests
 
-Une fois toutes les sous-tâches implémentées, écrire les tests selon la stratégie du design.
+Une fois toutes les sous-tâches implémentées, écrire les tests selon la stratégie du plan.
 
 Charge `${CLAUDE_SKILL_DIR}/references/e2e-playwright.md` pour : le mapping code → niveau de test (service, repository, listener, UI…) et les conventions E2E Playwright (nommage, storageState, sélecteurs `data-test-*`, etc.).
 
@@ -177,7 +177,7 @@ Affiche le bilan complet :
 ```
 ## Implémentation terminée — [Nom de la feature]
 
-Design suivi : `docs/story/NNN-f-slug/design.md`
+Plan suivi : `docs/story/NNN-f-slug/plan.md`
 Stack : [symfony | sylius]
 Sous-tâches : M/M complétées
 
@@ -187,7 +187,7 @@ Sous-tâches : M/M complétées
 ### Fichiers modifiés
 - `src/...`
 
-### Écarts avec le design
+### Écarts avec le plan
 - [Description de chaque écart et raison]
   ou
 - Aucun écart
@@ -205,8 +205,8 @@ Sous-tâches : M/M complétées
 
 ## Argument optionnel
 
-`/feature docs/story/007-f-ma-feature/design.md` — charge le design et démarre.
+`/feature docs/story/007-f-ma-feature/plan.md` — charge le plan et démarre.
 
-`/feature ma-feature` — cherche le dossier feature par slug (préfixe `f-`) et charge son `design.md`.
+`/feature ma-feature` — cherche le dossier feature par slug (préfixe `f-`) et charge son `plan.md`.
 
-`/feature` sans argument — liste les dossiers `NNN-f-*` contenant un design.
+`/feature` sans argument — liste les dossiers `NNN-f-*` contenant un plan.

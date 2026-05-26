@@ -1,6 +1,6 @@
 ---
 name: help
-description: Affiche le sommaire du workflow et oriente vers le bon skill à appeler — détaille les phases amont (vision, product-backlog), les trois tracks d'exécution (feature, refacto, tech), l'enchaînement des skills dans chaque track et les artifacts produits à chaque étape. À utiliser quand tu ne sais pas par où commencer ou quel skill correspond à ton besoin.
+description: Affiche le sommaire du workflow et oriente vers le bon skill — phases amont (vision, product-backlog), trois tracks (feature, refacto, tech), enchaînement et artifacts. À utiliser quand tu ne sais pas par où commencer ou quel skill correspond.
 user_invocable: true
 disable-model-invocation: true
 allowed-tools:
@@ -26,12 +26,12 @@ allowed-tools:
                                            Lu par feature-pitch pour situer chaque feature.
 
                         TRACK FEATURE (valeur utilisateur, structurante)
- ┌──────────────┐   ┌───────────────┐   ┌────────┐   ┌────────┐   ┌────────┐   ┌────────┐   ┌──────┐
- │feature-pitch │──▶│ feature-design│──▶│ feature│──▶│ review │──▶│ commit │──▶│ report │──▶│ sync │
- └──────┬───────┘   └───────┬───────┘   └───┬────┘   └───┬────┘   └───┬────┘   └───┬────┘   └──┬───┘
-        │                    │              │            │            │            │           │
-        feature.md        design.md   code+migrations review.md    commit       report.md   doc sync
-                                      +nouveaux tests              +push                   +changelog
+ ┌──────────────┐   ┌──────────────┐   ┌────────┐   ┌────────┐   ┌────────┐   ┌────────┐   ┌──────┐
+ │feature-pitch │──▶│ feature-plan │──▶│ feature│──▶│ review │──▶│ commit │──▶│ report │──▶│ sync │
+ └──────┬───────┘   └──────┬───────┘   └───┬────┘   └───┬────┘   └───┬────┘   └───┬────┘   └──┬───┘
+        │                   │              │            │            │            │           │
+        pitch.md          plan.md    code+migrations review.md    commit       report.md   doc sync
+                                     +nouveaux tests              +push                   +changelog
 
                     TRACK REFACTO (comportement figé, code restructuré)
  ┌──────────────┐   ┌─────────┐   ┌────────┐   ┌────────┐   ┌────────┐   ┌──────┐
@@ -58,7 +58,7 @@ allowed-tools:
  Playwright MCP live       │       ce sommaire
                            ▼
                   docs/adr/NNNN-slug.md
-                  (depuis design/plan/review/report
+                  (depuis pitch/plan/review/report
                    ou topic libre)
 
  ┌──────────────┐    ┌─────────┐
@@ -67,7 +67,7 @@ allowed-tools:
         │                 │
         ▼                 ▼
  docs/feature-map/    vX.Y.Z + CHANGELOG.md
- NNN-slug/feature.md  + tag annoté + GitHub release
+ NNN-slug/overview.md + tag annoté + GitHub release
  (rétro-doc à partir   (SemVer depuis Conventional
   du code livré)        Commits, push, gh release)
 ```
@@ -80,9 +80,11 @@ Tous les artifacts vivent dans `docs/story/` à plat, **numérotés globalement*
 
 | Tag    | Type              | Doc d'intention              | Exemple                             |
 |--------|-------------------|------------------------------|-------------------------------------|
-| `f`    | Feature           | `feature.md` + `design.md`  | `docs/story/042-f-checkout-express/` |
+| `f`    | Feature           | `pitch.md` + `plan.md`       | `docs/story/042-f-checkout-express/` |
 | `r`    | Refacto           | `plan.md`                    | `docs/story/043-r-extract-pricing/`  |
 | `t`    | Évolution tech    | `plan.md`                    | `docs/story/044-t-redis-cache/`      |
+
+Tous les tracks produisent un `plan.md` (cadrage technique exécutable). Le track feature a en amont un `pitch.md` (cadrage fonctionnel) qui formalise le problème utilisateur avant le plan.
 
 Les numéros s'incrémentent globalement (042-f → 043-r → 044-t → 045-f…), ce qui permet de lire la timeline d'évolution du projet en listant simplement `docs/story/`.
 
@@ -123,13 +125,13 @@ Pour tout changement qui introduit une nouvelle fonctionnalité ou modifie un co
 
 | #  | Skill              | Rôle                                                         | Produit                                      |
 |----|--------------------|--------------------------------------------------------------|----------------------------------------------|
-| 1  | `/feature-pitch`   | Cadrer et challenger une fonctionnalité                      | `docs/story/NNN-f-slug/feature.md`           |
-| 2  | `/feature-design`  | Concevoir la solution technique à partir de la spec          | `docs/story/NNN-f-slug/design.md`            |
+| 1  | `/feature-pitch`   | Cadrer et challenger une fonctionnalité                      | `docs/story/NNN-f-slug/pitch.md`             |
+| 2  | `/feature-plan`    | Concevoir la solution technique à partir du pitch            | `docs/story/NNN-f-slug/plan.md`              |
 | 3  | `/feature`         | Implémenter sous-tâche par sous-tâche avec QA continue       | Code + migrations + tests                    |
-| 4  | `/review`          | Code review (sécu, perf, qualité, conformité design)         | `docs/story/NNN-f-slug/review.md`            |
+| 4  | `/review`          | Code review (sécu, perf, qualité, conformité plan)           | `docs/story/NNN-f-slug/review.md`            |
 | 5  | `/commit`          | Commit Conventional Commits en français + push               | Commit                                       |
 | 6  | `/report`          | Documenter ce qui a été fait vs ce qui était prévu           | `docs/story/NNN-f-slug/report.md`            |
-| 7  | `/sync`            | Réaligner spec et design avec la réalité du code             | Mise à jour `feature.md` + `design.md`       |
+| 7  | `/sync`            | Réaligner pitch et plan avec la réalité du code              | Mise à jour `pitch.md` + `plan.md`           |
 
 ## Track refacto — Comportement figé, code restructuré
 
@@ -185,12 +187,12 @@ Les trois tracks (feature, refacto, tech) partagent les mêmes étapes de clôtu
 Lit le diff git, regroupe les changements en lots cohérents, propose des messages au format **Conventional Commits en français** (`feat(scope): …`, `fix(scope): …`, `refactor(scope): …`, etc.), demande validation, commit et push. Sur un track refacto, on a souvent **un commit par étape** pour préserver la réversibilité.
 
 ### `/report` — Documenter la livraison réelle
-Crée `report.md` dans le dossier de track (`docs/story/NNN-<f|r|t>-slug/`). Documente **ce qui a été fait vs ce qui était prévu** : écart entre intention (`feature.md`/`design.md`/`plan.md`) et exécution réelle — ajouts non prévus, choix qui ont dévié, dette laissée, métriques effectivement obtenues (en track tech : valeur cible vs mesurée, kill switch armé ou non). C'est la **mémoire factuelle** de la livraison, utile pour les rétros, l'onboarding futur et la traçabilité produit.
+Crée `report.md` dans le dossier de track (`docs/story/NNN-<f|r|t>-slug/`). Documente **ce qui a été fait vs ce qui était prévu** : écart entre intention (`pitch.md`/`plan.md`) et exécution réelle — ajouts non prévus, choix qui ont dévié, dette laissée, métriques effectivement obtenues (en track tech : valeur cible vs mesurée, kill switch armé ou non). C'est la **mémoire factuelle** de la livraison, utile pour les rétros, l'onboarding futur et la traçabilité produit.
 
 ### `/sync` — Réaligner la doc d'intention avec le code
-Met à jour `feature.md`, `design.md` ou `plan.md` quand l'implémentation a obligé à dévier (modèle de données ajusté, route renommée, lib remplacée, étape rajoutée…). Le but : que la doc d'intention **se lise comme si elle avait été écrite correctement dès le départ**, sans cicatrice de l'historique de décisions.
+Met à jour `pitch.md` ou `plan.md` quand l'implémentation a obligé à dévier (modèle de données ajusté, route renommée, lib remplacée, étape rajoutée…). Le but : que la doc d'intention **se lise comme si elle avait été écrite correctement dès le départ**, sans cicatrice de l'historique de décisions.
 
-**Différence `/report` vs `/sync`** : `/report` raconte l'histoire de la livraison **une fois pour toutes** (document figé, lecture chronologique). `/sync` met à jour le document d'intention **en place**, comme une révision documentaire. Les deux sont complémentaires : on garde la trace dans `report.md` et on rend les specs à nouveau fiables pour les futurs lecteurs.
+**Différence `/report` vs `/sync`** : `/report` raconte l'histoire de la livraison **une fois pour toutes** (document figé, lecture chronologique). `/sync` met à jour le document d'intention **en place**, comme une révision documentaire. Les deux sont complémentaires : on garde la trace dans `report.md` et on rend les docs d'intention à nouveau fiables pour les futurs lecteurs.
 
 > **Ne pas confondre `/sync` avec `/doc-feature`** : `/sync` recale un document d'intention récent que tu viens de modifier dans un track structuré. `/doc-feature` (voir Utilitaires) cartographie une feature **ancienne ou jamais passée par le pipeline**, en partant du code livré, sans dossier de track préalable.
 
@@ -199,10 +201,10 @@ Met à jour `feature.md`, `design.md` ou `plan.md` quand l'implémentation a obl
 | Skill                | Rôle                                                                                       |
 |----------------------|--------------------------------------------------------------------------------------------|
 | `/test-scenario`     | Tester un scénario utilisateur via Playwright MCP (navigateur piloté en live)              |
-| `/adr`               | Rédiger un Architecture Decision Record (`docs/adr/NNNN-slug.md`) depuis un artifact (design, plan, review, report) ou un topic libre — format MADR léger, backlinks et index automatiques |
-| `/doc-feature`       | **Cartographier une feature existante** en lisant le code (entités, flux, routes, services, templates, points d'extension) — stack-agnostique avec détection auto (Sylius, Symfony, autre). Produit `docs/feature-map/NNN-slug/feature.md`. Utile pour onboarder sur un module legacy ou documenter une zone du code jamais passée par le pipeline. À distinguer de `/sync` (qui met à jour une doc d'intention récente). |
+| `/adr`               | Rédiger un Architecture Decision Record (`docs/adr/NNNN-slug.md`) depuis un artifact (pitch, plan, review, report) ou un topic libre — format MADR léger, backlinks et index automatiques |
+| `/doc-feature`       | **Cartographier une feature existante** en lisant le code (entités, flux, routes, services, templates, points d'extension) — stack-agnostique avec détection auto (Sylius, Symfony, autre). Produit `docs/feature-map/NNN-slug/overview.md`. Utile pour onboarder sur un module legacy ou documenter une zone du code jamais passée par le pipeline. À distinguer de `/sync` (qui met à jour une doc d'intention récente). |
 | `/release`           | **Créer une release versionnée bout en bout** — détermine le bump SemVer (major/minor/patch) depuis les Conventional Commits depuis le dernier tag, met à jour `CHANGELOG.md` (format Keep a Changelog), crée un tag annoté `vX.Y.Z`, push, puis publie la release sur GitHub via `gh`. Demande validation avant toute action publique. Argument-hint : `[major\|minor\|patch] [--no-push] [--draft] [--pre <suffix>]`. |
-| `/migrate-legacy`    | Renommer les anciens dossiers `docs/story/<f\|r\|t>-NNN-<slug>/` vers `NNN-<f\|r\|t>-<slug>/` |
+| `/migrate-legacy`    | Renommer les anciens dossiers `docs/story/<f\|r\|t>-NNN-<slug>/` vers `NNN-<f\|r\|t>-<slug>/`, et migrer les artifacts `feature.md`/`design.md` → `pitch.md`/`plan.md` |
 | `/import-external`   | Importer une doc produite par Spec Kit, BMAD-METHOD ou GSD vers le format workflow         |
 | `/help`              | Ce sommaire — pour se rappeler le workflow et les skills disponibles                       |
 

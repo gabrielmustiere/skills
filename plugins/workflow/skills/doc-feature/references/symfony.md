@@ -38,7 +38,7 @@
 - Templates : `templates/`
 - Migrations : `migrations/`
 
-## Sections additionnelles à inclure dans `feature.md`
+## Sections additionnelles à inclure dans `overview.md`
 
 Ces sections viennent **en plus** du squelette générique. À inclure uniquement si pertinentes pour la feature documentée.
 

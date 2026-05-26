@@ -36,7 +36,7 @@ Le plugin `workflow` est le plus structurant de la Forge : il pilote tout le cyc
 
 ### Philosophie en trois idées
 
-1. **Une étape = une skill = un artefact.** Chaque skill produit un fichier markdown (`feature.md`, `design.md`, `plan.md`, `review.md`, `report.md`) qui sert d'entrée à la suivante. Tu ne passes jamais à l'étape d'après sans validation explicite (`ok`, `go`, `validé`).
+1. **Une étape = une skill = un artefact.** Chaque skill produit un fichier markdown (`pitch.md`, `plan.md`, `review.md`, `report.md`) qui sert d'entrée à la suivante. Tu ne passes jamais à l'étape d'après sans validation explicite (`ok`, `go`, `validé`).
 2. **Trois tracks symétriques selon la nature du changement.** Une feature visible utilisateur, un refacto qui ne change rien dehors, ou une évolution technique (perf/résilience/sécu/observabilité) qu'un monitoring voit. Le pipeline est le même, seuls les premiers skills changent.
 3. **Stack-agnostique avec règles framework auto-chargées.** Le workflow détecte ton stack (Symfony, Sylius…) via `composer.json` / `package.json` et charge les bonnes conventions de QA, sécu, perf au bon moment. Tes conventions projet (commandes exactes, credentials de test…) vivent dans le `CLAUDE.md` à la racine.
 
@@ -48,7 +48,7 @@ PHASE 0 (une fois)
   /workflow:product-backlog  → docs/product-backlog.md (domaines, capacités, MVP/V2/V3)
 
 CHOIX DU TRACK
-  Feature (user-facing)  : feature-pitch → feature-design → feature
+  Feature (user-facing)  : feature-pitch → feature-plan → feature
   Refacto (comportement figé) : refactor-plan → refactor
   Tech (perf/sécu/obs)   : tech-plan → tech
 
@@ -56,7 +56,7 @@ FIN DE CYCLE (commune aux 3 tracks)
   review → commit → report → sync
 ```
 
-Tout vit dans `docs/story/NNN-<f|r|t>-<slug>/` (compteur global → tri lexicographique = timeline du projet). Exemple : `docs/story/042-f-checkout-express/feature.md`.
+Tout vit dans `docs/story/NNN-<f|r|t>-<slug>/` (compteur global → tri lexicographique = timeline du projet). Exemple : `docs/story/042-f-checkout-express/pitch.md`.
 
 ### Premier réflexe — `/workflow:help`
 
@@ -85,9 +85,9 @@ Si l'évolution est ciblée (`Enrichir` ou `Éditer`), le skill saute la phase d
 
 Pour tout changement qu'un utilisateur final ou un admin peut décrire ("je vois maintenant un bouton X qui fait Y"). C'est le track le plus complet, en 3 phases avant le commit.
 
-- **`/workflow:feature-pitch`** — Atelier de cadrage de l'idée. Claude lit `docs/vision.md` et `docs/product-backlog.md` pour challenger l'alignement (cette feature sert quelle capacité ? quel principe ? quel impact North Star ?), puis cadre le pitch : problème utilisateur, persona, valeur, scope MVP vs hors-scope, critères d'acceptation, risques. Produit `docs/story/NNN-f-slug/feature.md`. **Refuse les formulations vagues** — c'est la skill qui te force à savoir ce que tu fais avant de coder.
+- **`/workflow:feature-pitch`** — Atelier de cadrage de l'idée. Claude lit `docs/vision.md` et `docs/product-backlog.md` pour challenger l'alignement (cette feature sert quelle capacité ? quel principe ? quel impact North Star ?), puis cadre le pitch : problème utilisateur, persona, valeur, scope MVP vs hors-scope, critères d'acceptation, risques. Produit `docs/story/NNN-f-slug/pitch.md`. **Refuse les formulations vagues** — c'est la skill qui te force à savoir ce que tu fais avant de coder.
 
-- **`/workflow:feature-design`** — Une fois la spec validée, design technique : architecture, modèle de données, contrats d'API, impacts existants, stratégie de migration, plan de tests. Produit `docs/story/NNN-f-slug/design.md`. Le design est validé avant écriture de la moindre ligne de code.
+- **`/workflow:feature-plan`** — Une fois le pitch validé, plan technique : architecture, modèle de données, contrats d'API, impacts existants, stratégie de migration, plan de tests. Produit `docs/story/NNN-f-slug/plan.md`. Le plan est validé avant écriture de la moindre ligne de code.
 
 - **`/workflow:feature`** — Implémentation guidée, sous-tâche par sous-tâche, avec QA continue (lint, types, tests) à chaque étape. Tu valides chaque sous-tâche avant de passer à la suivante. Produit le code, les migrations, les tests.
 
@@ -111,10 +111,10 @@ Pour les changements qu'un observateur externe (test, monitoring, log consumer, 
 
 Après l'implémentation, le pipeline converge sur quatre skills qui s'enchaînent toujours dans le même ordre.
 
-- **`/workflow:review`** — Code review du diff : sécurité (OWASP, secrets), qualité (lint, typing, complexité), conformité au design (ce que dit `design.md` ou `plan.md` est-il bien là ?), non-régression. Produit `review.md` avec un statut bloquant / non-bloquant.
+- **`/workflow:review`** — Code review du diff : sécurité (OWASP, secrets), qualité (lint, typing, complexité), conformité au plan (ce que dit `plan.md` est-il bien là ?), non-régression. Produit `review.md` avec un statut bloquant / non-bloquant.
 - **`/workflow:commit`** — Génère un message Conventional Commits en français à partir du diff et du contexte de la story, puis commit et push. Pas de message générique : il décrit l'**intention** (le pourquoi), pas le quoi.
-- **`/workflow:report`** — Compte rendu honnête de ce qui a été fait **vs ce qui était prévu** dans `feature.md` / `design.md` / `plan.md`. Liste les écarts, les compromis pris en cours de route, les TODOs ouverts. Produit `report.md`.
-- **`/workflow:sync`** — Si le report révèle que la doc d'intention a divergé du code livré, ce skill réaligne `feature.md` / `design.md` / `plan.md` sur la réalité, pour que la story reste lisible dans 6 mois.
+- **`/workflow:report`** — Compte rendu honnête de ce qui a été fait **vs ce qui était prévu** dans `pitch.md` / `plan.md`. Liste les écarts, les compromis pris en cours de route, les TODOs ouverts. Produit `report.md`.
+- **`/workflow:sync`** — Si le report révèle que la doc d'intention a divergé du code livré, ce skill réaligne `pitch.md` / `plan.md` sur la réalité, pour que la story reste lisible dans 6 mois.
 
 ### Track "fast" — Bugfix express (hors pipeline structuré)
 
@@ -123,9 +123,9 @@ Pour les modifs qui cochent **toutes** ces cases : moins de 3 fichiers, pas de m
 ### Utilitaires hors pipeline
 
 - **`/workflow:test-scenario`** — Joue un scénario utilisateur en live dans un navigateur piloté par Playwright MCP. Utile pour valider une feature en bout de chaîne.
-- **`/workflow:adr`** — Rédige un Architecture Decision Record (`docs/adr/NNNN-<slug>.md`, format MADR léger) sur une décision technique structurante. Trois modes d'entrée : depuis un artifact existant (`design.md`, `plan.md`, `review.md`, `report.md`), depuis un slug de story, ou depuis un topic libre. Mode atelier (contexte, drivers, options, conséquences) avec validation explicite avant écriture, puis backlinks automatiques dans l'artifact source, dans l'index `docs/adr/README.md` et dans le `report.md` de la story si applicable.
-- **`/workflow:doc-feature`** — Cartographie une feature **existante** (legacy non documentée) en un `feature.md` rétro-ingénierié. Stack-aware (Symfony, Sylius).
-- **`/workflow:migrate-legacy`** — Migre les anciens dossiers `docs/story/<f|r|t>-NNN-<slug>/` vers le format `NNN-<f|r|t>-<slug>/` (compteur en tête) via `git mv`.
+- **`/workflow:adr`** — Rédige un Architecture Decision Record (`docs/adr/NNNN-<slug>.md`, format MADR léger) sur une décision technique structurante. Trois modes d'entrée : depuis un artifact existant (`pitch.md`, `plan.md`, `review.md`, `report.md`), depuis un slug de story, ou depuis un topic libre. Mode atelier (contexte, drivers, options, conséquences) avec validation explicite avant écriture, puis backlinks automatiques dans l'artifact source, dans l'index `docs/adr/README.md` et dans le `report.md` de la story si applicable.
+- **`/workflow:doc-feature`** — Cartographie une feature **existante** (legacy non documentée) en un `overview.md` rétro-ingénierié. Stack-aware (Symfony, Sylius).
+- **`/workflow:migrate-legacy`** — Migre les anciens formats workflow : dossiers `docs/story/<f|r|t>-NNN-<slug>/` → `NNN-<f|r|t>-<slug>/`, artifacts `feature.md`/`design.md` → `pitch.md`/`plan.md` dans les stories feature, et `feature.md` → `overview.md` dans `docs/feature-map/`. Via `git mv` pour préserver l'historique.
 - **`/workflow:import-external`** — Importe une doc produite par Spec Kit, BMAD-METHOD ou GSD vers le format workflow.
 - **`/workflow:release`** — Tag SemVer annoté + `CHANGELOG.md` Keep a Changelog + release GitHub. À lancer en fin de jalon, pas après chaque feature.
 
@@ -139,13 +139,13 @@ Session 1 — Pose les fondations (une fois pour toute la vie du projet)
   /workflow:product-backlog  → docs/product-backlog.md
 
 Session 2 — Première feature
-  /workflow:feature-pitch    → docs/story/001-f-publier-page-evenement/feature.md
-  /workflow:feature-design   → docs/story/001-f-publier-page-evenement/design.md
+  /workflow:feature-pitch    → docs/story/001-f-publier-page-evenement/pitch.md
+  /workflow:feature-plan     → docs/story/001-f-publier-page-evenement/plan.md
   /workflow:feature          → code + migrations + tests
   /workflow:review           → docs/story/001-f-publier-page-evenement/review.md
   /workflow:commit           → commit + push
   /workflow:report           → docs/story/001-f-publier-page-evenement/report.md
-  /workflow:sync             → réalignement éventuel feature.md / design.md
+  /workflow:sync             → réalignement éventuel pitch.md / plan.md
 ```
 
 À l'issue de la session 2, `docs/story/001-f-publier-page-evenement/` contient cinq fichiers qui racontent l'histoire complète de la feature (du pitch à la livraison) — relisable dans 6 mois sans contexte.
@@ -162,7 +162,7 @@ Session 2 — Première feature
 
 | Plugin | Version | Inventaire | Description |
 | --- | --- | --- | --- |
-| `workflow` | `0.24.0` | [22 skills](documentation/workflow.md) | Pipeline de développement stack-agnostique. **Phase 0** : `vision` produit `docs/vision.md` (problème, audience, North Star, principes, anti-objectifs). **Phase 0.5** : `product-backlog` traduit la vision en domaines, capacités, parcours et backlog priorisé MVP/V2/V3 → `docs/product-backlog.md`. Ces deux documents fondateurs sont **vivants**, maintenus via 4 modes (Création / Enrichir / Éditer / Pivot) avec changelog interne, et lus par `feature-pitch` pour challenger l'alignement et reprendre le pitch depuis le backlog. Trois tracks symétriques : **feature** (`feature-pitch` → `feature-design` → `feature`), **refacto** (`refactor-plan` → `refactor`), **évolution technique** (`tech-plan` → `tech`). Étapes communes : `review` → `commit` → `report` → `sync`. Outillage transverse : `adr` (Architecture Decision Records MADR léger dans `docs/adr/` avec backlinks automatiques), `migrate-legacy`, `import-external`, `release`, `doc-feature` (carte d'une feature existante, stack-aware). Détection auto du stack (Symfony, Sylius). |
+| `workflow` | `0.24.0` | [22 skills](documentation/workflow.md) | Pipeline de développement stack-agnostique. **Phase 0** : `vision` produit `docs/vision.md` (problème, audience, North Star, principes, anti-objectifs). **Phase 0.5** : `product-backlog` traduit la vision en domaines, capacités, parcours et backlog priorisé MVP/V2/V3 → `docs/product-backlog.md`. Ces deux documents fondateurs sont **vivants**, maintenus via 4 modes (Création / Enrichir / Éditer / Pivot) avec changelog interne, et lus par `feature-pitch` pour challenger l'alignement et reprendre le pitch depuis le backlog. Trois tracks symétriques avec nomenclature unifiée (`plan.md` partout) : **feature** (`feature-pitch` → `feature-plan` → `feature`), **refacto** (`refactor-plan` → `refactor`), **évolution technique** (`tech-plan` → `tech`). Étapes communes : `review` → `commit` → `report` → `sync`. Outillage transverse : `adr` (Architecture Decision Records MADR léger dans `docs/adr/` avec backlinks automatiques), `migrate-legacy`, `import-external`, `release`, `doc-feature` (carte d'une feature existante, stack-aware). Détection auto du stack (Symfony, Sylius). |
 | `sylius` | `0.26.0` | [17 skills](documentation/sylius.md) | Skills pour travailler avec Sylius (conventions, entités traduisibles, customization de modèle/form/grid/template/styles/dynamic/validation/state-machine/translation/fixtures, commandes, e-mails, promotions panier, coupons, ajustements). Pour la documentation d'une feature existante, voir `workflow:doc-feature`. |
 | `symfony` | `0.12.0` | [25 skills](documentation/symfony.md) | Skills Symfony/Doctrine groupées par domaine : **doctrine** (entity, migration, query), **events** (dispatch, listen, subscribe), **forms** (type, handle, render, advanced), **http** (controller-action, routing-define), **http-client** (request, response, async, test), **messenger** (async), **serializer** (use), **object-mapper**, **services** (define, wire, tags), **validation** (constraints, groups, use). Relayées par `workflow` quand le stack détecté est Symfony/Sylius. |
 | `editorial` | `0.3.0` | [3 skills](documentation/editorial.md) | Pipeline éditorial en trois étapes — `article-plan` (cadrage), `article` (rédaction guidée + vérifications + traduction) et `article-rework` (retouche chirurgicale d'une portion d'un article publié) — pour articles de blog et fiches side-project. Stack-agnostique : détecte Astro Content Collections, Next.js MDX, Hugo, Jekyll ou markdown brut. Artifacts unifiés sous `docs/story/a-NNN-slug/`. |

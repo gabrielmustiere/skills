@@ -1,6 +1,6 @@
 ---
 name: sync
-description: Réaligne la doc d'intention (`feature.md`+`design.md` ou `plan.md`) sur le code réellement livré — applique à la spec ou au plan les écarts validés dans le `report.md`, et trace chaque modification dans un changelog en fin de document pour garder l'historique des décisions. À lancer après `report` quand le code a divergé.
+description: Réaligne la doc d'intention (`pitch.md`+`plan.md` pour une feature, `plan.md` pour un refacto ou une évolution tech) sur le code livré — applique les écarts validés du `report.md`, trace chaque modif dans un changelog en fin de document. À lancer après `report` quand le code a divergé.
 user_invocable: true
 allowed-tools:
   - Read
@@ -26,7 +26,7 @@ Ce skill **modifie** la doc d'intention pour qu'elle reflète le code livré. Il
 
 `docs/story/` utilise un préfixage par type :
 
-- `docs/story/NNN-f-slug/` — **feature** : doc d'intention = `feature.md` + `design.md`
+- `docs/story/NNN-f-slug/` — **feature** : doc d'intention = `pitch.md` + `plan.md`
 - `docs/story/NNN-r-slug/` — **refacto** : doc d'intention = `plan.md`
 - `docs/story/NNN-t-slug/` — **évolution technique** : doc d'intention = `plan.md`
 
@@ -47,17 +47,17 @@ Le skill adapte ses questions et les fichiers qu'il modifie selon le type.
 
 Si l'utilisateur fournit un slug (`/sync ma-feature`) ou un chemin (`/sync docs/story/007-f-ma-feature/report.md`), résous le dossier dans `docs/story/` en testant les préfixes `f-`, `r-`, `t-`.
 
-Sinon, liste via `Glob` les dossiers `docs/story/*-[frt]-*` qui contiennent la doc d'intention adéquate (design.md pour `f-`, plan.md pour `r-`/`t-`) et demande lequel traiter.
+Sinon, liste via `Glob` les dossiers `docs/story/*-[frt]-*` qui contiennent un `plan.md` (les 3 types) et demande lequel traiter.
 
 **Détermine le type** selon le préfixe du dossier et lis les fichiers présents :
 
 | Préfixe | Fichiers d'intention          | Aussi lu si présent |
 |---------|-------------------------------|---------------------|
-| `f-`    | `feature.md` + `design.md`   | `report.md`         |
+| `f-`    | `pitch.md` + `plan.md`        | `report.md`         |
 | `r-`    | `plan.md`                     | `report.md`         |
 | `t-`    | `plan.md`                     | `report.md`         |
 
-**Si un fichier d'intention manque**, refuse de continuer : "Pas de doc à synchroniser pour ce dossier — il manque [fichier]. Lance [`/feature-pitch` | `/feature-design` | `/refactor-plan` | `/tech-plan`] d'abord."
+**Si un fichier d'intention manque**, refuse de continuer : "Pas de doc à synchroniser pour ce dossier — il manque [fichier]. Lance [`/feature-pitch` | `/feature-plan` | `/refactor-plan` | `/tech-plan`] d'abord."
 
 ### Phase 2 — Identification des écarts
 
@@ -73,8 +73,8 @@ Classe les écarts selon le type de dossier.
 
 **Cas `f-` (feature)** — 3 catégories :
 
-1. **Mises à jour spec feature** — règles métier qui ont changé, user stories ajoutées/modifiées, critères d'acceptation à corriger, hors scope qui a bougé, impacts transverses différents
-2. **Mises à jour design** — fichiers créés/modifiés différents du prévu, approche technique ajustée, stratégie de test modifiée, ordre d'implémentation réel
+1. **Mises à jour pitch** — règles métier qui ont changé, user stories ajoutées/modifiées, critères d'acceptation à corriger, hors scope qui a bougé, impacts transverses différents
+2. **Mises à jour plan** — fichiers créés/modifiés différents du prévu, approche technique ajustée, stratégie de test modifiée, ordre d'implémentation réel
 3. **Aucune mise à jour nécessaire** — écarts mineurs qui ne changent pas la documentation
 
 **Cas `r-` (refacto)** — catégories :
@@ -97,7 +97,7 @@ Pour chaque catégorie non vide, présente les modifications proposées et deman
 **Format de présentation par changement :**
 
 ```
-docs/story/NNN-f-slug/feature.md
+docs/story/NNN-f-slug/pitch.md
 Section : [Règles métier]
 - Avant : "Le stock est décrémenté à la commande"
 - Après : "Le stock est décrémenté à la validation du paiement"

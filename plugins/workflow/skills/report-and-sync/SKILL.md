@@ -1,6 +1,6 @@
 ---
 name: report-and-sync
-description: Enchaîne `/workflow:report` puis `/workflow:sync` pour une story après livraison — produit le compte rendu d'implémentation (écarts intention vs code livré) puis réaligne la doc d'intention sur le code livré, en une seule passe. Point d'entrée slash qui délègue au subagent `workflow:report-and-sync` pour exécution en contexte isolé. À lancer avec `/workflow:report-and-sync <slug-ou-chemin-story>` après livraison d'une feature, d'un refacto ou d'une évolution technique.
+description: Enchaîne `/workflow:report` puis `/workflow:sync` en une passe après livraison d'une story (feature, refacto ou évolution technique) — compte rendu d'écarts intention vs code livré, puis réalignement de la doc. Délègue à un subagent isolé.
 user_invocable: true
 allowed-tools:
   - Agent
@@ -12,7 +12,7 @@ allowed-tools:
 Cette skill est un **point d'entrée slash** pour le subagent `workflow:report-and-sync`. Le subagent enchaîne deux phases :
 
 1. **REPORT** — invoque la skill `/workflow:report` pour produire `report.md` (constat des écarts entre intention et code livré)
-2. **SYNC** — invoque la skill `/workflow:sync` pour appliquer les écarts validés à la doc d'intention (`feature.md` + `design.md` ou `plan.md`) avec changelog interne
+2. **SYNC** — invoque la skill `/workflow:sync` pour appliquer les écarts validés à la doc d'intention (`pitch.md` + `plan.md` pour une feature, `plan.md` pour un refacto ou une évolution tech) avec changelog interne
 
 Le wrapper te donne un point d'entrée slash explicite et préserve l'isolation de contexte : c'est le subagent qui pilote l'enchaînement, pas la session principale.
 

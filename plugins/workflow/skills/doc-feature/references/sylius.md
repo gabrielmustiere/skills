@@ -36,7 +36,7 @@
 
 Ne plonger dans le vendor que si la feature documentée s'appuie sur un mécanisme natif (ex. checkout state machine, promotion processor) ou si l'utilisateur veut comprendre une mécanique de base avant de la surcharger.
 
-## Sections additionnelles à inclure dans `feature.md`
+## Sections additionnelles à inclure dans `overview.md`
 
 Ces sections viennent **en plus** du squelette générique. À inclure uniquement si pertinentes pour la feature documentée.
 

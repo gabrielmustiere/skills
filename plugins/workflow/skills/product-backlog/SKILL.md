@@ -1,6 +1,6 @@
 ---
 name: product-backlog
-description: Traduit la vision projet en périmètre fonctionnel structuré — domaines métier, capacités, parcours utilisateurs, règles transverses et backlog priorisé (MVP/V2/V3). Quatre modes d'usage : Création (initial), Enrichir (nouvelle capacité), Éditer (correction), Pivot (refonte). Prérequis `docs/vision.md`. Produit ou met à jour `docs/product-backlog.md` avec changelog, lu ensuite par `feature-pitch`.
+description: Traduit la vision en périmètre fonctionnel — domaines, capacités, parcours, règles, backlog priorisé MVP/V2/V3. Quatre modes : Création, Enrichir, Éditer, Pivot. Produit `docs/product-backlog.md` avec changelog, lu par `feature-pitch`.
 user_invocable: true
 disable-model-invocation: true
 allowed-tools:
@@ -27,7 +27,7 @@ Tu refuses :
 Ce skill couvre **uniquement le périmètre fonctionnel et le découpage en features candidates** — toujours en mode produit, jamais en mode technique. Ce n'est **pas** :
 
 - Une spec détaillée par feature (c'est `/feature-pitch`).
-- Un design technique (c'est `/feature-design`, `/refactor-plan`, `/tech-plan`).
+- Un design technique (c'est `/feature-plan`, `/refactor-plan`, `/tech-plan`).
 - Un Gantt ni une roadmap calendaire — la priorisation est **ordinale** + tagging d'horizon (MVP / V2 / V3, alignés sur les horizons de la vision).
 - Un produit fini de PRD type Jira — c'est un document **vivant**, révisé quand le périmètre bouge.
 
@@ -53,7 +53,7 @@ Une application a un cycle de vie long. Le backlog est un **document vivant** qu
 1. **Ne jamais écrire `docs/product-backlog.md` tant que l'utilisateur n'a pas explicitement validé** (« on rédige », « go », « c'est bon », « valide »). Un backlog écrit trop tôt fige une structure encore floue.
 2. **Privilégier `AskUserQuestion`** pour les questions structurées. Si l'outil n'est pas chargé, le récupérer via `ToolSearch`. À défaut, poser les questions en texte libre, une à une.
 3. **Maximum 3 questions par tour** — chaque tour fait avancer une phase précise.
-4. **Rester fonctionnel** — bannir le vocabulaire technique (entité, table, service, endpoint, queue). Le backlog parle d'utilisateurs, d'actions, de bénéfices, de règles métier. Si l'utilisateur dérive vers du technique, note l'idée pour `/feature-design` et recadre.
+4. **Rester fonctionnel** — bannir le vocabulaire technique (entité, table, service, endpoint, queue). Le backlog parle d'utilisateurs, d'actions, de bénéfices, de règles métier. Si l'utilisateur dérive vers du technique, note l'idée pour `/feature-plan` et recadre.
 5. **Forcer le concret** — chaque capacité s'exprime avec un verbe d'action utilisateur (« importer », « relancer », « consulter », « valider »), pas avec un nom abstrait (« gestion », « pilotage », « supervision »).
 6. **Aligner systématiquement sur la vision** — chaque domaine, capacité et feature du backlog doit pouvoir pointer vers un élément de `docs/vision.md` (problème adressé, audience servie, principe respecté, North Star impactée). Une feature qui ne s'aligne sur rien doit être justifiée ou retirée.
 7. **Pas de compliments creux** — challenge constructif uniquement. Le silence vaut mieux qu'un « bonne idée ! ».
@@ -66,7 +66,7 @@ Avant de challenger, fais l'inventaire :
 
 1. **Vision** : lire `docs/vision.md` intégralement, **y compris son changelog**. Si absent → arrêter et proposer `/vision`. Mémoriser : problème central, audience principale, principes, anti-objectifs, North Star, horizons, et les évolutions récentes (un enrichissement de vision non répercuté sur le backlog est un signal fort).
 2. **Blueprint existant** : lire `docs/product-backlog.md` s'il existe (domaines, capacités, parcours, règles transverses, backlog, changelog).
-3. **Stories existantes** : scanner `docs/story/` (juste les noms de dossiers et titres `feature.md` / `plan.md`) pour repérer ce qui a déjà été cadré ou livré. Le backlog ne doit pas réinventer ce qui existe — au contraire, l'enrichissement doit s'inscrire dans l'historique.
+3. **Stories existantes** : scanner `docs/story/` (juste les noms de dossiers et titres `pitch.md` / `plan.md`) pour repérer ce qui a déjà été cadré ou livré. Le backlog ne doit pas réinventer ce qui existe — au contraire, l'enrichissement doit s'inscrire dans l'historique.
 4. **Stack** : lire `${CLAUDE_SKILL_DIR}/../../references/stacks/_detection.md` et appliquer la procédure. Le backlog reste **fonctionnel**, mais le stack oriente le découpage en domaines (ex: e-commerce Sylius → suggérer catalogue / panier / commande / paiement / promotion / fidélité).
 5. **Contexte projet** : `CLAUDE.md` racine + `README.md` si présents — conventions, contraintes métier, stakeholders.
 
@@ -131,7 +131,7 @@ Adapte le message au mode :
 
 - **Enrichir** ou **Éditer** :
   > Backlog mis à jour : `docs/product-backlog.md` (mode <Enrichir|Éditer>, éléments : <liste>). Changelog enrichi.
-  > Prochaine étape suggérée : si une nouvelle ligne de backlog a été ajoutée en MVP, lance `/feature-pitch <slug>` pour la cadrer. Si une feature en cours s'appuie sur un élément que tu viens de modifier (capacité reformulée, parcours réorganisé), relis son `feature.md` pour vérifier la cohérence.
+  > Prochaine étape suggérée : si une nouvelle ligne de backlog a été ajoutée en MVP, lance `/feature-pitch <slug>` pour la cadrer. Si une feature en cours s'appuie sur un élément que tu viens de modifier (capacité reformulée, parcours réorganisé), relis son `pitch.md` pour vérifier la cohérence.
 
 ## Argument optionnel
 

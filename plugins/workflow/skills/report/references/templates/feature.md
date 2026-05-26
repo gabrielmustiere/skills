@@ -1,8 +1,8 @@
 ```markdown
 # Report — [Nom de la fonctionnalité]
 
-> Feature spec : `docs/story/NNN-f-slug/feature.md`
-> Design : `docs/story/NNN-f-slug/design.md`
+> Pitch : `docs/story/NNN-f-slug/pitch.md`
+> Plan : `docs/story/NNN-f-slug/plan.md`
 > Date d'implémentation : YYYY-MM-DD
 > Commits liés : `abc1234`, `def5678` (si identifiables)
 
@@ -14,23 +14,23 @@ En 2-3 phrases : ce qui a été livré, l'état global (conforme / écarts mineu
 
 ### Fichiers créés
 
-| Fichier | Rôle | Prévu dans le design |
-|---------|------|----------------------|
+| Fichier | Rôle | Prévu dans le plan |
+|---------|------|--------------------|
 | `src/...` | Description | Oui / Non (ajout) |
 
 ### Fichiers modifiés
 
-| Fichier | Modification | Prévu dans le design |
-|---------|--------------|----------------------|
+| Fichier | Modification | Prévu dans le plan |
+|---------|--------------|--------------------|
 | `src/...` | Description | Oui / Non (ajout) |
 
-## Écarts avec le design
+## Écarts avec le plan
 
 ### Écarts volontaires
 
 | Prévu | Réalisé | Raison |
 |-------|---------|--------|
-| Description du design | Ce qui a été fait à la place | Pourquoi |
+| Description du plan | Ce qui a été fait à la place | Pourquoi |
 
 ### Non implémenté
 
@@ -56,7 +56,7 @@ En 2-3 phrases : ce qui a été livré, l'état global (conforme / écarts mineu
 
 ## Critères d'acceptation
 
-Reprise des critères de la `feature.md` avec statut :
+Reprise des critères du `pitch.md` avec statut :
 
 - [x] Critère validé
 - [ ] Critère non validé — raison

@@ -23,8 +23,8 @@ specs/003-checkout-express/
 
 | Source           | Destination                            | Note |
 |------------------|----------------------------------------|------|
-| `spec.md`        | `feature.md`                            | Renommer simplement, garder le contenu intégral. La structure « User Story / Acceptance Scenarios » de Spec Kit est compatible avec `feature.md` du workflow. |
-| `plan.md`        | `design.md`                             | Renommer. Les sections « Technical Context », « Architecture », « Phases » deviennent les sections design. |
+| `spec.md`        | `pitch.md`                              | Renommer simplement, garder le contenu intégral. La structure « User Story / Acceptance Scenarios » de Spec Kit est compatible avec le `pitch.md` du workflow. |
+| `plan.md`        | `plan.md`                               | Conserver le nom. Les sections « Technical Context », « Architecture », « Phases » deviennent les sections du plan technique. |
 | `tasks.md`       | `_archive/spec-kit/<NNN>-<slug>/tasks.md` | Pas d'équivalent direct dans le workflow (qui exécute les tâches via `/feature`). On archive pour référence. |
 | `checklist.md`   | `_archive/spec-kit/<NNN>-<slug>/checklist.md` | Idem — archive. |
 | `research.md`    | `_archive/spec-kit/<NNN>-<slug>/research.md` | Idem. |
@@ -70,11 +70,10 @@ Après :
 ```
 docs/story/
 ├── 001-f-user-login/
-│   ├── feature.md          # ex spec.md
-│   └── design.md           # ex plan.md
+│   ├── pitch.md            # ex spec.md
+│   └── plan.md             # ex plan.md (conservé)
 └── 002-r-extract-auth-service/
-    ├── feature.md
-    └── design.md
+    └── plan.md             # ex plan.md (refacto : pas de pitch)
 
 _archive/spec-kit/
 ├── 001-user-login/
@@ -86,4 +85,4 @@ _archive/spec-kit/
 
 - **Branches Git associées** : Spec Kit crée des branches au format `001-user-login`. Après import, les branches existantes restent valides (le mapping est juste sur les dossiers). Pas besoin de renommer les branches sauf si l'utilisateur le veut.
 - **`.specify/` à la racine** : ce dossier (templates, scripts) est l'infra Spec Kit, pas du contenu projet. Ne pas le toucher pendant l'import. L'utilisateur peut le retirer après si Spec Kit n'est plus utilisé.
-- **Liens internes dans les fichiers** : `spec.md` peut contenir `[plan](plan.md)` — après renommage en `feature.md`/`design.md`, ces liens cassent. Faire un `Edit` pour les mettre à jour : `[plan](plan.md)` → `[design](design.md)`, `[spec](spec.md)` → `[feature](feature.md)`.
+- **Liens internes dans les fichiers** : `spec.md` peut contenir `[plan](plan.md)` — après renommage en `pitch.md`/`plan.md`, les liens vers `plan` restent valides ; ceux vers `spec` doivent être mis à jour : `[spec](spec.md)` → `[pitch](pitch.md)`.

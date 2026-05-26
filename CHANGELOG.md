@@ -7,6 +7,12 @@ et ce projet adhère au [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+### Changed
+- Plugin `workflow` : **rupture** — homogénéisation de la nomenclature des artifacts entre les trois tracks. La skill `feature-design` est renommée en `feature-plan`, et les fichiers produits sont alignés : `feature.md` → `pitch.md` (produit par `/workflow:feature-pitch`), `design.md` → `plan.md` (produit par `/workflow:feature-plan`). Désormais **tous les tracks produisent un `plan.md`** (cadrage technique exécutable) ; seul le track feature ajoute en amont un `pitch.md` (cadrage fonctionnel). La skill hors pipeline `doc-feature` produit maintenant `overview.md` (au lieu de `feature.md`) sous `docs/feature-map/`. La skill `migrate-legacy` est étendue : elle migre aussi les anciens fichiers (`feature.md`/`design.md` → `pitch.md`/`plan.md`, `feature.md` → `overview.md` dans `feature-map/`) via `git mv` pour préserver l'historique. Plugin `workflow` bumpé de `0.25.1` à `1.0.0` (rupture API publique, stabilisation du modèle).
+
+### Migration
+- **Utilisateurs avec des stories existantes** : lancer `/workflow:migrate-legacy` pour renommer automatiquement les dossiers + artifacts dans le nouveau format. Le skill détecte les trois types de legacy (ancien format de dossier, anciens noms d'artifacts feature, anciens noms feature-map) et propose un plan validé avant exécution.
+
 ## [1.8.1] - 2026-05-25
 
 ### Fixed

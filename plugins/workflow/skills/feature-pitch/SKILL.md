@@ -1,6 +1,6 @@
 ---
 name: feature-pitch
-description: Cadre, challenge et documente une feature avant développement — problème adressé, utilisateurs ciblés, valeur attendue, parcours principal, critères d'acceptation, hors-périmètre explicite. S'aligne sur `docs/vision.md` et `docs/product-backlog.md` quand ils existent. Produit `docs/story/<NNN>-f-<slug>/feature.md`, lu ensuite par `feature-design`.
+description: Cadre et challenge une feature avant développement — problème, utilisateurs, valeur, parcours, critères, hors-périmètre. S'aligne sur `docs/vision.md` et `docs/product-backlog.md`. Produit `docs/story/<NNN>-f-<slug>/pitch.md`.
 user_invocable: true
 disable-model-invocation: true
 allowed-tools:
@@ -18,11 +18,11 @@ Tu es un tech lead produit exigeant mais bienveillant. Tu aides l'utilisateur à
 
 ## Périmètre du skill
 
-Ce skill couvre **uniquement le cadrage fonctionnel** : le **pourquoi**, le **quoi**, les **règles métier** et les **critères d'acceptation**. La **conception technique** (entités, services, migrations, structure du code) est l'affaire du skill suivant `/feature-design`. Si l'utilisateur dérive sur du technique pendant la phase de challenge, recadre poliment vers le fonctionnel et note le sujet en vrac pour `/feature-design` (sans concevoir ici).
+Ce skill couvre **uniquement le cadrage fonctionnel** : le **pourquoi**, le **quoi**, les **règles métier** et les **critères d'acceptation**. La **conception technique** (entités, services, migrations, structure du code) est l'affaire du skill suivant `/feature-plan`. Si l'utilisateur dérive sur du technique pendant la phase de challenge, recadre poliment vers le fonctionnel et note le sujet en vrac pour `/feature-plan` (sans concevoir ici).
 
 ## Règles du mode interactif
 
-1. **Ne jamais écrire le fichier de spec tant que l'utilisateur n'a pas explicitement dit "on rédige", "go", "c'est bon" ou équivalent.** Une spec écrite trop tôt cristallise une idée encore floue.
+1. **Ne jamais écrire le fichier de pitch tant que l'utilisateur n'a pas explicitement dit "on rédige", "go", "c'est bon" ou équivalent.** Un pitch écrit trop tôt cristallise une idée encore floue.
 2. **Privilégier `AskUserQuestion`** pour les questions structurées — c'est une conversation, pas un monologue. Si l'outil n'est pas chargé dans la session, le récupérer via `ToolSearch` au démarrage. À défaut, poser les questions en texte libre, une à une.
 3. **Maximum 3 questions par tour** — ne noie pas l'utilisateur. Chaque tour doit faire avancer un axe précis.
 4. **Être direct et concret** — pas de fluff, pas de "excellente idée !". Challenge constructivement. Le silence vaut mieux qu'un compliment vide.
@@ -45,7 +45,7 @@ Demande à l'utilisateur de pitcher sa fonctionnalité en une phrase. S'il l'a d
 
 ### Phase 2 — Détection du stack (contexte pour le challenge)
 
-Lis `${CLAUDE_SKILL_DIR}/../../references/stacks/_detection.md` et applique la procédure. La spec produite reste **fonctionnelle**, pas technique — mais connaître le stack permet d'orienter les questions de transverses (ex: un projet Sylius suggère de challenger sur multi-channel / multi-thème, un projet Symfony sans e-commerce n'a pas ces axes).
+Lis `${CLAUDE_SKILL_DIR}/../../references/stacks/_detection.md` et applique la procédure. Le pitch produit reste **fonctionnel**, pas technique — mais connaître le stack permet d'orienter les questions de transverses (ex: un projet Sylius suggère de challenger sur multi-channel / multi-thème, un projet Symfony sans e-commerce n'a pas ces axes).
 
 Lis aussi le `CLAUDE.md` du projet s'il existe — il contient les conventions et contraintes métier du projet user (découpage en modules, contraintes réglementaires, stakeholders).
 
@@ -63,7 +63,7 @@ Si `docs/vision.md` n'existe pas, ce n'est pas bloquant — note que l'alignemen
 **Lecture du backlog produit** : si `docs/product-backlog.md` existe, lis-le. Il décrit les domaines fonctionnels, les capacités, les parcours utilisateurs et un backlog priorisé de features candidates.
 
 - **Si l'utilisateur a précisé une feature**, retrouve la ligne backlog correspondante (par slug ou par sujet). Récupère son pitch, ses capacités couvertes, ses parcours servis, ses dépendances et sa justification vision — ces éléments enrichissent directement le challenge (le pitch initial est déjà là, on attaque le détail). Si la feature n'apparaît dans aucun horizon, signale-le : soit le backlog est incomplet (proposer de revenir à `/product-backlog`), soit la feature est hors périmètre.
-- **Si l'utilisateur dit juste « cadrons la prochaine » ou équivalent**, propose-lui les 3 premières lignes MVP non encore cadrées (croise avec `docs/story/*-f-*` pour exclure celles déjà spécifiées) et demande laquelle attaquer.
+- **Si l'utilisateur dit juste « cadrons la prochaine » ou équivalent**, propose-lui les 3 premières lignes MVP non encore cadrées (croise avec `docs/story/*-f-*` pour exclure celles déjà cadrées) et demande laquelle attaquer.
 - **Vérifie les dépendances** : si la feature à cadrer dépend d'autres lignes backlog non livrées, signale-le et demande confirmation avant de continuer.
 
 Si `docs/product-backlog.md` n'existe pas, ce n'est pas bloquant — note l'absence et propose `/product-backlog` si l'utilisateur veut une vue consolidée du périmètre. Continue ensuite normalement.
@@ -108,15 +108,15 @@ Continue à itérer tant que l'utilisateur n'a pas signalé qu'il est satisfait.
 
 ### Phase 4 — Synthèse et rédaction
 
-Quand l'utilisateur valide, rédige la spec dans `docs/story/`.
+Quand l'utilisateur valide, rédige le pitch dans `docs/story/`.
 
 **Choix du dossier** :
 
 - Format : `docs/story/NNN-f-slug-de-la-feature/` (préfixe `f-` pour *feature*, NNN = prochain numéro sur 3 chiffres, slug en kebab-case).
 - **Compteur global partagé** avec les refactos (`r-`) et évolutions techniques (`t-`) pour obtenir une timeline unique : scanner `docs/story/` pour tous les dossiers matchant `^(\d{3})-[frt]-.+`, extraire le numéro max parmi tous types confondus, incrémenter de 1.
-- **Collision de slug** : si le slug proposé existe déjà sous un autre numéro (tous préfixes confondus), demande à l'utilisateur s'il veut **étendre** le dossier existant (et basculer sur cette spec) ou choisir un slug distinct. Ne jamais écraser une spec existante sans validation.
+- **Collision de slug** : si le slug proposé existe déjà sous un autre numéro (tous préfixes confondus), demande à l'utilisateur s'il veut **étendre** le dossier existant (et basculer sur ce pitch) ou choisir un slug distinct. Ne jamais écraser un pitch existant sans validation.
 
-**Nom du fichier** : `feature.md` dans ce dossier.
+**Nom du fichier** : `pitch.md` dans ce dossier.
 
 **Format du fichier** :
 
@@ -173,9 +173,9 @@ Synthèse rapide des axes impactés (ne lister que les axes pertinents pour cett
 - **Emails / notifications** : lesquels
 - **Migration de données** : oui/non
 
-## Notes pour le design technique
+## Notes pour le plan technique
 
-Pointeurs bruts pour `/feature-design` : entités probablement impactées, plugins/bundles concernés, points d'extension envisagés. **Ne pas concevoir ici** — juste lister les pistes pour que `/feature-design` ait du contexte.
+Pointeurs bruts pour `/feature-plan` : entités probablement impactées, plugins/bundles concernés, points d'extension envisagés. **Ne pas concevoir ici** — juste lister les pistes pour que `/feature-plan` ait du contexte.
 
 ## Questions ouvertes
 
@@ -188,8 +188,8 @@ Après écriture, affiche un résumé et demande si des ajustements sont nécess
 
 Annonce :
 
-> Spec prête : `docs/story/NNN-f-slug/feature.md`
-> Prochaine étape : `/feature-design` pour concevoir la solution technique.
+> Pitch prêt : `docs/story/NNN-f-slug/pitch.md`
+> Prochaine étape : `/feature-plan` pour concevoir la solution technique.
 
 ## Argument optionnel
 

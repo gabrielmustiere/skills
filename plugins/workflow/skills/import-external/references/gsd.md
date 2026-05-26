@@ -23,11 +23,11 @@ Chaque fichier est **un document complet** (genre PRD condensé) : overview, cha
 
 ## Mapping fichiers
 
-GSD = 1 fichier source → 1 dossier workflow contenant 1 fichier (`feature.md` ou `plan.md`).
+GSD = 1 fichier source → 1 dossier workflow contenant 1 fichier (`pitch.md` ou `plan.md`).
 
 | Source                              | Destination                                       | Contenu cible |
 |-------------------------------------|---------------------------------------------------|---------------|
-| `.plans/<id>-<slug>.md`             | `docs/story/<NNN>-<tag>-<slug>/feature.md`        | Si tag = `f` |
+| `.plans/<id>-<slug>.md`             | `docs/story/<NNN>-<tag>-<slug>/pitch.md`          | Si tag = `f` |
 | `.plans/<id>-<slug>.md`             | `docs/story/<NNN>-<tag>-<slug>/plan.md`           | Si tag = `r` ou `t` |
 
 Le contenu est **copié intégralement** sans transformation. On ajoute juste un header en tête pour la traçabilité :
@@ -62,14 +62,14 @@ GSD ne distingue pas feature/refacto/tech. Heuristique sur le **titre H1** et le
 
 Demander confirmation à l'utilisateur, lui afficher le H1 de chaque fichier pour qu'il décide vite.
 
-## Pas de design.md ?
+## Pas de plan.md séparé ?
 
-Le workflow attend `feature.md` + `design.md` pour une feature complète. GSD met **tout dans un seul fichier**. Deux choix :
+Le workflow attend `pitch.md` + `plan.md` pour une feature complète. GSD met **tout dans un seul fichier**. Deux choix :
 
-1. **Tout va dans `feature.md`** : c'est un mix spec + plan. L'utilisateur pourra plus tard exécuter `/feature-design` pour générer un `design.md` propre à partir du contenu mixte. **Recommandé** car simple et préserve fidèlement l'origine.
-2. **Découpe interactive** : le skill propose un découpage automatique (sections "Overview"/"Why" → `feature.md`, sections "Changes"/"Implementation"/"Files" → `design.md`). Plus chirurgical, mais le découpage automatique est faillible — réserver aux cas où l'utilisateur le demande explicitement.
+1. **Tout va dans `pitch.md`** : c'est un mix spec + plan. L'utilisateur pourra plus tard exécuter `/feature-plan` pour générer un `plan.md` propre à partir du contenu mixte. **Recommandé** car simple et préserve fidèlement l'origine.
+2. **Découpe interactive** : le skill propose un découpage automatique (sections "Overview"/"Why" → `pitch.md`, sections "Changes"/"Implementation"/"Files" → `plan.md`). Plus chirurgical, mais le découpage automatique est faillible — réserver aux cas où l'utilisateur le demande explicitement.
 
-Par défaut, **tout va dans `feature.md`** (pour `f`) ou **tout dans `plan.md`** (pour `r`/`t`).
+Par défaut, **tout va dans `pitch.md`** (pour `f`) ou **tout dans `plan.md`** (pour `r`/`t`).
 
 ## Exemple complet
 
@@ -92,7 +92,7 @@ docs/story/
 ├── 002-t-add-redis-cache/
 │   └── plan.md
 ├── 003-f-checkout-express/
-│   └── feature.md
+│   └── pitch.md
 └── 004-r-extract-pricing/
     └── plan.md
 

@@ -1,6 +1,6 @@
 ---
 name: doc-feature
-description: Documente une feature déjà implémentée en lisant le code — trace les entités, flux, routes, services, templates et points d'extension dans `docs/feature-map/NNN-slug/feature.md`. Stack-agnostique avec détection automatique (Sylius, Symfony, autre). Utile pour l'onboarding sur un module existant ou la cartographie d'un domaine du code.
+description: Documente une feature implémentée en lisant le code — entités, flux, routes, services, templates, points d'extension. Stack-agnostique (Sylius, Symfony). Produit `docs/feature-map/NNN-slug/overview.md`. Utile pour onboarding ou cartographie.
 user_invocable: true
 disable-model-invocation: true
 allowed-tools:
@@ -114,7 +114,7 @@ Quand l'utilisateur valide, écris le fichier de documentation.
 - Scanner les dossiers existants via `Glob` (pattern `docs/feature-map/[0-9]*/`), extraire le préfixe numérique le plus élevé et incrémenter de 1.
 - **Collision de slug** : si le slug existe déjà sous un autre numéro, demande à l'utilisateur s'il veut **étendre** la doc existante ou choisir un slug distinct. Ne jamais écraser sans validation.
 
-**Nom du fichier** : `feature.md` dans ce dossier.
+**Nom du fichier** : `overview.md` dans ce dossier.
 
 **Format de base** (sections génériques — la référence stack peut en ajouter) :
 
@@ -197,7 +197,7 @@ La référence stack peut compléter ce squelette par des sections additionnelle
 
 Affiche le chemin du fichier produit :
 
-> Documentation prête : `docs/feature-map/NNN-slug/feature.md`
+> Documentation prête : `docs/feature-map/NNN-slug/overview.md`
 
 ## Argument optionnel
 

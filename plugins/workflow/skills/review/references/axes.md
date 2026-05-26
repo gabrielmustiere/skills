@@ -13,13 +13,13 @@ Parcours chaque fichier modifié et analyse selon ces axes, dans cet ordre de pr
 
 ## Axe 2 — Conformité à la référence d'intention (bloquant si fournie)
 
-**Cas feature (`f-`)** — référence = `design.md` :
+**Cas feature (`f-`)** — référence = `plan.md` :
 
-- Les fichiers créés/modifiés correspondent-ils au design ?
+- Les fichiers créés/modifiés correspondent-ils au plan ?
 - L'approche technique est-elle celle prévue ?
 - Les entités et relations sont-elles conformes au schéma prévu ?
 - Si un écart existe : est-il justifié ou c'est une dérive silencieuse ?
-- Les critères d'acceptation de la `feature.md` sont-ils couverts ?
+- Les critères d'acceptation du `pitch.md` sont-ils couverts ?
 
 **Cas refacto (`r-`)** — référence = `plan.md`, focus inversé sur la non-régression :
 

@@ -33,16 +33,16 @@ Cet agent **remplace** la boucle interactive de `/workflow:feature`, `/workflow:
 
 - Un **slug** (`ma-feature`, `extract-pricing`, `redis-cache`) — tu résous en testant successivement `f-`, `r-`, `t-` dans `docs/story/`. Le préfixe trouvé détermine le track.
 - Un **chemin** vers le dossier `docs/story/NNN-<f|r|t>-slug/` ou un fichier dedans.
-- **Rien** — tu listes via `Glob` les dossiers `docs/story/*-[frt]-*` qui contiennent un `design.md` (track feature) ou un `plan.md` (refacto, tech) et tu demandes via `AskUserQuestion` lequel piloter.
+- **Rien** — tu listes via `Glob` les dossiers `docs/story/*-[frt]-*` qui contiennent un `plan.md` (les 3 tracks) et tu demandes via `AskUserQuestion` lequel piloter.
 
 ## Phase 1 — Résolution et initialisation
 
 1. Identifie le dossier `docs/story/NNN-<f|r|t>-slug/` et déduis le **track** depuis le préfixe (`f` → feature, `r` → refactor, `t` → tech).
 2. Charge l'**intention** :
-   - feature → `design.md` (+ `feature.md` pour contexte fonctionnel).
+   - feature → `plan.md` (+ `pitch.md` pour contexte fonctionnel).
    - refactor → `plan.md`.
    - tech → `plan.md`.
-   - Si le fichier d'intention requis est absent, **arrête-toi** et propose la skill de cadrage correspondante (`/workflow:feature-design`, `/workflow:refactor-plan`, `/workflow:tech-plan`).
+   - Si le fichier d'intention requis est absent, **arrête-toi** et propose la skill de cadrage correspondante (`/workflow:feature-plan`, `/workflow:refactor-plan`, `/workflow:tech-plan`).
 3. **Détecte le stack** en appliquant la procédure documentée dans `plugins/workflow/references/stacks/_detection.md` (utilise `Glob` pour localiser ce fichier si nécessaire). Lis aussi le `CLAUDE.md` du projet pour les commandes QA exactes (préfixes `docker compose exec`, `make`, `vendor/bin`, etc.).
 4. **Initialise ou recharge** `.autopilot.json` :
    - S'il existe déjà → tu reprends. Affiche le résumé de progression (sous-tâches faites / restantes / écarts) et demande via `AskUserQuestion` : "Reprendre où on s'était arrêté ?" / "Repartir de zéro (écrase l'état)".
@@ -54,7 +54,7 @@ Schéma `.autopilot.json` :
 {
   "track": "feature|refactor|tech",
   "slug": "ma-feature",
-  "intent_path": "docs/story/042-f-ma-feature/design.md",
+  "intent_path": "docs/story/042-f-ma-feature/plan.md",
   "stack": "symfony|sylius|other",
   "qa_commands": { "style": "...", "static": "...", "tests": "..." },
   "preconditions": {
@@ -114,7 +114,7 @@ Construis un prompt de sous-agent **autocontenu** (le sous-agent démarre avec u
 Tu exécutes la sous-tâche N du <track> "<slug>" en mode autopilot.
 
 Contexte (lecture obligatoire) :
-- Intention : <chemin absolu du design.md ou plan.md>
+- Intention : <chemin absolu du plan.md>
 - État global : <chemin absolu de .autopilot.json>
 - Stack détecté : <symfony|sylius|...>
 - CLAUDE.md projet : <chemin si existe>
@@ -166,7 +166,7 @@ Lis le `RESULT` retourné. Mets à jour `.autopilot.json` (si le sous-agent ne l
 - `status = done` + aucun écart majeur → passer à la sous-tâche suivante.
 - `status = done` + écarts mineurs → consigner dans `deviations_minor`, continuer.
 - `status = deviation_major` → **STOP-POINT**. Tu n'enchaînes pas. Tu affiches l'écart à l'utilisateur via `AskUserQuestion` :
-  > "Sous-tâche N a détecté un écart majeur : <description>. Continuer en assumant l'écart, basculer en `/workflow:<feature-design|refactor-plan|tech-plan>` pour réviser, ou arrêter ?"
+  > "Sous-tâche N a détecté un écart majeur : <description>. Continuer en assumant l'écart, basculer en `/workflow:<feature-plan|refactor-plan|tech-plan>` pour réviser, ou arrêter ?"
 - `status = failed` → **STOP-POINT**. QA ou tests ne passent pas malgré les tentatives. Tu affiches le détail et demandes : "Reprendre cette sous-tâche manuellement, arrêter l'autopilote ?"
 
 ### 3.4 — Rythme
@@ -181,7 +181,7 @@ Quand toutes les sous-tâches ont `status = done` :
 
 1. Affiche le bilan intermédiaire (sous-tâches, écarts mineurs/majeurs consignés, fichiers touchés).
 2. **STOP-POINT** via `AskUserQuestion` : "Lancer maintenant la suite complète de tests + (phase 4 refactor / phases 4-5 tech) ?"
-3. Si oui, délègue un dernier sous-agent dédié : "Exécuter la Phase finale du skill `/workflow:<feature|refactor|tech>` — pour feature : écrire les nouveaux tests selon la stratégie du design + lancer la suite complète ; pour refactor : lancer la suite complète + vérifier zéro régression ; pour tech : période d'observation + retrait kill switch si prévu + suite complète." Il met à jour `final_tests` dans `.autopilot.json`.
+3. Si oui, délègue un dernier sous-agent dédié : "Exécuter la Phase finale du skill `/workflow:<feature|refactor|tech>` — pour feature : écrire les nouveaux tests selon la stratégie du plan + lancer la suite complète ; pour refactor : lancer la suite complète + vérifier zéro régression ; pour tech : période d'observation + retrait kill switch si prévu + suite complète." Il met à jour `final_tests` dans `.autopilot.json`.
 
 ## Phase 5 — Clôture
 
@@ -216,4 +216,4 @@ Agent({
 })
 ```
 
-L'agent résout `docs/story/042-f-checkout-express/`, charge `design.md`, initialise `.autopilot.json`, et enchaîne les sous-tâches via sous-agents jusqu'aux stop-points stratégiques ou à la clôture.
+L'agent résout `docs/story/042-f-checkout-express/`, charge `plan.md`, initialise `.autopilot.json`, et enchaîne les sous-tâches via sous-agents jusqu'aux stop-points stratégiques ou à la clôture.

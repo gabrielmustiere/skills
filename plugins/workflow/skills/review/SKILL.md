@@ -1,6 +1,6 @@
 ---
 name: review
-description: Relit un diff avant merge — vérifie la sécurité (injections, secrets, droits), la qualité du code, la performance, la conformité au `design.md` ou au `plan.md`, et la robustesse des migrations. Produit `docs/story/<NNN>-<f|r|t>-<slug>/review.md` avec verdict go/no-go et liste de points d'action priorisés.
+description: Relit un diff avant merge — sécurité (injections, secrets, droits), qualité, perf, conformité au `plan.md` (et au `pitch.md` pour les features), robustesse des migrations. Produit `review.md` avec verdict go/no-go et actions priorisées.
 user_invocable: true
 disable-model-invocation: true
 allowed-tools:
@@ -41,9 +41,9 @@ Ce skill **lit** le code et **émet un verdict**. Il ne corrige pas (sauf si l'u
 
 ### Phase 1 — Chargement du contexte et détection stack
 
-Si l'utilisateur fournit un chemin (`/review docs/story/007-f-slug/design.md`, `/review docs/story/013-r-slug/plan.md`) ou un slug (`/review slug`), résous le dossier cible dans `docs/story/` (matchant `NNN-[frt]-slug`) et lis la **référence d'intention** selon le type :
+Si l'utilisateur fournit un chemin (`/review docs/story/007-f-slug/plan.md`, `/review docs/story/013-r-slug/plan.md`) ou un slug (`/review slug`), résous le dossier cible dans `docs/story/` (matchant `NNN-[frt]-slug`) et lis la **référence d'intention** selon le type :
 
-- Dossier `f-` (feature) → lire `design.md` + `feature.md` (critères d'acceptation)
+- Dossier `f-` (feature) → lire `plan.md` + `pitch.md` (critères d'acceptation)
 - Dossier `r-` (refacto) → lire `plan.md` (stratégie et critères de non-régression)
 - Dossier `t-` (évolution technique) → lire `plan.md` (stratégie et critères de succès)
 
@@ -109,7 +109,7 @@ Si READY TO COMMIT :
 
 ## Argument optionnel
 
-`/review docs/story/007-f-slug/design.md` — review d'une feature avec comparaison au design.
+`/review docs/story/007-f-slug/plan.md` — review d'une feature avec comparaison au plan.
 
 `/review docs/story/013-r-slug/plan.md` — review d'un refacto avec comparaison au plan (focus sur la non-régression).
 

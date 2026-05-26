@@ -1,6 +1,6 @@
 ---
 name: report
-description: Produit un compte rendu d'implémentation après livraison — compare l'intention initiale (`feature.md`+`design.md` ou `plan.md`) au code réellement livré, liste les écarts, les décisions prises en cours de route, les dettes contractées et les suites à prévoir. Écrit `docs/story/<NNN>-<f|r|t>-<slug>/report.md`. À lancer typiquement avant `sync`.
+description: Compte rendu d'implémentation après livraison — compare l'intention (`pitch.md`+`plan.md` pour une feature, `plan.md` pour un refacto ou une évolution tech) au code livré, liste écarts, décisions, dettes et suites. Écrit `docs/story/<NNN>-<f|r|t>-<slug>/report.md`. À lancer avant `sync`.
 user_invocable: true
 allowed-tools:
   - Read
@@ -16,7 +16,7 @@ allowed-tools:
 
 # /report — Compte rendu d'implémentation
 
-Tu es un tech lead rigoureux qui fait la revue post-implémentation. Tu compares ce qui était prévu (spec + design pour une feature, plan pour un refacto ou une évolution technique) avec ce qui a été réellement codé, tu identifies les écarts, et tu produis un compte rendu exploitable.
+Tu es un tech lead rigoureux qui fait la revue post-implémentation. Tu compares ce qui était prévu (pitch + plan pour une feature, plan pour un refacto ou une évolution technique) avec ce qui a été réellement codé, tu identifies les écarts, et tu produis un compte rendu exploitable.
 
 ## Périmètre du skill
 
@@ -32,7 +32,7 @@ Il ne refait pas une code review (`/review`) et n'aligne pas la doc (`/sync`).
 
 `docs/story/` utilise un préfixage par type pour obtenir une timeline partagée :
 
-- `docs/story/NNN-f-slug/` — **feature** : source d'intention = `feature.md` + `design.md`
+- `docs/story/NNN-f-slug/` — **feature** : source d'intention = `pitch.md` + `plan.md`
 - `docs/story/NNN-r-slug/` — **refacto** : source d'intention = `plan.md` (comportement préservé + tests caractérisation)
 - `docs/story/NNN-t-slug/` — **évolution technique** : source d'intention = `plan.md` (brique technique ajoutée/changée)
 
@@ -51,15 +51,15 @@ Le skill adapte ses questions et son template selon le type détecté.
 
 Si l'utilisateur fournit un slug (`/report ma-feature`) ou un chemin, résous le dossier dans `docs/story/` en testant les préfixes `f-`, `r-`, `t-`.
 
-Sinon, liste via `Glob` les dossiers `docs/story/*-[frt]-*` qui contiennent soit un `design.md` (type `f`) soit un `plan.md` (types `r` ou `t`), et demande lequel traiter.
+Sinon, liste via `Glob` les dossiers `docs/story/*-[frt]-*` qui contiennent un `plan.md` (les 3 types — feature, refacto, tech), et demande lequel traiter.
 
 **Détermine le type** selon le préfixe du dossier et charge les fichiers adéquats :
 
 | Préfixe | Fichiers requis             | Bloquant si manquant                                        |
 |---------|------------------------------|-------------------------------------------------------------|
-| `f-`    | `feature.md` + `design.md`  | Lance `/feature-pitch` ou `/feature-design` d'abord          |
+| `f-`    | `pitch.md` + `plan.md`       | Lance `/feature-pitch` ou `/feature-plan` d'abord            |
 | `r-`    | `plan.md`                    | Lance `/refactor-plan` d'abord                              |
-| `t-`    | `plan.md`                    | Lance le skill de planification évolution tech d'abord      |
+| `t-`    | `plan.md`                    | Lance `/tech-plan` d'abord                                  |
 
 Si un fichier requis manque, refuse de continuer et redirige.
 
@@ -70,12 +70,12 @@ Affiche un résumé en 3-4 lignes pour confirmer le périmètre (type, intention
 Explore le code réellement produit :
 
 - **Git** : `git log --oneline` et `git diff` pour identifier les commits liés. Si possible, filtrer par scope/slug : `git log --grep=<slug-fragment>`.
-- **Fichiers créés / modifiés** : compare avec ce qui était prévu (design ou plan).
+- **Fichiers créés / modifiés** : compare avec ce qui était prévu (plan).
 - **Entités et migrations** (`f-`, `t-` si la brique touche au schéma) : vérifie le schéma réel vs le schéma prévu (`migrations/` et `src/Entity/`).
 - **Services et config** : vérifie les services déclarés, l'injection, la config.
 - **Templates et hooks** (`f-`) : vérifie l'intégration front, impact multi-thème (front shop uniquement).
 - **Tests** :
-  - `f-` : tests écrits vs stratégie de test prévue dans le design.
+  - `f-` : tests écrits vs stratégie de test prévue dans le plan.
   - `r-` : **tests de caractérisation** présents (obligatoires pour un refacto), et la suite complète passe à l'identique avant / après.
   - `t-` : tests/bench vérifiant les critères de succès du plan (perf, résilience, observabilité).
 
@@ -134,7 +134,7 @@ Affiche le chemin du fichier et le résumé.
 
 > Report prêt : `docs/story/NNN-<f|r|t>-slug/report.md`
 >
-> Des écarts ont été documentés — prochaine étape : `/sync` pour réaligner la doc (spec/design ou plan) sur la réalité du code.
+> Des écarts ont été documentés — prochaine étape : `/sync` pour réaligner la doc (pitch/plan) sur la réalité du code.
 
 **Si conformité totale (aucun écart)**, propose :
 
@@ -145,7 +145,7 @@ Affiche le chemin du fichier et le résumé.
 
 `/report ma-feature` — cherche le dossier par slug (préfixes `f-`, `r-`, `t-`) et démarre l'analyse.
 
-`/report docs/story/007-f-ma-feature/design.md` — charge directement une feature.
+`/report docs/story/007-f-ma-feature/plan.md` — charge directement une feature.
 
 `/report docs/story/013-r-extract-service/plan.md` — charge directement un refacto.
 

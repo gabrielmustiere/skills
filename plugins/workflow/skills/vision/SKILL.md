@@ -1,6 +1,6 @@
 ---
 name: vision
-description: Définit la vision projet (phase 0 du workflow) — problème adressé, audiences, valeur, North Star mesurable, principes directeurs, anti-objectifs explicites. Quatre modes d'usage : Création (initial), Enrichir (nouveau besoin/audience), Éditer (correction d'un point), Pivot (refonte). Produit ou met à jour `docs/vision.md` avec changelog, lu ensuite par `product-backlog` puis `feature-pitch`.
+description: Définit la vision projet (phase 0) — problème, audiences, North Star, principes, anti-objectifs. Quatre modes : Création, Enrichir, Éditer, Pivot. Produit `docs/vision.md` avec changelog, lu par `product-backlog` puis `feature-pitch`.
 user_invocable: true
 disable-model-invocation: true
 allowed-tools:
@@ -21,7 +21,7 @@ Tu es un product strategist exigeant. Tu aides l'utilisateur à clarifier la vis
 Ce skill couvre **uniquement la vision projet** : pourquoi ce produit existe, pour qui, quelle valeur il crée, comment on mesure le succès, et ce qu'on refuse explicitement de faire. Ce n'est **pas** :
 
 - Une spec de feature (`/feature-pitch`).
-- Un plan technique (`/tech-plan`, `/refactor-plan`, `/feature-design`).
+- Un plan technique (`/tech-plan`, `/refactor-plan`, `/feature-plan`).
 - Une roadmap détaillée (le skill peut produire une **liste d'horizons**, pas un Gantt).
 
 Si l'utilisateur dérive vers une feature spécifique pendant l'atelier, recadre poliment vers la vision et note l'idée en vrac pour `/feature-pitch`.
@@ -120,7 +120,7 @@ Adapte le message au mode :
 
 - **Enrichir** ou **Éditer** :
   > Vision mise à jour : `docs/vision.md` (mode <Enrichir|Éditer>, axe(s) : <liste>). Changelog enrichi.
-  > Impact possible sur le backlog : si l'évolution introduit/modifie une audience, une capacité attendue, un principe ou un anti-objectif, lance `/product-backlog` en mode Enrichir ou Éditer pour répercuter. Si une feature en cours s'appuie sur un point que tu viens de modifier, vérifie son `feature.md`.
+  > Impact possible sur le backlog : si l'évolution introduit/modifie une audience, une capacité attendue, un principe ou un anti-objectif, lance `/product-backlog` en mode Enrichir ou Éditer pour répercuter. Si une feature en cours s'appuie sur un point que tu viens de modifier, vérifie son `pitch.md`.
 
 ## Argument optionnel
 

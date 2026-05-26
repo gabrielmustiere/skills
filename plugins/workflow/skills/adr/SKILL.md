@@ -1,6 +1,6 @@
 ---
 name: adr
-description: Rédige un Architecture Decision Record (ADR) sur un sujet précis — choix techno, pattern, infra, contrat d'API, dette assumée — à partir d'un artifact existant (`design.md`, `plan.md`, `review.md`, `report.md`) ou d'une revue à chaud d'une feature ou d'une base de code. Co-construit la décision en mode atelier (contexte, drivers, options, conséquences), puis produit `docs/adr/NNNN-<slug>.md` au format MADR léger. Ajoute le backlink dans l'artifact source et met à jour l'index `docs/adr/README.md`. À déclencher quand l'utilisateur dit "documente cette décision", "ADR", "trace la décision archi", "pourquoi on a choisi X".
+description: Rédige un Architecture Decision Record (MADR léger) depuis un artifact (pitch/plan/review/report) ou un topic libre — contexte, drivers, options, conséquences. Produit `docs/adr/NNNN-<slug>.md` avec backlinks et index auto.
 user_invocable: true
 disable-model-invocation: true
 allowed-tools:
@@ -24,7 +24,7 @@ Tu es un architecte logiciel exigeant. Tu captures une décision technique struc
 
 Ce skill produit un **ADR atomique** (une décision = un fichier) dans `docs/adr/NNNN-<slug>.md`. Il s'utilise dans plusieurs contextes :
 
-- **Depuis un artifact de la timeline** (`design.md`, `plan.md`, `review.md`, `report.md`) — extrait la décision implicite ou explicite et la transforme en ADR autonome, avec backlink dans l'artifact source.
+- **Depuis un artifact de la timeline** (`pitch.md`, `plan.md`, `review.md`, `report.md`) — extrait la décision implicite ou explicite et la transforme en ADR autonome, avec backlink dans l'artifact source.
 - **Depuis une revue de code** (`/review` qui révèle un choix structurant à graver) — capture la décision avant qu'elle ne se dissolve dans le diff.
 - **En standalone sur un sujet** (`/adr passer à Redis pour le cache de sessions`) — explore le code et le contexte, challenge les options, puis rédige.
 
@@ -49,7 +49,7 @@ Trois modes d'entrée possibles selon l'argument :
 
 | Argument                                                        | Mode                                |
 |-----------------------------------------------------------------|-------------------------------------|
-| `/adr docs/story/NNN-<f\|r\|t>-slug/design.md` (ou `plan.md`)   | **Depuis artifact** (chemin)        |
+| `/adr docs/story/NNN-<f\|r\|t>-slug/plan.md` (ou `pitch.md`)    | **Depuis artifact** (chemin)        |
 | `/adr <slug-story>`                                             | **Depuis artifact** (résolution)    |
 | `/adr <topic libre>` (ex: "passer à Redis pour les sessions")   | **Standalone topic**                |
 | `/adr` sans argument                                            | **Demander** : artifact ou topic ?  |
@@ -122,14 +122,14 @@ Si le dossier `docs/adr/` n'existe pas, crée-le.
 
 Trois actions de couplage à effectuer (selon les éléments présents) :
 
-**1. Backlink dans l'artifact source** (si la décision vient d'un `design.md`, `plan.md`, `review.md` ou `report.md`)
+**1. Backlink dans l'artifact source** (si la décision vient d'un `pitch.md`, `plan.md`, `review.md` ou `report.md`)
 
-Édite l'artifact pour ajouter une ligne de référence sous l'en-tête, en gardant les références existantes. Exemple pour un `design.md` :
+Édite l'artifact pour ajouter une ligne de référence sous l'en-tête, en gardant les références existantes. Exemple pour un `plan.md` :
 
 ```markdown
-# Design — Checkout express
+# Plan technique — Checkout express
 
-> Feature spec : `docs/story/042-f-checkout-express/feature.md`
+> Pitch : `docs/story/042-f-checkout-express/pitch.md`
 > Stack : symfony
 > ADR : `docs/adr/0007-cache-sessions-redis.md`
 ```
@@ -188,7 +188,7 @@ Propose la suite selon le statut :
 
 ## Argument optionnel
 
-`/adr docs/story/042-f-checkout/design.md` — extrait une décision depuis un artifact, propose un draft à partir du contenu.
+`/adr docs/story/042-f-checkout/plan.md` — extrait une décision depuis un artifact, propose un draft à partir du contenu.
 
 `/adr checkout-express` — résout le slug dans `docs/story/`, propose la liste des décisions possibles à graver.
 

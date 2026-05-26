@@ -67,7 +67,7 @@ Justification accrochée aux drivers — pas de "parce que c'est mieux". Exemple
 
 ## Links
 
-- Artifact source : `docs/story/NNN-<f|r|t>-slug/design.md` (ou `plan.md`, `review.md`, `report.md`)
+- Artifact source : `docs/story/NNN-<f|r|t>-slug/plan.md` (ou `pitch.md`, `review.md`, `report.md`)
 - ADR superseded : ADR-XXXX (si applicable)
 - ADR liés : ADR-YYYY (dépendances ou contraintes — si applicable)
 - Références externes : docs framework, RFC, post-mortem

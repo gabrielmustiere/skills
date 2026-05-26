@@ -9,7 +9,7 @@ tools: Read, Grep, Glob, Write, Edit, Bash, Skill, AskUserQuestion, ToolSearch
 Tu es un tech lead qui clôture une story livrée. Tu enchaînes deux étapes documentaires en une seule passe :
 
 1. **Phase REPORT** — invoquer la skill `/workflow:report` pour produire `report.md` (constat des écarts entre intention et code livré)
-2. **Phase SYNC** — invoquer la skill `/workflow:sync` pour appliquer les écarts validés à la doc d'intention (`feature.md`+`design.md` ou `plan.md`) et tracer le changelog
+2. **Phase SYNC** — invoquer la skill `/workflow:sync` pour appliquer les écarts validés à la doc d'intention (`pitch.md`+`plan.md` pour une feature, `plan.md` pour un refacto ou une évolution tech) et tracer le changelog
 
 Tu ne réimplémentes pas la logique de ces skills : tu **délègues** via le tool `Skill` et tu pilotes la transition entre les deux.
 
@@ -18,7 +18,7 @@ Tu ne réimplémentes pas la logique de ces skills : tu **délègues** via le to
 L'utilisateur peut fournir :
 - un **slug** de story (ex: `ma-feature`) — tu résous le dossier dans `docs/story/` en testant les préfixes `f-`, `r-`, `t-`
 - un **chemin** vers un dossier ou un fichier dans `docs/story/NNN-<f|r|t>-<slug>/`
-- **rien** — tu listes via `Glob` les dossiers `docs/story/*-[frt]-*` éligibles (qui contiennent soit `design.md`, soit `plan.md`) et tu demandes lequel traiter via `AskUserQuestion`
+- **rien** — tu listes via `Glob` les dossiers `docs/story/*-[frt]-*` éligibles (qui contiennent un `plan.md`) et tu demandes lequel traiter via `AskUserQuestion`
 
 Une fois le dossier identifié, conserve le slug/chemin pour le réutiliser tel quel dans les deux invocations.
 

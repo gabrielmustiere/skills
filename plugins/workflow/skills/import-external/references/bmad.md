@@ -24,21 +24,21 @@ docs/
 
 ## Mapping fichiers
 
-BMAD est plus délicat à mapper car le PRD et l'architecture sont **partagés** entre toutes les stories, alors que le workflow met `feature.md` + `design.md` **par story**. Deux options :
+BMAD est plus délicat à mapper car le PRD et l'architecture sont **partagés** entre toutes les stories, alors que le workflow met `pitch.md` + `plan.md` **par story**. Deux options :
 
 ### Option A — Stories indépendantes (recommandée)
 
 Pour **chaque story BMAD**, créer un dossier workflow avec :
-- `feature.md` = contenu de la story BMAD (qui contient déjà user story, acceptance criteria).
-- `design.md` = extrait de l'architecture pertinent pour cette story (à choisir interactivement avec l'utilisateur, ou copie intégrale du `architecture.md` global avec une note "à filtrer").
+- `pitch.md` = contenu de la story BMAD (qui contient déjà user story, acceptance criteria).
+- `plan.md` = extrait de l'architecture pertinent pour cette story (à choisir interactivement avec l'utilisateur, ou copie intégrale du `architecture.md` global avec une note "à filtrer").
 
 Le PRD et l'architecture globaux vont dans `_archive/bmad/` pour référence.
 
 ### Option B — Premier story = projet complet
 
 Tous les artefacts BMAD (`prd.md`, `architecture.md`, toutes les stories) deviennent **une seule** story workflow géante :
-- `docs/story/001-f-<projet>/feature.md` = `prd.md` + concaténation des stories.
-- `docs/story/001-f-<projet>/design.md` = `architecture.md`.
+- `docs/story/001-f-<projet>/pitch.md` = `prd.md` + concaténation des stories.
+- `docs/story/001-f-<projet>/plan.md` = `architecture.md`.
 
 À utiliser si le projet BMAD est petit ou si l'utilisateur veut tout regrouper.
 
@@ -48,9 +48,9 @@ Tous les artefacts BMAD (`prd.md`, `architecture.md`, toutes les stories) devien
 
 | Source                            | Destination                                       | Note |
 |-----------------------------------|---------------------------------------------------|------|
-| `docs/stories/<epic>.<story>.story.md` | `docs/story/<NNN>-<tag>-<slug>/feature.md`   | Une story BMAD = une story workflow. |
-| `docs/prd.md`                     | `_archive/bmad/prd.md`                            | Consultable mais hors compteur global. Référencé en lien depuis chaque `feature.md` importée. |
-| `docs/architecture.md`            | `_archive/bmad/architecture.md` + copie ciblée    | L'utilisateur choisit pour chaque story s'il veut copier les sections architecture pertinentes dans son `design.md`, ou juste linker. |
+| `docs/stories/<epic>.<story>.story.md` | `docs/story/<NNN>-<tag>-<slug>/pitch.md`     | Une story BMAD = une story workflow. |
+| `docs/prd.md`                     | `_archive/bmad/prd.md`                            | Consultable mais hors compteur global. Référencé en lien depuis chaque `pitch.md` importée. |
+| `docs/architecture.md`            | `_archive/bmad/architecture.md` + copie ciblée    | L'utilisateur choisit pour chaque story s'il veut copier les sections architecture pertinentes dans son `plan.md`, ou juste linker. |
 | `docs/epics/<epic>.md` (si existe)| `_archive/bmad/epics/<epic>.md`                   | Archive — l'epic est encodé dans le slug. |
 
 ## Numérotation
@@ -101,13 +101,13 @@ Après (Option A, slugs `eXsY-<titre>`) :
 ```
 docs/story/
 ├── 001-f-e1s1-user-login/
-│   └── feature.md
+│   └── pitch.md
 ├── 002-f-e1s2-user-logout/
-│   └── feature.md
+│   └── pitch.md
 ├── 003-f-e2s1-express-checkout/
-│   └── feature.md
+│   └── pitch.md
 └── 004-t-e3s1-add-redis-cache/
-    └── feature.md
+    └── pitch.md
 
 _archive/bmad/
 ├── prd.md
@@ -115,10 +115,10 @@ _archive/bmad/
 └── epics/        # si présent dans la source
 ```
 
-Note : pas de `design.md` créé automatiquement — l'utilisateur peut le générer plus tard via `/feature-design` en utilisant `_archive/bmad/architecture.md` comme source.
+Note : pas de `plan.md` créé automatiquement — l'utilisateur peut le générer plus tard via `/feature-plan` en utilisant `_archive/bmad/architecture.md` comme source.
 
 ## Pièges spécifiques BMAD
 
-- **PRD global non transposable** : le PRD BMAD est un document de vision (problème, marché, persona). Son contenu n'a pas vraiment d'équivalent dans le workflow (qui démarre directement à la spec d'une feature concrète). **Ne pas essayer de l'éclater dans les `feature.md`** — laisser dans `_archive/bmad/prd.md` et linker.
-- **Architecture globale réutilisée par story** : ne pas dupliquer le contenu de `architecture.md` dans chaque `design.md`. Soit linker (`Voir _archive/bmad/architecture.md`), soit copier seulement la section pertinente pour cette story.
-- **Stories en cours d'exécution (Status: In Progress)** : signaler à l'utilisateur que le format BMAD encode des statuts qui n'ont pas d'équivalent direct dans le workflow (le statut workflow est implicite via la présence de `report.md`). L'info est conservée dans le `feature.md` importé.
+- **PRD global non transposable** : le PRD BMAD est un document de vision (problème, marché, persona). Son contenu n'a pas vraiment d'équivalent dans le workflow (qui démarre directement au pitch d'une feature concrète). **Ne pas essayer de l'éclater dans les `pitch.md`** — laisser dans `_archive/bmad/prd.md` et linker.
+- **Architecture globale réutilisée par story** : ne pas dupliquer le contenu de `architecture.md` dans chaque `plan.md`. Soit linker (`Voir _archive/bmad/architecture.md`), soit copier seulement la section pertinente pour cette story.
+- **Stories en cours d'exécution (Status: In Progress)** : signaler à l'utilisateur que le format BMAD encode des statuts qui n'ont pas d'équivalent direct dans le workflow (le statut workflow est implicite via la présence de `report.md`). L'info est conservée dans le `pitch.md` importé.

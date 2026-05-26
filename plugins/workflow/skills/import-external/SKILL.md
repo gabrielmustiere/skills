@@ -1,6 +1,6 @@
 ---
 name: import-external
-description: Importe une documentation externe (Spec Kit, BMAD-METHOD, GSD) vers le format `docs/story/NNN-<f|r|t>-<slug>/`. Détecte automatiquement la source, propose un mapping des sections vers `feature.md` / `design.md` / `plan.md`, demande validation puis copie via `git mv` pour préserver l'historique.
+description: Importe une doc externe (Spec Kit, BMAD-METHOD, GSD) vers `docs/story/NNN-<f|r|t>-<slug>/`. Détecte la source, mappe les sections vers `pitch.md`/`plan.md` avec validation, copie via `git mv` pour préserver l'historique.
 user_invocable: true
 disable-model-invocation: true
 allowed-tools:
@@ -19,7 +19,7 @@ allowed-tools:
 
 # /import-external — Import depuis Spec Kit, BMAD-METHOD ou GSD
 
-Ce skill fait passer un projet d'un autre framework spec-driven (Spec Kit, BMAD-METHOD, get-shit-done) vers le format `workflow` : `docs/story/NNN-<f|r|t>-<slug>/` avec `feature.md`+`design.md` ou `plan.md` selon le tag.
+Ce skill fait passer un projet d'un autre framework spec-driven (Spec Kit, BMAD-METHOD, get-shit-done) vers le format `workflow` : `docs/story/NNN-<f|r|t>-<slug>/` avec `pitch.md`+`plan.md` pour une feature, `plan.md` seul pour un refacto ou une évolution tech.
 
 C'est une opération d'import, pas un pont bidirectionnel. L'objectif : récupérer le contenu existant dans la nomenclature workflow pour pouvoir continuer avec `/feature`, `/refactor`, `/tech`, etc. La doc d'origine est **conservée** (déplacée dans `_archive/`, pas supprimée) au cas où l'utilisateur veut comparer.
 
@@ -29,7 +29,7 @@ C'est une opération d'import, pas un pont bidirectionnel. L'objectif : récupé
 - **Mapping fichier-à-fichier** documenté pour chaque source (voir références).
 - **Choix du tag** (`f`/`r`/`t`) interactif, avec heuristique sur les mots-clés du titre.
 - **Compteur global** : si certaines stories ont déjà un numéro (Spec Kit), on **réutilise**. Sinon (BMAD, GSD), on alloue séquentiellement.
-- **Pas de modification de contenu** au-delà du strict minimum (renommage de sections type `## Spec` → `## Spec` reste tel quel ; le fichier renommé `spec.md` → `feature.md` garde son texte intégral).
+- **Pas de modification de contenu** au-delà du strict minimum (renommage de sections type `## Spec` → `## Spec` reste tel quel ; le fichier renommé `spec.md` → `pitch.md` garde son texte intégral).
 
 ## Sources supportées
 
@@ -81,8 +81,8 @@ Pour chaque story source, construis un enregistrement :
 - tag proposé : f  (heuristique : mots-clés "feature", "user story", "checkout")
 - destination : docs/story/003-f-checkout-express/
 - mapping fichiers :
-    spec.md   →  feature.md
-    plan.md   →  design.md
+    spec.md   →  pitch.md
+    plan.md   →  plan.md
     tasks.md  →  _archive/tasks.md
 ```
 
@@ -129,9 +129,9 @@ Pour chaque story :
 
 1. Crée le dossier de destination : `mkdir -p docs/story/<NNN>-<tag>-<slug>/`
 2. Déplace les fichiers mappés via `git mv` (préserve l'historique).
-3. Renomme selon le mapping (ex: `git mv specs/003-x/spec.md docs/story/003-f-x/feature.md`).
+3. Renomme selon le mapping (ex: `git mv specs/003-x/spec.md docs/story/003-f-x/pitch.md`).
 4. Archive les fichiers non mappés : `git mv <fichier> _archive/<source>/<NNN>-<slug>/<fichier>`.
-5. Si la source était un fichier plat (GSD `.plans/<id>-<slug>.md`), le contenu va dans `feature.md` ou `plan.md` selon le tag — voir `references/gsd.md`.
+5. Si la source était un fichier plat (GSD `.plans/<id>-<slug>.md`), le contenu va dans `pitch.md` ou `plan.md` selon le tag — voir `references/gsd.md`.
 
 À la fin :
 
@@ -156,7 +156,7 @@ Affiche :
 
 - **Numéros qui dépassent 999** : Spec Kit accepte des timestamps `20251225-143022-x` comme numéros. Dans ce cas, demande à l'utilisateur s'il veut renuméroter séquentiellement (recommandé : `001-f-x`, `002-f-y`, …) ou tronquer à 3 chiffres (risqué : collisions possibles).
 - **Stories BMAD au format `<epic>.<story>`** : `1.1.story.md`, `1.2.story.md`, `2.1.story.md` n'ont pas de compteur global. On alloue séquentiellement et on garde la trace de l'epic dans le **slug** (ex: `001-f-epic-1-user-login`).
-- **GSD avec un seul fichier plat** : `.plans/1755-install-audit-fix.md` devient `docs/story/<NNN>-<tag>-install-audit-fix/feature.md` ou `plan.md`. Le numéro `1755` (souvent un issue GitHub) est mentionné dans le **header** du fichier importé pour traçabilité, pas dans le nom du dossier.
+- **GSD avec un seul fichier plat** : `.plans/1755-install-audit-fix.md` devient `docs/story/<NNN>-<tag>-install-audit-fix/pitch.md` ou `plan.md`. Le numéro `1755` (souvent un issue GitHub) est mentionné dans le **header** du fichier importé pour traçabilité, pas dans le nom du dossier.
 - **Conflit avec stories workflow déjà présentes** : si `docs/story/` contient déjà du contenu workflow, l'import doit s'**ajouter** (suite logique de la numérotation), pas écraser. Vérifier collisions avant chaque `git mv`.
 
 ## Substitutions disponibles
