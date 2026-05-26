@@ -1,6 +1,6 @@
 ---
 name: tech
-description: Exécute une évolution technique cadrée — capture la baseline mesurée AVANT toute modification, installe un kill switch activable à chaud, applique les étapes du plan une par une avec mesure d'impact et vérification de non-régression après chacune. Prérequis un `plan.md` existant sous `docs/story/<NNN>-t-<slug>/`. Argument optionnel : le slug à reprendre.
+description: Exécute une évolution technique cadrée — capture la baseline AVANT, kill switch à chaud, applique le plan étape par étape avec mesure d'impact et non-régression. Prérequis un `plan.md` sous `docs/story/<NNN>-t-<slug>/`.
 user_invocable: true
 disable-model-invocation: true
 argument-hint: "[slug-tech]"

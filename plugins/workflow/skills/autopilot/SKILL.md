@@ -1,6 +1,6 @@
 ---
 name: autopilot
-description: Pilote autonome bout-en-bout des skills d'implémentation `/workflow:feature`, `/workflow:refactor` et `/workflow:tech` — exécute toutes les sous-tâches d'une story en déléguant chaque sous-tâche à un sous-agent isolé (contexte propre par sous-tâche), trace l'avancement dans `.autopilot.json` (reprise possible) et ne s'arrête qu'aux stop-points stratégiques (verrou caractérisation, baseline, écart majeur, tests finaux). Point d'entrée slash qui délègue au subagent `workflow:autopilot` pour exécution en contexte isolé. À lancer avec `/workflow:autopilot <slug-ou-chemin-story>`.
+description: Pilote autonome bout-en-bout de `/workflow:feature`, `/workflow:refactor` et `/workflow:tech` — délègue chaque sous-tâche à un subagent isolé, trace dans `.autopilot.json` (reprise possible), s'arrête uniquement aux stop-points stratégiques.
 user_invocable: true
 allowed-tools:
   - Agent

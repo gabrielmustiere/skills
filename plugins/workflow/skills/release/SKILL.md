@@ -1,6 +1,6 @@
 ---
 name: release
-description: Crée une release versionnée de bout en bout — détermine le bump SemVer (major/minor/patch) depuis les Conventional Commits depuis le dernier tag, met à jour `CHANGELOG.md` au format Keep a Changelog, crée un tag annoté `vX.Y.Z`, pousse, puis publie la release sur GitHub via `gh`. Demande validation avant toute action publique.
+description: Crée une release versionnée bout-en-bout — bump SemVer depuis Conventional Commits, met à jour `CHANGELOG.md` (Keep a Changelog), tag annoté `vX.Y.Z`, push, puis publie sur GitHub via `gh`. Demande validation avant toute action publique.
 user_invocable: true
 disable-model-invocation: true
 argument-hint: "[major|minor|patch] [--no-push] [--draft] [--pre <suffix>]"

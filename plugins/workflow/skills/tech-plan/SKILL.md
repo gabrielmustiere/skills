@@ -1,6 +1,6 @@
 ---
 name: tech-plan
-description: Cadre une évolution technique transverse (performance, résilience, observabilité, sécurité, scalabilité) avant son exécution — motivation, baseline à mesurer AVANT, options envisagées et option retenue, plan incrémental avec kill switch et métriques de validation à chaque étape. Produit `docs/story/<NNN>-t-<slug>/plan.md`, lu ensuite par la skill `tech`.
+description: Cadre une évolution technique transverse (perf, résilience, observabilité, sécu, scalabilité) — motivation, baseline AVANT, options, plan incrémental avec kill switch et métriques. Produit `docs/story/<NNN>-t-<slug>/plan.md`.
 user_invocable: true
 disable-model-invocation: true
 allowed-tools:

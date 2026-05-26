@@ -1,6 +1,6 @@
 ---
 name: test-scenario
-description: Joue un scénario utilisateur via Playwright ou Chrome DevTools MCP — pilote un vrai navigateur pour valider un parcours fonctionnel de bout en bout, reproduire un bug ou simuler un comportement utilisateur. Capture les états visuels, erreurs console et requêtes réseau au fil du scénario pour produire un constat exploitable.
+description: Joue un scénario utilisateur via Playwright ou Chrome DevTools MCP — pilote un vrai navigateur pour valider un parcours bout-en-bout, reproduire un bug ou simuler un comportement. Capture états visuels, erreurs console et requêtes réseau.
 user_invocable: true
 disable-model-invocation: true
 argument-hint: "[scénario ou url]"
