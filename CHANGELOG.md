@@ -7,6 +7,8 @@ et ce projet adhère au [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+## [2.0.0] - 2026-05-26
+
 ### Changed
 - Plugin `workflow` : **rupture** — homogénéisation de la nomenclature des artifacts entre les trois tracks. La skill `feature-design` est renommée en `feature-plan`, et les fichiers produits sont alignés : `feature.md` → `pitch.md` (produit par `/workflow:feature-pitch`), `design.md` → `plan.md` (produit par `/workflow:feature-plan`). Désormais **tous les tracks produisent un `plan.md`** (cadrage technique exécutable) ; seul le track feature ajoute en amont un `pitch.md` (cadrage fonctionnel). La skill hors pipeline `doc-feature` produit maintenant `overview.md` (au lieu de `feature.md`) sous `docs/feature-map/`. La skill `migrate-legacy` est étendue : elle migre aussi les anciens fichiers (`feature.md`/`design.md` → `pitch.md`/`plan.md`, `feature.md` → `overview.md` dans `feature-map/`) via `git mv` pour préserver l'historique. Plugin `workflow` bumpé de `0.25.1` à `1.0.0` (rupture API publique, stabilisation du modèle).
 
@@ -158,7 +160,9 @@ Première version stable de la marketplace `gabrielmustiere`. Le format des plug
 - Plugin `workflow` synchronisé à `0.10.0` dans `marketplace.json` et `README.md` (alignement avec `plugin.json`)
 - Inventaire workflow du `README.md` complété avec les skills `migrate-legacy`, `import-external` et `release`
 
-[Unreleased]: https://github.com/gabrielmustiere/skills/compare/v1.8.0...HEAD
+[Unreleased]: https://github.com/gabrielmustiere/skills/compare/v2.0.0...HEAD
+[2.0.0]: https://github.com/gabrielmustiere/skills/compare/v1.8.1...v2.0.0
+[1.8.1]: https://github.com/gabrielmustiere/skills/compare/v1.8.0...v1.8.1
 [1.8.0]: https://github.com/gabrielmustiere/skills/compare/v1.7.2...v1.8.0
 [1.7.2]: https://github.com/gabrielmustiere/skills/compare/v1.7.1...v1.7.2
 [1.7.1]: https://github.com/gabrielmustiere/skills/compare/v1.7.0...v1.7.1
