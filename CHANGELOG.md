@@ -7,6 +7,23 @@ et ce projet adhère au [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+## [2.1.0] - 2026-05-27
+
+### Added
+- Plugin `workflow` : gabarit unifié pour chaque artifact — squelettes `pitch.md`, `plan.md`, `report.md`, `review.md` externalisés en `references/template.md` chargés à la demande par les skills `feature-pitch`, `feature-plan`, `refactor-plan`, `tech-plan`, `report`, `review`. Un seul template `report` couvre désormais les 3 tracks (feature/refactor/tech) à la place des trois variantes précédentes.
+- Plugin `workflow` : skill `migrate-legacy` étendue d'une phase 4 interactive de reformatage des artifacts existants au gabarit unifié, fichier par fichier, avec validation utilisateur.
+- Plugin `workflow` : `argument-hint` ajouté à toutes les skills user-invocables pour améliorer la complétion dans le menu `/`.
+- Documentation : section « Agents » dans `documentation/workflow.md` listant `autopilot` et `report-and-sync` avec leur rôle.
+
+### Changed
+- Plugin `workflow` : agent `report-and-sync` réécrit en architecture **inline** — la procédure (REPORT + SYNC) est portée par l'agent lui-même, plus aucun appel au tool `Skill`. L'indirection précédente cassait l'écriture du `report.md` en contexte délégué (substitutions `${CLAUDE_SKILL_DIR}` non résolues, état perdu).
+- Plugin `workflow` : agent `autopilot` aligné sur la même règle — `ToolSearch` et `Skill` retirés du frontmatter `tools:`, délégation strictement via `Agent`.
+- Plugins `workflow`, `sylius`, `symfony` : `allowed-tools` Bash durci sur l'ensemble des skills avec une whitelist explicite (`Bash(git:*)`, `Bash(symfony:*)`, `Bash(composer:*)`, etc.) en remplacement d'un `Bash` global. Pour les commandes hors liste, Claude Code demandera l'autorisation au cas par cas — c'est attendu.
+- Plugin `workflow` bumpé de `1.0.0` à `1.4.0`, plugin `sylius` de `0.26.0` à `0.27.0`, plugin `symfony` de `0.12.0` à `0.13.0`, plugin `editorial` de `0.3.0` à `0.4.0`.
+
+### Removed
+- Plugin `workflow` : trois templates de report `references/templates/{feature,refactor,tech}.md` supprimés au profit du template unifié `report/references/template.md`.
+
 ## [2.0.0] - 2026-05-26
 
 ### Changed
@@ -160,7 +177,8 @@ Première version stable de la marketplace `gabrielmustiere`. Le format des plug
 - Plugin `workflow` synchronisé à `0.10.0` dans `marketplace.json` et `README.md` (alignement avec `plugin.json`)
 - Inventaire workflow du `README.md` complété avec les skills `migrate-legacy`, `import-external` et `release`
 
-[Unreleased]: https://github.com/gabrielmustiere/skills/compare/v2.0.0...HEAD
+[Unreleased]: https://github.com/gabrielmustiere/skills/compare/v2.1.0...HEAD
+[2.1.0]: https://github.com/gabrielmustiere/skills/compare/v2.0.0...v2.1.0
 [2.0.0]: https://github.com/gabrielmustiere/skills/compare/v1.8.1...v2.0.0
 [1.8.1]: https://github.com/gabrielmustiere/skills/compare/v1.8.0...v1.8.1
 [1.8.0]: https://github.com/gabrielmustiere/skills/compare/v1.7.2...v1.8.0
