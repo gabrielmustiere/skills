@@ -3,6 +3,7 @@ name: feature-plan
 description: Conçoit techniquement une feature cadrée — architecture, modèle de données, intégrations, contrats d'API, stratégie de test, impacts existants. Prérequis : `pitch.md` validé. Produit `docs/story/<NNN>-f-<slug>/plan.md`, lu par `feature`.
 user_invocable: true
 disable-model-invocation: true
+argument-hint: "[slug-feature ou chemin pitch.md]"
 allowed-tools:
   - Read
   - Grep
@@ -104,73 +105,7 @@ Quand l'utilisateur valide, écris le fichier de plan.
 
 **Nom du fichier** : `docs/story/NNN-f-slug-de-la-feature/plan.md` (dans le **même dossier** que le pitch).
 
-**Format du fichier** :
-
-```markdown
-# Plan technique — [Nom de la fonctionnalité]
-
-> Pitch : `docs/story/NNN-f-slug/pitch.md`
-> Stack : [symfony | sylius | autre]
-
-## Approche retenue
-
-Description de l'approche choisie et pourquoi. Mentionner les alternatives écartées et la raison.
-
-## Entités et modèle de données
-
-Entités impactées, nouveaux champs, relations. Inclure le mapping prévu (conventions du framework, snake_case en BDD pour les colonnes camelCase).
-
-## Mécanismes framework mobilisés
-
-- Points d'extension retenus (service, listener, decorator, hook UI, etc.) et pourquoi.
-
-## Fichiers à créer
-
-| Fichier | Rôle |
-|---------|------|
-| `src/...` | Description |
-| `config/...` | Description |
-| `templates/...` | Description |
-
-## Fichiers à modifier
-
-| Fichier | Modification |
-|---------|--------------|
-| `src/...` | Description du changement |
-
-## Impacts transverses
-
-Uniquement les axes pertinents pour la feature :
-
-- Multi-channel / multi-tenant : oui/non, comment
-- Multi-thème (shop) : templates concernés dans chaque thème
-- API : ressources exposées, auth
-- i18n : champs et libellés concernés
-- Permissions : rôles / voters
-- Emails : transactionnels à envoyer
-- Migration de données : oui/non, stratégie
-
-## Ordre d'implémentation
-
-1. [ ] Sous-tâche 1 — description
-2. [ ] Sous-tâche 2 — description
-
-## Stratégie de test
-
-| Code | Type de test | Ce qu'on vérifie |
-|------|--------------|------------------|
-| `src/Service/...` | Unit | ... |
-| `src/Repository/...` | Functional | ... |
-| `templates/...` | E2E | ... |
-
-## Risques et points d'attention
-
-- Risque identifié et mitigation prévue.
-
-## Questions ouvertes
-
-- Points non résolus à clarifier avant ou pendant l'implémentation.
-```
+**Format du fichier** : voir `${CLAUDE_SKILL_DIR}/references/template.md`. À charger au moment de la rédaction — il contient le squelette, les guides de remplissage par section et les conventions (`> _Skill : ..._`, commentaires HTML, placeholders) à retirer avant commit.
 
 ### Phase 6 — Clôture
 

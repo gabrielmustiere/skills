@@ -2,7 +2,21 @@
 name: translation-entity
 description: Crée une entité Sylius traduisible (pattern personal translations) : AbstractTranslation, TranslatableInterface, TranslatableTrait, locale fallback, ajout programmatique. Pour des libellés UI statiques → `/sylius:translation`.
 user_invocable: true
-allowed-tools: Read, Write, Edit, Glob, Grep, Bash
+allowed-tools:
+  - Read
+  - Write
+  - Edit
+  - Glob
+  - Grep
+  - Bash(ls:*)
+  - Bash(find:*)
+  - Bash(cat:*)
+  - Bash(git:*)
+  - Bash(symfony:*)
+  - Bash(bin/console:*)
+  - Bash(composer:*)
+  - Bash(vendor/bin/*:*)
+  - Bash(./vendor/bin/*:*)
 ---
 
 # /translation-entity — Entité traduisible Sylius

@@ -2,7 +2,21 @@
 name: messenger-async
 description: Conçoit un flux Symfony Messenger — message + handler #[AsMessageHandler], MessageBusInterface, transports (doctrine/amqp/redis), retry, DLQ, middleware. Déclenche sur "messenger", "traitement asynchrone", "queue de messages", "worker async".
 user_invocable: true
-allowed-tools: Read, Write, Edit, Glob, Grep, Bash
+allowed-tools:
+  - Read
+  - Write
+  - Edit
+  - Glob
+  - Grep
+  - Bash(ls:*)
+  - Bash(find:*)
+  - Bash(cat:*)
+  - Bash(git:*)
+  - Bash(symfony:*)
+  - Bash(bin/console:*)
+  - Bash(composer:*)
+  - Bash(vendor/bin/*:*)
+  - Bash(./vendor/bin/*:*)
 ---
 
 # /messenger-async — Concevoir un flux Messenger (message, handler, transport, worker)

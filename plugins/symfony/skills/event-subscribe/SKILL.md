@@ -2,7 +2,21 @@
 name: event-subscribe
 description: Crée un Event Subscriber Symfony — `EventSubscriberInterface`, `getSubscribedEvents()`, multi-callbacks, priorités. Déclenche sur "event subscriber", "getSubscribedEvents", "KernelEvents", "before/after filter".
 user_invocable: true
-allowed-tools: Read, Write, Edit, Glob, Grep, Bash
+allowed-tools:
+  - Read
+  - Write
+  - Edit
+  - Glob
+  - Grep
+  - Bash(ls:*)
+  - Bash(find:*)
+  - Bash(cat:*)
+  - Bash(git:*)
+  - Bash(symfony:*)
+  - Bash(bin/console:*)
+  - Bash(composer:*)
+  - Bash(vendor/bin/*:*)
+  - Bash(./vendor/bin/*:*)
 ---
 
 # /event-subscribe — Event Subscriber Symfony

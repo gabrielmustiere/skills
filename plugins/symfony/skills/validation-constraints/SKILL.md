@@ -2,7 +2,21 @@
 name: validation-constraints
 description: Pose des contraintes Symfony via `#[Assert\*]` — entité/DTO/classe, catalogue (NotBlank, Email, UniqueEntity, Callback). Déclenche sur "contrainte Symfony", "Assert", "NotBlank", "UniqueEntity". Impose attributs PHP et auto-mapping.
 user_invocable: true
-allowed-tools: Read, Write, Edit, Glob, Grep, Bash
+allowed-tools:
+  - Read
+  - Write
+  - Edit
+  - Glob
+  - Grep
+  - Bash(ls:*)
+  - Bash(find:*)
+  - Bash(cat:*)
+  - Bash(git:*)
+  - Bash(symfony:*)
+  - Bash(bin/console:*)
+  - Bash(composer:*)
+  - Bash(vendor/bin/*:*)
+  - Bash(./vendor/bin/*:*)
 ---
 
 # /validation-constraints — Contraintes Symfony sur entité/DTO/classe

@@ -2,7 +2,21 @@
 name: doctrine-entity
 description: Crée ou modifie une entité Doctrine (Symfony/Sylius) — ORM, champs, relations, types custom. Déclenche sur "créer entité", "relation ManyToOne", "UniqueEntity", "mapping Doctrine". Impose make:entity et snake_case BDD.
 user_invocable: true
-allowed-tools: Read, Write, Edit, Glob, Grep, Bash
+allowed-tools:
+  - Read
+  - Write
+  - Edit
+  - Glob
+  - Grep
+  - Bash(ls:*)
+  - Bash(find:*)
+  - Bash(cat:*)
+  - Bash(git:*)
+  - Bash(symfony:*)
+  - Bash(bin/console:*)
+  - Bash(composer:*)
+  - Bash(vendor/bin/*:*)
+  - Bash(./vendor/bin/*:*)
 ---
 
 # /doctrine-entity — Création et modification d'entités Doctrine

@@ -2,7 +2,21 @@
 name: styles
 description: Customise les styles Sylius 2.x (admin Tabler / shop Bootstrap) — surcharge les variables CSS (`--tblr-*`, `--bs-*`) via SCSS, sans patcher vendor. Déclenche sur "changer la couleur admin Sylius", "thème Sylius shop", "surcharger les styles".
 user_invocable: true
-allowed-tools: Read, Write, Edit, Glob, Grep, Bash
+allowed-tools:
+  - Read
+  - Write
+  - Edit
+  - Glob
+  - Grep
+  - Bash(ls:*)
+  - Bash(find:*)
+  - Bash(cat:*)
+  - Bash(git:*)
+  - Bash(symfony:*)
+  - Bash(bin/console:*)
+  - Bash(composer:*)
+  - Bash(vendor/bin/*:*)
+  - Bash(./vendor/bin/*:*)
 ---
 
 # /styles — Customiser les styles Sylius

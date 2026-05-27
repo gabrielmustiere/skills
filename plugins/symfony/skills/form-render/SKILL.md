@@ -2,7 +2,21 @@
 name: form-render
 description: Rend un formulaire Symfony dans Twig — form_row, form_widget, form_errors, thèmes (bootstrap_5, tailwind). Déclenche sur "rendu form Twig", "form_row", "form_theme". Impose thème global et form_row.
 user_invocable: true
-allowed-tools: Read, Write, Edit, Glob, Grep, Bash
+allowed-tools:
+  - Read
+  - Write
+  - Edit
+  - Glob
+  - Grep
+  - Bash(ls:*)
+  - Bash(find:*)
+  - Bash(cat:*)
+  - Bash(git:*)
+  - Bash(symfony:*)
+  - Bash(bin/console:*)
+  - Bash(composer:*)
+  - Bash(vendor/bin/*:*)
+  - Bash(./vendor/bin/*:*)
 ---
 
 # /form-render — Rendu Twig d'un formulaire Symfony

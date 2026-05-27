@@ -1,7 +1,8 @@
 ---
 name: sync
-description: Réaligne la doc d'intention (`pitch.md`+`plan.md` pour une feature, `plan.md` pour un refacto ou une évolution tech) sur le code livré — applique les écarts validés du `report.md`, trace chaque modif dans un changelog en fin de document. À lancer après `report` quand le code a divergé.
+description: Réaligne la doc d'intention (`pitch.md`+`plan.md` ou `plan.md`) sur le code livré — applique les écarts validés du `report.md`, trace chaque modif dans un changelog en pied de fichier. À lancer après `report` quand le code a divergé.
 user_invocable: true
+argument-hint: "[slug-story ou chemin report.md]"
 allowed-tools:
   - Read
   - Write

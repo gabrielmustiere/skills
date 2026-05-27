@@ -2,7 +2,21 @@
 name: doctrine-migration
 description: Génère, relit ou corrige une migration Doctrine (Symfony/Sylius). Déclenche sur "make:migration", "migrations:migrate", "ajouter colonne", "NOT NULL table existante", "down()", "migration cassée". Impose make:migration et vérifie réversibilité.
 user_invocable: true
-allowed-tools: Read, Write, Edit, Glob, Grep, Bash
+allowed-tools:
+  - Read
+  - Write
+  - Edit
+  - Glob
+  - Grep
+  - Bash(ls:*)
+  - Bash(find:*)
+  - Bash(cat:*)
+  - Bash(git:*)
+  - Bash(symfony:*)
+  - Bash(bin/console:*)
+  - Bash(composer:*)
+  - Bash(vendor/bin/*:*)
+  - Bash(./vendor/bin/*:*)
 ---
 
 # /doctrine-migration — Migrations Doctrine

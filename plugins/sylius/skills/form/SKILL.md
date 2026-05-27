@@ -2,7 +2,21 @@
 name: form
 description: Étend un FormType Sylius via `AbstractTypeExtension` : ajoute/retire un champ sur `sylius_shop.form.type.*` ou `sylius_admin.form.type.*`, priorités, champs dynamiques (`PRE_SET_DATA`), Twig Hook pour l'affichage. Champ absent → `/sylius:model`.
 user_invocable: true
-allowed-tools: Read, Write, Edit, Glob, Grep, Bash
+allowed-tools:
+  - Read
+  - Write
+  - Edit
+  - Glob
+  - Grep
+  - Bash(ls:*)
+  - Bash(find:*)
+  - Bash(cat:*)
+  - Bash(git:*)
+  - Bash(symfony:*)
+  - Bash(bin/console:*)
+  - Bash(composer:*)
+  - Bash(vendor/bin/*:*)
+  - Bash(./vendor/bin/*:*)
 ---
 
 # /form — Customiser un formulaire Sylius

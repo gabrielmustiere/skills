@@ -2,7 +2,21 @@
 name: event-listen
 description: Crée un Event Listener Symfony — `#[AsEventListener]` ou tag `kernel.event_listener`, `__invoke()`, priorité. Déclenche sur "event listener", "AsEventListener", "écouter événement", "onKernelRequest", "onKernelException".
 user_invocable: true
-allowed-tools: Read, Write, Edit, Glob, Grep, Bash
+allowed-tools:
+  - Read
+  - Write
+  - Edit
+  - Glob
+  - Grep
+  - Bash(ls:*)
+  - Bash(find:*)
+  - Bash(cat:*)
+  - Bash(git:*)
+  - Bash(symfony:*)
+  - Bash(bin/console:*)
+  - Bash(composer:*)
+  - Bash(vendor/bin/*:*)
+  - Bash(./vendor/bin/*:*)
 ---
 
 # /event-listen — Event Listener Symfony

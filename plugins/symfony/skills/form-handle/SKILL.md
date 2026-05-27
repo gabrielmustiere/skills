@@ -2,7 +2,21 @@
 name: form-handle
 description: Traite la soumission d'un formulaire Symfony — createForm, handleRequest, isSubmitted/isValid, PRG. Déclenche sur "traiter formulaire", "handleRequest", "isSubmitted && isValid", "redirection après form". Impose délégation métier et redirection.
 user_invocable: true
-allowed-tools: Read, Write, Edit, Glob, Grep, Bash
+allowed-tools:
+  - Read
+  - Write
+  - Edit
+  - Glob
+  - Grep
+  - Bash(ls:*)
+  - Bash(find:*)
+  - Bash(cat:*)
+  - Bash(git:*)
+  - Bash(symfony:*)
+  - Bash(bin/console:*)
+  - Bash(composer:*)
+  - Bash(vendor/bin/*:*)
+  - Bash(./vendor/bin/*:*)
 ---
 
 # /form-handle — Traitement d'un formulaire dans un contrôleur

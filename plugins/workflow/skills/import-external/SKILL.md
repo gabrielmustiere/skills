@@ -3,6 +3,7 @@ name: import-external
 description: Importe une doc externe (Spec Kit, BMAD-METHOD, GSD) vers `docs/story/NNN-<f|r|t>-<slug>/`. Détecte la source, mappe les sections vers `pitch.md`/`plan.md` avec validation, copie via `git mv` pour préserver l'historique.
 user_invocable: true
 disable-model-invocation: true
+argument-hint: "[spec-kit | bmad | gsd]"
 allowed-tools:
   - Read
   - Write

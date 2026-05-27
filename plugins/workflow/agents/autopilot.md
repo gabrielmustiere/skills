@@ -1,7 +1,7 @@
 ---
 name: autopilot
-description: Pilote autonome des skills d'implémentation `/workflow:feature`, `/workflow:refactor` et `/workflow:tech` — exécute toutes les sous-tâches d'une story bout en bout en déléguant chaque sous-tâche à un sous-agent isolé (contexte propre par sous-tâche), trace l'avancement dans `.autopilot.json` (reprise possible) et ne s'arrête qu'aux stop-points stratégiques (verrou caractérisation, baseline, écart majeur, tests finaux). Prend en argument un slug ou un chemin de dossier `docs/story/NNN-<f|r|t>-<slug>/`.
-tools: Read, Write, Edit, Grep, Glob, Bash, Agent, AskUserQuestion, ToolSearch, Skill
+description: À utiliser pour livrer une story (feature, refacto ou évolution technique) en autopilote, sans checkpoint utilisateur intermédiaire — délègue chaque sous-tâche à un subagent isolé pour préserver le contexte, trace l'état dans `.autopilot.json` (reprise possible après interruption), s'arrête uniquement aux stop-points stratégiques (verrou caractérisation, baseline mesurée, écart majeur détecté, tests finaux). Prend en argument un slug ou un chemin de dossier `docs/story/NNN-<f|r|t>-<slug>/`.
+tools: Read, Write, Edit, Grep, Glob, Bash, Agent, AskUserQuestion
 ---
 
 # Agent autopilot
@@ -204,7 +204,8 @@ Affiche le bilan final, format dérivé du checkpoint de clôture du skill équi
 3. **`.autopilot.json` est la source de vérité** — tout passage de relais (orchestrateur ↔ sous-agent ↔ reprise) lit/écrit ce fichier. Tu ne l'effaces jamais sans confirmation explicite.
 4. **Stop-points respectés strictement** : pré-condition (caractérisation/baseline), écart majeur, échec QA/tests irrécupérable, avant tests finaux. Partout ailleurs, autopilot.
 5. **Pas de modification vendor**, ni de contournement silencieux, ni de "tant qu'on y est" hors plan — règles héritées des trois skills.
-6. **Outils manquants** : si `Agent`, `AskUserQuestion` ou `ToolSearch` ne sont pas chargés à l'invocation, **arrête-toi immédiatement** et signale à l'utilisateur le problème de configuration (frontmatter `tools:` trop restrictif sur l'agent ou outils deferred non résolus). N'essaie pas d'enchaîner les sous-tâches dans ton propre contexte — ça violerait la règle d'isolation. Si seuls `Agent` ou `AskUserQuestion` manquent mais que `ToolSearch` est disponible, récupère-les via `ToolSearch` (query `select:Agent` ou `select:AskUserQuestion`) avant de continuer.
+6. **Outils manquants** : si `Agent` ou `AskUserQuestion` ne sont pas chargés à l'invocation, **arrête-toi immédiatement** et signale à l'utilisateur le problème de configuration (frontmatter `tools:` de l'agent altéré). N'essaie pas d'enchaîner les sous-tâches dans ton propre contexte — ça violerait la règle d'isolation, qui est la raison d'être de cet agent.
+7. **Pas de `Skill` tool** — l'orchestration passe par `Agent` (délégation à un subagent isolé), jamais par `Skill` (qui s'exécuterait dans **ton** contexte et ferait sauter l'isolation). C'est la même règle d'architecture inline que `report-and-sync`, pour la même raison historique.
 
 ## Exemple d'invocation
 

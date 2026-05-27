@@ -1,7 +1,8 @@
 ---
 name: report
-description: Compte rendu d'implémentation après livraison — compare l'intention (`pitch.md`+`plan.md` pour une feature, `plan.md` pour un refacto ou une évolution tech) au code livré, liste écarts, décisions, dettes et suites. Écrit `docs/story/<NNN>-<f|r|t>-<slug>/report.md`. À lancer avant `sync`.
+description: Compte rendu d'implémentation après livraison — compare l'intention (`pitch.md`+`plan.md` ou `plan.md`) au code livré, liste écarts, décisions, dettes. Écrit `docs/story/NNN-<f|r|t>-<slug>/report.md`. À lancer avant `sync`.
 user_invocable: true
+argument-hint: "[slug-story ou chemin plan.md]"
 allowed-tools:
   - Read
   - Grep
@@ -116,15 +117,12 @@ Quand la revue est complète et validée, écris le fichier.
 
 **Nom du fichier** : `docs/story/NNN-<f|r|t>-slug/report.md` (dans le même dossier que l'intention).
 
-**Template à utiliser selon le type** — charge **uniquement** celui qui correspond au préfixe du dossier :
+**Format du fichier** : voir `${CLAUDE_SKILL_DIR}/references/template.md`. À charger au moment de la rédaction — un seul template unifié qui couvre les 3 types (feature, refacto, tech). Les guides `> _Skill : ..._` du template précisent les adaptations selon le préfixe :
 
-| Préfixe | Template à lire                                                |
-|---------|----------------------------------------------------------------|
-| `f-`    | `${CLAUDE_SKILL_DIR}/references/templates/feature.md`          |
-| `r-`    | `${CLAUDE_SKILL_DIR}/references/templates/refactor.md`         |
-| `t-`    | `${CLAUDE_SKILL_DIR}/references/templates/tech.md`             |
+- Pour `-r-` / `-t-` : supprimer la ligne `> Pitch : …` du frontmatter, remplacer `## Critères d'acceptation` par `## Critères de succès` (repris du `plan.md`).
+- Pour `-f-` : conserver le frontmatter complet et reprendre les critères du `pitch.md`.
 
-Ne charge pas les deux autres — un seul est utile pour le report en cours.
+Retirer tous les blocs guides et commentaires HTML avant commit.
 
 ### Phase 5 — Clôture
 

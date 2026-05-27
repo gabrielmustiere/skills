@@ -2,7 +2,21 @@
 name: validation
 description: Customise la validation d'un resource Sylius — `config/validator/<Model>.yaml` + groupe custom via `sylius.form.type.*.validation_groups`. Champ absent → `/sylius:model`. Déclenche sur "ajouter une contrainte Sylius", "valider un champ custom".
 user_invocable: true
-allowed-tools: Read, Write, Edit, Glob, Grep, Bash
+allowed-tools:
+  - Read
+  - Write
+  - Edit
+  - Glob
+  - Grep
+  - Bash(ls:*)
+  - Bash(find:*)
+  - Bash(cat:*)
+  - Bash(git:*)
+  - Bash(symfony:*)
+  - Bash(bin/console:*)
+  - Bash(composer:*)
+  - Bash(vendor/bin/*:*)
+  - Bash(./vendor/bin/*:*)
 ---
 
 # /validation — Customiser la validation Sylius

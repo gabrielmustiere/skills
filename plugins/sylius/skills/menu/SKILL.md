@@ -2,7 +2,21 @@
 name: menu
 description: Customise un menu Sylius 2.x : sidebar admin et menu compte shop via listener sur `MenuBuilderEvent` (`sylius.menu.admin.main`, `sylius.menu.shop.account`), boutons et onglets de form via Twig Hooks, icônes Tabler.
 user_invocable: true
-allowed-tools: Read, Write, Edit, Glob, Grep, Bash
+allowed-tools:
+  - Read
+  - Write
+  - Edit
+  - Glob
+  - Grep
+  - Bash(ls:*)
+  - Bash(find:*)
+  - Bash(cat:*)
+  - Bash(git:*)
+  - Bash(symfony:*)
+  - Bash(bin/console:*)
+  - Bash(composer:*)
+  - Bash(vendor/bin/*:*)
+  - Bash(./vendor/bin/*:*)
 ---
 
 # /menu — Customiser un menu Sylius

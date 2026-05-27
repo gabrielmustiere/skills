@@ -2,7 +2,21 @@
 name: http-client-request
 description: Construit une requête HTTP (symfony/http-client) — HttpClientInterface, scoped_clients, options (json, auth_bearer, timeout). Déclenche sur "appeler API", "HttpClient", "scoped client". Impose un scoped client par API.
 user_invocable: true
-allowed-tools: Read, Write, Edit, Glob, Grep, Bash
+allowed-tools:
+  - Read
+  - Write
+  - Edit
+  - Glob
+  - Grep
+  - Bash(ls:*)
+  - Bash(find:*)
+  - Bash(cat:*)
+  - Bash(git:*)
+  - Bash(symfony:*)
+  - Bash(bin/console:*)
+  - Bash(composer:*)
+  - Bash(vendor/bin/*:*)
+  - Bash(./vendor/bin/*:*)
 ---
 
 # /http-client-request — Construire une requête HTTP sortante

@@ -2,7 +2,21 @@
 name: form-type
 description: Conçoit une classe FormType Symfony — AbstractType, buildForm, configureOptions, types de champs (ChoiceType, EntityType…). Déclenche sur "créer FormType", "buildForm", "data_class", "EntityType". Impose make:form.
 user_invocable: true
-allowed-tools: Read, Write, Edit, Glob, Grep, Bash
+allowed-tools:
+  - Read
+  - Write
+  - Edit
+  - Glob
+  - Grep
+  - Bash(ls:*)
+  - Bash(find:*)
+  - Bash(cat:*)
+  - Bash(git:*)
+  - Bash(symfony:*)
+  - Bash(bin/console:*)
+  - Bash(composer:*)
+  - Bash(vendor/bin/*:*)
+  - Bash(./vendor/bin/*:*)
 ---
 
 # /form-type — Conception d'un FormType Symfony

@@ -3,6 +3,7 @@ name: feature-pitch
 description: Cadre et challenge une feature avant développement — problème, utilisateurs, valeur, parcours, critères, hors-périmètre. S'aligne sur `docs/vision.md` et `docs/product-backlog.md`. Produit `docs/story/<NNN>-f-<slug>/pitch.md`.
 user_invocable: true
 disable-model-invocation: true
+argument-hint: "[pitch initial ou slug feature]"
 allowed-tools:
   - Read
   - Write
@@ -118,69 +119,9 @@ Quand l'utilisateur valide, rédige le pitch dans `docs/story/`.
 
 **Nom du fichier** : `pitch.md` dans ce dossier.
 
-**Format du fichier** :
+**Format du fichier** : voir `${CLAUDE_SKILL_DIR}/references/template.md`. À charger au moment de la rédaction — il contient le squelette, les guides de remplissage par section et les conventions (`> _Skill : ..._`, commentaires HTML, placeholders) à retirer avant commit.
 
-```markdown
-# [Nom de la fonctionnalité]
-
-> Résumé en une phrase.
-
-## Contexte
-
-Pourquoi cette fonctionnalité existe. Quel problème elle résout. Ce qui a motivé la décision.
-
-## Alignement vision
-
-_(Section présente uniquement si `docs/vision.md` existe.)_
-
-- **Problème adressé** : à quel pan du problème central de la vision cette feature s'attaque.
-- **Audience servie** : utilisateur principal / secondaire / nouveau segment.
-- **Principes respectés / tendus** : si la feature met un principe sous tension, expliquer le compromis.
-- **Impact North Star** : effet attendu sur la métrique (positif, neutre, à mesurer).
-
-## Utilisateurs concernés
-
-Qui est impacté et comment. Préciser les rôles (admin, client, partenaire…) et les permissions attendues.
-
-## User Stories
-
-- En tant que [rôle], je veux [action] afin de [bénéfice].
-- ...
-
-## Règles métier
-
-- Liste des règles métier identifiées pendant l'atelier.
-
-## Critères d'acceptation
-
-- [ ] Critère vérifiable 1
-- [ ] Critère vérifiable 2
-- ...
-
-## Hors scope
-
-Ce qui a été explicitement exclu et pourquoi.
-
-## Impacts transverses
-
-Synthèse rapide des axes impactés (ne lister que les axes pertinents pour cette feature) :
-
-- **Multi-channel / multi-tenant** : oui/non, comment
-- **Multi-thème** : oui/non
-- **i18n / traduction** : champs et libellés concernés
-- **API** : ressources exposées
-- **Permissions** : nouveaux rôles / voters
-- **Emails / notifications** : lesquels
-- **Migration de données** : oui/non
-
-## Notes pour le plan technique
-
-Pointeurs bruts pour `/feature-plan` : entités probablement impactées, plugins/bundles concernés, points d'extension envisagés. **Ne pas concevoir ici** — juste lister les pistes pour que `/feature-plan` ait du contexte.
-
-## Questions ouvertes
-
-Points non résolus pendant l'atelier, à clarifier avant ou pendant le design technique.
-```
+Section "Alignement vision" : à ajouter **uniquement si `docs/vision.md` existe** (le template n'inclut pas cette section — l'insérer après "Contexte" avec les points : problème adressé, audience servie, principes respectés/tendus, impact North Star).
 
 Après écriture, affiche un résumé et demande si des ajustements sont nécessaires.
 

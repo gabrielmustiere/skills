@@ -2,7 +2,21 @@
 name: doctrine-query
 description: Écrit ou optimise une requête Doctrine (find/findBy, DQL, QueryBuilder, DBAL) — Symfony/Sylius. Déclenche sur "requête Doctrine", "repository custom", "QueryBuilder", "DQL", "JOIN fetch", "N+1", "optimiser requête".
 user_invocable: true
-allowed-tools: Read, Write, Edit, Glob, Grep, Bash
+allowed-tools:
+  - Read
+  - Write
+  - Edit
+  - Glob
+  - Grep
+  - Bash(ls:*)
+  - Bash(find:*)
+  - Bash(cat:*)
+  - Bash(git:*)
+  - Bash(symfony:*)
+  - Bash(bin/console:*)
+  - Bash(composer:*)
+  - Bash(vendor/bin/*:*)
+  - Bash(./vendor/bin/*:*)
 ---
 
 # /doctrine-query — Requêtes Doctrine dans les repositories

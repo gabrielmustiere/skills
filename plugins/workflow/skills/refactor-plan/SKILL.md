@@ -3,6 +3,7 @@ name: refactor-plan
 description: Cadre un refacto avant exécution — motivation, périmètre (fichiers/modules), tests de caractérisation à poser AVANT changement, plan incrémental par étapes vérifiables. Produit `docs/story/<NNN>-r-<slug>/plan.md`.
 user_invocable: true
 disable-model-invocation: true
+argument-hint: "[intention ou slug-refacto]"
 allowed-tools:
   - Read
   - Grep

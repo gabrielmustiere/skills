@@ -1,8 +1,19 @@
 ---
 name: article
 description: Rédige un article depuis le `plan.md` sous `docs/story/a-<NNN>-<slug>/` — fichier dans la collection détectée (Astro, Hugo, Jekyll, MDX), schéma + traduction. Déclenche sur "rédige depuis ce plan", "écris l'article", "draft l'article".
-metadata:
-  version: 0.1.0
+user_invocable: true
+allowed-tools:
+  - Read
+  - Write
+  - Edit
+  - Glob
+  - Grep
+  - Bash(ls:*)
+  - Bash(mkdir:*)
+  - Bash(npm:*)
+  - Bash(yarn:*)
+  - Bash(hugo:*)
+  - Bash(jekyll:*)
 ---
 
 # Article

@@ -2,7 +2,21 @@
 name: fixtures
 description: Customise les fixtures Sylius — suite `default` dans `sylius_fixtures.yaml`, `ExampleFactory` + `Fixture` pour un champ custom. Champ absent → `/sylius:model`. Déclenche sur "ajouter une fixture Sylius", "customiser données de test", "seed Sylius".
 user_invocable: true
-allowed-tools: Read, Write, Edit, Glob, Grep, Bash
+allowed-tools:
+  - Read
+  - Write
+  - Edit
+  - Glob
+  - Grep
+  - Bash(ls:*)
+  - Bash(find:*)
+  - Bash(cat:*)
+  - Bash(git:*)
+  - Bash(symfony:*)
+  - Bash(bin/console:*)
+  - Bash(composer:*)
+  - Bash(vendor/bin/*:*)
+  - Bash(./vendor/bin/*:*)
 ---
 
 # /fixtures — Customiser les fixtures Sylius

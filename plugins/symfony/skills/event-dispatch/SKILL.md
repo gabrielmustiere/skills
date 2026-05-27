@@ -2,7 +2,21 @@
 name: event-dispatch
 description: Définit et dispatche un événement Symfony custom — classe Event, EventDispatcherInterface, GenericEvent, stopPropagation. Déclenche sur "dispatcher événement", "créer event Symfony", "hook applicatif", "bus événements".
 user_invocable: true
-allowed-tools: Read, Write, Edit, Glob, Grep, Bash
+allowed-tools:
+  - Read
+  - Write
+  - Edit
+  - Glob
+  - Grep
+  - Bash(ls:*)
+  - Bash(find:*)
+  - Bash(cat:*)
+  - Bash(git:*)
+  - Bash(symfony:*)
+  - Bash(bin/console:*)
+  - Bash(composer:*)
+  - Bash(vendor/bin/*:*)
+  - Bash(./vendor/bin/*:*)
 ---
 
 # /event-dispatch — Créer et dispatcher un événement custom

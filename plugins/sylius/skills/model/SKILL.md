@@ -2,7 +2,21 @@
 name: model
 description: Étend un modèle Sylius (Customer, Country, ShippingMethod…) — sous-classe `Base*`, déclaration sous `sylius_<bundle>.resources.<r>.classes.model`, migration. Déclenche sur "ajouter un champ sur Customer", "étendre Country", "modèle Sylius custom".
 user_invocable: true
-allowed-tools: Read, Write, Edit, Glob, Grep, Bash
+allowed-tools:
+  - Read
+  - Write
+  - Edit
+  - Glob
+  - Grep
+  - Bash(ls:*)
+  - Bash(find:*)
+  - Bash(cat:*)
+  - Bash(git:*)
+  - Bash(symfony:*)
+  - Bash(bin/console:*)
+  - Bash(composer:*)
+  - Bash(vendor/bin/*:*)
+  - Bash(./vendor/bin/*:*)
 ---
 
 # /model — Customiser un modèle Sylius

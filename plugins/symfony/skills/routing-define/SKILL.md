@@ -2,7 +2,21 @@
 name: routing-define
 description: Définit le routing Symfony — #[Route] (path, methods, requirements, schemes, stateless, host, locale), génération d'URL (UrlGenerator, path/url Twig), URIs signées. Déclenche sur "créer route", "#[Route]", "générer URL". Impose routes nommées.
 user_invocable: true
-allowed-tools: Read, Write, Edit, Glob, Grep, Bash
+allowed-tools:
+  - Read
+  - Write
+  - Edit
+  - Glob
+  - Grep
+  - Bash(ls:*)
+  - Bash(find:*)
+  - Bash(cat:*)
+  - Bash(git:*)
+  - Bash(symfony:*)
+  - Bash(bin/console:*)
+  - Bash(composer:*)
+  - Bash(vendor/bin/*:*)
+  - Bash(./vendor/bin/*:*)
 ---
 
 # /routing-define — Définir le routing Symfony

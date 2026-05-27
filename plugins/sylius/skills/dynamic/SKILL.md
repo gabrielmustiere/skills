@@ -2,7 +2,21 @@
 name: dynamic
 description: Customise un élément dynamique Sylius 2.1+ via Stimulus/UX — `*_controller.js`, `stimulus_controller()` Twig, `controllers.json`. Déclenche sur "ajouter du JS Sylius", "controller Stimulus Sylius", "remplacer un controller natif".
 user_invocable: true
-allowed-tools: Read, Write, Edit, Glob, Grep, Bash
+allowed-tools:
+  - Read
+  - Write
+  - Edit
+  - Glob
+  - Grep
+  - Bash(ls:*)
+  - Bash(find:*)
+  - Bash(cat:*)
+  - Bash(git:*)
+  - Bash(symfony:*)
+  - Bash(bin/console:*)
+  - Bash(composer:*)
+  - Bash(vendor/bin/*:*)
+  - Bash(./vendor/bin/*:*)
 ---
 
 # /dynamic — Customiser les éléments dynamiques Sylius

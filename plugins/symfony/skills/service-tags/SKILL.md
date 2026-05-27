@@ -2,7 +2,21 @@
 name: service-tags
 description: Tags container Symfony — `#[AutoconfigureTag]`, `#[AsTaggedItem]`, `!tagged_iterator`, `!tagged_locator`, `#[AsDecorator]`, compiler pass. Déclenche sur "tagger service", "tagged_iterator", "AsDecorator", "strategy Symfony".
 user_invocable: true
-allowed-tools: Read, Write, Edit, Glob, Grep, Bash
+allowed-tools:
+  - Read
+  - Write
+  - Edit
+  - Glob
+  - Grep
+  - Bash(ls:*)
+  - Bash(find:*)
+  - Bash(cat:*)
+  - Bash(git:*)
+  - Bash(symfony:*)
+  - Bash(bin/console:*)
+  - Bash(composer:*)
+  - Bash(vendor/bin/*:*)
+  - Bash(./vendor/bin/*:*)
 ---
 
 # /service-tags — Tags, collections, factories et décorateurs

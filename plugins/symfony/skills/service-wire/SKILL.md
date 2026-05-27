@@ -2,7 +2,21 @@
 name: service-wire
 description: Câble les arguments d'un service Symfony — scalaires, `%env(...)%`, `#[Autowire]`, bindings, alias, `#[Target]`. Déclenche sur "Cannot autowire", "injecter paramètre", "#[Autowire]", "%env()%", "alias service".
 user_invocable: true
-allowed-tools: Read, Write, Edit, Glob, Grep, Bash
+allowed-tools:
+  - Read
+  - Write
+  - Edit
+  - Glob
+  - Grep
+  - Bash(ls:*)
+  - Bash(find:*)
+  - Bash(cat:*)
+  - Bash(git:*)
+  - Bash(symfony:*)
+  - Bash(bin/console:*)
+  - Bash(composer:*)
+  - Bash(vendor/bin/*:*)
+  - Bash(./vendor/bin/*:*)
 ---
 
 # /service-wire — Câbler les arguments d'un service

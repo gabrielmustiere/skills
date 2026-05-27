@@ -2,7 +2,21 @@
 name: adjustment
 description: Ajoute un ajustement MANUEL Sylius (remise SAV, frais custom) sur Order, OrderItem ou OrderItemUnit via AdjustmentInterface, `lock()` pour survivre aux recalculs. Pour une remise automatique avec rules/actions → `/sylius:cart-promotion`.
 user_invocable: true
-allowed-tools: Read, Write, Edit, Glob, Grep, Bash
+allowed-tools:
+  - Read
+  - Write
+  - Edit
+  - Glob
+  - Grep
+  - Bash(ls:*)
+  - Bash(find:*)
+  - Bash(cat:*)
+  - Bash(git:*)
+  - Bash(symfony:*)
+  - Bash(bin/console:*)
+  - Bash(composer:*)
+  - Bash(vendor/bin/*:*)
+  - Bash(./vendor/bin/*:*)
 ---
 
 # /adjustment — Ajustements Sylius

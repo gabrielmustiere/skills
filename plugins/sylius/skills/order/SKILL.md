@@ -2,7 +2,21 @@
 name: order
 description: Crée ou manipule une commande Sylius par code : Order/OrderItem via factories, OrderItemQuantityModifier, CompositeOrderProcessor, applique les transitions cart→new→fulfilled. Modifier la machine elle-même → `/sylius:state-machine`.
 user_invocable: true
-allowed-tools: Read, Write, Edit, Glob, Grep, Bash
+allowed-tools:
+  - Read
+  - Write
+  - Edit
+  - Glob
+  - Grep
+  - Bash(ls:*)
+  - Bash(find:*)
+  - Bash(cat:*)
+  - Bash(git:*)
+  - Bash(symfony:*)
+  - Bash(bin/console:*)
+  - Bash(composer:*)
+  - Bash(vendor/bin/*:*)
+  - Bash(./vendor/bin/*:*)
 ---
 
 # /order — Commandes Sylius

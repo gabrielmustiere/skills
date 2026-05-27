@@ -1,8 +1,15 @@
 ---
 name: article-plan
 description: Cadrage d'un article (sujet, thèse, audience, chapitrage, frontmatter). Détecte la stack (Astro, Hugo, Jekyll, MDX). Produit `docs/story/a-<NNN>-<slug>/plan.md`. Déclenche sur "idée d'article", "plan d'article", "j'écris sur…".
-metadata:
-  version: 0.1.0
+user_invocable: true
+allowed-tools:
+  - Read
+  - Write
+  - Edit
+  - Glob
+  - Grep
+  - Bash(ls:*)
+  - Bash(mkdir:*)
 ---
 
 # Article Plan

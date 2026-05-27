@@ -2,6 +2,7 @@
 name: report-and-sync
 description: Enchaîne `/workflow:report` puis `/workflow:sync` en une passe après livraison d'une story (feature, refacto ou évolution technique) — compte rendu d'écarts intention vs code livré, puis réalignement de la doc. Délègue à un subagent isolé.
 user_invocable: true
+argument-hint: "[slug-story ou chemin docs/story/NNN-<f|r|t>-<slug>/]"
 allowed-tools:
   - Agent
   - AskUserQuestion

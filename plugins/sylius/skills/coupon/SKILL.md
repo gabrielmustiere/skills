@@ -2,7 +2,21 @@
 name: coupon
 description: Crée, applique ou génère en masse des codes promo Sylius (PromotionCoupon) saisis par le client — expirationDate, usageLimit, bulk via PromotionCouponGenerator. La Promotion (`couponBased=true`) d'abord → `/sylius:cart-promotion`.
 user_invocable: true
-allowed-tools: Read, Write, Edit, Glob, Grep, Bash
+allowed-tools:
+  - Read
+  - Write
+  - Edit
+  - Glob
+  - Grep
+  - Bash(ls:*)
+  - Bash(find:*)
+  - Bash(cat:*)
+  - Bash(git:*)
+  - Bash(symfony:*)
+  - Bash(bin/console:*)
+  - Bash(composer:*)
+  - Bash(vendor/bin/*:*)
+  - Bash(./vendor/bin/*:*)
 ---
 
 # /coupon — Coupons de promotion Sylius

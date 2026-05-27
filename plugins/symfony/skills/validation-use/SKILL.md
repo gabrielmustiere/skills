@@ -2,7 +2,21 @@
 name: validation-use
 description: Utilise `ValidatorInterface` Symfony hors form — DTO, payload JSON, `ConstraintViolationList`, 422 Problem Details. Déclenche sur "ValidatorInterface", "valider un DTO", "valider sans form". Impose service injecté.
 user_invocable: true
-allowed-tools: Read, Write, Edit, Glob, Grep, Bash
+allowed-tools:
+  - Read
+  - Write
+  - Edit
+  - Glob
+  - Grep
+  - Bash(ls:*)
+  - Bash(find:*)
+  - Bash(cat:*)
+  - Bash(git:*)
+  - Bash(symfony:*)
+  - Bash(bin/console:*)
+  - Bash(composer:*)
+  - Bash(vendor/bin/*:*)
+  - Bash(./vendor/bin/*:*)
 ---
 
 # /validation-use — Utiliser le Validator Symfony hors forms

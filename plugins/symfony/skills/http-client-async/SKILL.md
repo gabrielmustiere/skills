@@ -2,7 +2,21 @@
 name: http-client-async
 description: Orchestre symfony/http-client — stream() multiplexing, Retryable/Caching/Throttling HttpClient, SSE. Déclenche sur "requêtes parallèles", "HttpClient concurrent", "retry HTTP". Impose fan-out + stream() et retry par decorator.
 user_invocable: true
-allowed-tools: Read, Write, Edit, Glob, Grep, Bash
+allowed-tools:
+  - Read
+  - Write
+  - Edit
+  - Glob
+  - Grep
+  - Bash(ls:*)
+  - Bash(find:*)
+  - Bash(cat:*)
+  - Bash(git:*)
+  - Bash(symfony:*)
+  - Bash(bin/console:*)
+  - Bash(composer:*)
+  - Bash(vendor/bin/*:*)
+  - Bash(./vendor/bin/*:*)
 ---
 
 # /http-client-async — Concurrence, retry, cache, rate limit, SSE

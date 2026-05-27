@@ -3,6 +3,7 @@ name: review
 description: Relit un diff avant merge — sécurité (injections, secrets, droits), qualité, perf, conformité au `plan.md` (et au `pitch.md` pour les features), robustesse des migrations. Produit `review.md` avec verdict go/no-go et actions priorisées.
 user_invocable: true
 disable-model-invocation: true
+argument-hint: "[slug-story ou chemin plan.md]"
 allowed-tools:
   - Read
   - Grep

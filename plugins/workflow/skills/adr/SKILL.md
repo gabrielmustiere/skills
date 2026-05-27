@@ -3,6 +3,7 @@ name: adr
 description: Rédige un Architecture Decision Record (MADR léger) depuis un artifact (pitch/plan/review/report) ou un topic libre — contexte, drivers, options, conséquences. Produit `docs/adr/NNNN-<slug>.md` avec backlinks et index auto.
 user_invocable: true
 disable-model-invocation: true
+argument-hint: "[topic, chemin artifact ou slug-story]"
 allowed-tools:
   - Read
   - Grep

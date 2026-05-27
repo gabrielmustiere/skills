@@ -2,7 +2,21 @@
 name: service-define
 description: Déclare un service Symfony/Sylius — autowiring, autoconfiguration, `resource`, privé/public, env (`#[When]`). Déclenche sur "créer service", "enregistrer service", "autowire", "services.yaml". Impose injection constructeur.
 user_invocable: true
-allowed-tools: Read, Write, Edit, Glob, Grep, Bash
+allowed-tools:
+  - Read
+  - Write
+  - Edit
+  - Glob
+  - Grep
+  - Bash(ls:*)
+  - Bash(find:*)
+  - Bash(cat:*)
+  - Bash(git:*)
+  - Bash(symfony:*)
+  - Bash(bin/console:*)
+  - Bash(composer:*)
+  - Bash(vendor/bin/*:*)
+  - Bash(./vendor/bin/*:*)
 ---
 
 # /service-define — Enregistrer un service Symfony

@@ -10,8 +10,29 @@ allowed-tools:
   - Edit
   - Grep
   - Glob
-  - Bash
+  - Bash(ls:*)
+  - Bash(find:*)
+  - Bash(cat:*)
+  - Bash(git:*)
+  - Bash(php:*)
+  - Bash(composer:*)
+  - Bash(symfony:*)
+  - Bash(vendor/bin/*:*)
+  - Bash(./vendor/bin/*:*)
+  - Bash(bin/console:*)
+  - Bash(npm:*)
+  - Bash(npx:*)
+  - Bash(yarn:*)
+  - Bash(make:*)
+  - Bash(docker compose:*)
+  - Bash(docker-compose:*)
+  - Bash(curl:*)
+  - Bash(k6:*)
+  - Bash(wrk:*)
+  - Bash(ab:*)
 ---
+
+> _Whitelist Bash pragmatique : couvre PHP/JS/git/docker + outils de bench (curl/k6/wrk/ab) propres à une évolution tech. Pour les commandes projet hors liste, Claude Code demandera l'autorisation au cas par cas — c'est attendu._
 
 # /tech — Exécution guidée d'une évolution technique
 

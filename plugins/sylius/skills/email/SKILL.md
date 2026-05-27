@@ -2,7 +2,21 @@
 name: email
 description: Personnalise ou ajoute un e-mail Sylius via Sender/EmailManager, override de templates Twig par canal, e-mail custom via SyliusMailerBundle. Déclenche sur "envoyer un mail Sylius", "personnaliser l'email de commande", "ajouter un email custom".
 user_invocable: true
-allowed-tools: Read, Write, Edit, Glob, Grep, Bash
+allowed-tools:
+  - Read
+  - Write
+  - Edit
+  - Glob
+  - Grep
+  - Bash(ls:*)
+  - Bash(find:*)
+  - Bash(cat:*)
+  - Bash(git:*)
+  - Bash(symfony:*)
+  - Bash(bin/console:*)
+  - Bash(composer:*)
+  - Bash(vendor/bin/*:*)
+  - Bash(./vendor/bin/*:*)
 ---
 
 # /email — E-mails Sylius

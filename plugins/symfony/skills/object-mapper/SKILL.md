@@ -2,7 +2,21 @@
 name: object-mapper
 description: Mappe un objet PHP vers un autre avec Symfony ObjectMapper (7.3+) — #[Map] (target/source/if/transform), conditions, transformers, MapCollection, multi-cibles. Déclenche sur "mapper un DTO", "DTO vers entité", "entité vers DTO", "#[Map]".
 user_invocable: true
-allowed-tools: Read, Write, Edit, Glob, Grep, Bash
+allowed-tools:
+  - Read
+  - Write
+  - Edit
+  - Glob
+  - Grep
+  - Bash(ls:*)
+  - Bash(find:*)
+  - Bash(cat:*)
+  - Bash(git:*)
+  - Bash(symfony:*)
+  - Bash(bin/console:*)
+  - Bash(composer:*)
+  - Bash(vendor/bin/*:*)
+  - Bash(./vendor/bin/*:*)
 ---
 
 # /object-mapper — Mapper un objet PHP vers un autre avec le composant ObjectMapper

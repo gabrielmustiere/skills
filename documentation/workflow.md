@@ -26,3 +26,12 @@ Pipeline de développement stack-agnostique (22 skills).
 | [`import-external`](../plugins/workflow/skills/import-external/SKILL.md) | Importe une doc Spec Kit / BMAD-METHOD / GSD vers le format `docs/story/NNN-<f\|r\|t>-<slug>/` |
 | [`release`](../plugins/workflow/skills/release/SKILL.md) | Tag annoté SemVer + `CHANGELOG.md` Keep a Changelog + release GitHub |
 | [`doc-feature`](../plugins/workflow/skills/doc-feature/SKILL.md) | Documente une feature existante (stack-agnostique, détection Sylius/Symfony) → `docs/feature-map/NNN-slug/overview.md` |
+
+## Agents
+
+Deux subagents sont fournis par le plugin pour les opérations qui doivent tourner en **contexte isolé** (saturation contexte évitée, reprise possible après interruption). Ils sont invocables directement par l'orchestrateur via le tool `Agent`, ou via leur skill wrapper slash (`/workflow:autopilot`, `/workflow:report-and-sync`).
+
+| Agent | Rôle |
+| --- | --- |
+| [`autopilot`](../plugins/workflow/agents/autopilot.md) | Pilote autonome bout-en-bout d'une story (feature, refacto, évolution technique). Délègue **chaque sous-tâche à un subagent dédié** pour préserver l'isolation, trace l'avancement dans `.autopilot.json` (reprise propre après crash ou pause), et n'arrête la boucle qu'aux stop-points stratégiques : verrou caractérisation (refacto), baseline mesurée (tech), écart majeur détecté, échec QA/tests irrécupérable, avant tests finaux. Ne fait ni `/review`, ni `/commit`, ni `/report`, ni `/sync`. |
+| [`report-and-sync`](../plugins/workflow/agents/report-and-sync.md) | Clôture documentaire d'une story livrée en une passe. **Architecture inline** (aucun appel au tool `Skill`) : produit lui-même `report.md` (constat des écarts intention vs code livré) avec vérification post-écriture, puis applique le sync sur `pitch.md` / `plan.md` avec changelog. Court-circuite le sync si conformité totale détectée. |

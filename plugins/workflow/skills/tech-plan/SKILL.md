@@ -3,6 +3,7 @@ name: tech-plan
 description: Cadre une évolution technique transverse (perf, résilience, observabilité, sécu, scalabilité) — motivation, baseline AVANT, options, plan incrémental avec kill switch et métriques. Produit `docs/story/<NNN>-t-<slug>/plan.md`.
 user_invocable: true
 disable-model-invocation: true
+argument-hint: "[intention ou slug-tech]"
 allowed-tools:
   - Read
   - Grep

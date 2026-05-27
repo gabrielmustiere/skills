@@ -1,8 +1,12 @@
 ---
 name: article-rework
 description: Retouche chirurgicale d'une portion d'article publié (chapitre, section, paragraphe). Lit le `plan.md` associé, respecte la voix, propage à la traduction. Déclenche sur "retravaille cette section", "réécris ce chapitre", "resserre ce paragraphe".
-metadata:
-  version: 0.1.0
+user_invocable: true
+allowed-tools:
+  - Read
+  - Edit
+  - Glob
+  - Grep
 ---
 
 # Article Rework

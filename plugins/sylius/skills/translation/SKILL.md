@@ -2,7 +2,21 @@
 name: translation
 description: Customise les libellés Sylius via `translations/messages.<locale>.yaml` (ou `validators`, `flashes`), priorité par domaine/locale. Message de contrainte → `/sylius:validation`. Déclenche sur "traduire un libellé Sylius", "changer un texte".
 user_invocable: true
-allowed-tools: Read, Write, Edit, Glob, Grep, Bash
+allowed-tools:
+  - Read
+  - Write
+  - Edit
+  - Glob
+  - Grep
+  - Bash(ls:*)
+  - Bash(find:*)
+  - Bash(cat:*)
+  - Bash(git:*)
+  - Bash(symfony:*)
+  - Bash(bin/console:*)
+  - Bash(composer:*)
+  - Bash(vendor/bin/*:*)
+  - Bash(./vendor/bin/*:*)
 ---
 
 # /translation — Customiser les traductions Sylius

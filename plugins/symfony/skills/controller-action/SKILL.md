@@ -2,7 +2,21 @@
 name: controller-action
 description: Écrit un contrôleur Symfony — AbstractController, helpers (render/json/redirectToRoute), mappage (#[MapQueryParameter], #[MapRequestPayload]). Déclenche sur "créer contrôleur", "action Symfony", "AbstractController". Impose contrôleur fin.
 user_invocable: true
-allowed-tools: Read, Write, Edit, Glob, Grep, Bash
+allowed-tools:
+  - Read
+  - Write
+  - Edit
+  - Glob
+  - Grep
+  - Bash(ls:*)
+  - Bash(find:*)
+  - Bash(cat:*)
+  - Bash(git:*)
+  - Bash(symfony:*)
+  - Bash(bin/console:*)
+  - Bash(composer:*)
+  - Bash(vendor/bin/*:*)
+  - Bash(./vendor/bin/*:*)
 ---
 
 # /controller-action — Écrire un contrôleur Symfony

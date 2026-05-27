@@ -2,7 +2,21 @@
 name: state-machine
 description: Modifie une state machine Sylius 2.x (Symfony Workflow) — ajoute/retire un state/transition sur Order, Shipment, Payment ou Checkout, branche un listener `workflow.*.completed.*`. Piloter un order existant → `/sylius:order`.
 user_invocable: true
-allowed-tools: Read, Write, Edit, Glob, Grep, Bash
+allowed-tools:
+  - Read
+  - Write
+  - Edit
+  - Glob
+  - Grep
+  - Bash(ls:*)
+  - Bash(find:*)
+  - Bash(cat:*)
+  - Bash(git:*)
+  - Bash(symfony:*)
+  - Bash(bin/console:*)
+  - Bash(composer:*)
+  - Bash(vendor/bin/*:*)
+  - Bash(./vendor/bin/*:*)
 ---
 
 # /state-machine — Customiser une state machine Sylius

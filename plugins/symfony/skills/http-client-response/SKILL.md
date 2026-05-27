@@ -2,7 +2,21 @@
 name: http-client-response
 description: Consomme une réponse symfony/http-client — getContent, toArray, exceptions Client/Server/Transport. Déclenche sur "lire réponse HttpClient", "toArray", "getContent false". Impose try/catch des 3 exceptions.
 user_invocable: true
-allowed-tools: Read, Write, Edit, Glob, Grep, Bash
+allowed-tools:
+  - Read
+  - Write
+  - Edit
+  - Glob
+  - Grep
+  - Bash(ls:*)
+  - Bash(find:*)
+  - Bash(cat:*)
+  - Bash(git:*)
+  - Bash(symfony:*)
+  - Bash(bin/console:*)
+  - Bash(composer:*)
+  - Bash(vendor/bin/*:*)
+  - Bash(./vendor/bin/*:*)
 ---
 
 # /http-client-response — Consommer une réponse HttpClient

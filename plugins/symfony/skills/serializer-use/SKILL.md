@@ -2,7 +2,21 @@
 name: serializer-use
 description: Conçoit la (dé)sérialisation Symfony — SerializerInterface, normalizers/encoders (json/xml/csv), attributs #[Groups] / #[Context] / #[DiscriminatorMap]. Déclenche sur "sérialiser Symfony", "désérialiser JSON", "#[Groups]", "JSON vers DTO".
 user_invocable: true
-allowed-tools: Read, Write, Edit, Glob, Grep, Bash
+allowed-tools:
+  - Read
+  - Write
+  - Edit
+  - Glob
+  - Grep
+  - Bash(ls:*)
+  - Bash(find:*)
+  - Bash(cat:*)
+  - Bash(git:*)
+  - Bash(symfony:*)
+  - Bash(bin/console:*)
+  - Bash(composer:*)
+  - Bash(vendor/bin/*:*)
+  - Bash(./vendor/bin/*:*)
 ---
 
 # /serializer-use — (Dé)sérialiser avec le composant Symfony Serializer

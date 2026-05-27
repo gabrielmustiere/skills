@@ -2,6 +2,7 @@
 name: autopilot
 description: Pilote autonome bout-en-bout de `/workflow:feature`, `/workflow:refactor` et `/workflow:tech` — délègue chaque sous-tâche à un subagent isolé, trace dans `.autopilot.json` (reprise possible), s'arrête uniquement aux stop-points stratégiques.
 user_invocable: true
+argument-hint: "[slug-story ou chemin docs/story/NNN-<f|r|t>-<slug>/]"
 allowed-tools:
   - Agent
   - AskUserQuestion

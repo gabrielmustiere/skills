@@ -2,7 +2,21 @@
 name: http-client-test
 description: Teste un service HttpClientInterface — MockHttpClient, MockResponse, JsonMockResponse, HAR. Déclenche sur "tester HttpClient", "MockHttpClient", "JsonMockResponse". Impose le mock, jamais d'appel réseau réel.
 user_invocable: true
-allowed-tools: Read, Write, Edit, Glob, Grep, Bash
+allowed-tools:
+  - Read
+  - Write
+  - Edit
+  - Glob
+  - Grep
+  - Bash(ls:*)
+  - Bash(find:*)
+  - Bash(cat:*)
+  - Bash(git:*)
+  - Bash(symfony:*)
+  - Bash(bin/console:*)
+  - Bash(composer:*)
+  - Bash(vendor/bin/*:*)
+  - Bash(./vendor/bin/*:*)
 ---
 
 # /http-client-test — Tester un service qui consomme HttpClientInterface

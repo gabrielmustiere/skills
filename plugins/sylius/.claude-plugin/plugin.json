@@ -1,7 +1,7 @@
 {
   "name": "sylius",
-  "description": "Skills pour travailler avec Sylius",
-  "version": "0.26.0",
+  "description": "Skills Sylius 2.x couvrant la customisation officielle : modèle (entités, traduction, ResourceInterface), formulaires et FormTypeExtension, grids et filtres, templates et Twig Hooks, styles (Twig Components, design tokens), validation (groupes 'sylius'), state-machines (Winzou), translation et translation-entity, fixtures, menus (admin/shop), emails transactionnels, ordres, panier, ajustements, coupons, promotions de panier, content dynamique. Aligné sur les conventions natives (jamais de modification vendor, Resource → mécanismes d'extension). Pour cartographier une feature existante : `workflow:doc-feature`.",
+  "version": "0.27.0",
   "author": {
     "name": "Gabriel Mustiere"
   },

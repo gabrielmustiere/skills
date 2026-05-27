@@ -2,7 +2,21 @@
 name: cart-promotion
 description: Crée une promotion panier Sylius appliquée AUTOMATIQUEMENT : combine Rules (CartQuantity, HasTaxon, ContainsProduct) et Actions (FixedDiscount, PercentageDiscount) via PromotionProcessor. Pour un code saisi par le client → `/sylius:coupon`.
 user_invocable: true
-allowed-tools: Read, Write, Edit, Glob, Grep, Bash
+allowed-tools:
+  - Read
+  - Write
+  - Edit
+  - Glob
+  - Grep
+  - Bash(ls:*)
+  - Bash(find:*)
+  - Bash(cat:*)
+  - Bash(git:*)
+  - Bash(symfony:*)
+  - Bash(bin/console:*)
+  - Bash(composer:*)
+  - Bash(vendor/bin/*:*)
+  - Bash(./vendor/bin/*:*)
 ---
 
 # /cart-promotion — Promotions panier Sylius
