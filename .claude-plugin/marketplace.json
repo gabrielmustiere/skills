@@ -5,7 +5,8 @@
   },
   "metadata": {
     "description": "Collection personnelle de skills Claude Code",
-    "pluginRoot": "./plugins"
+    "pluginRoot": "./plugins",
+    "license": "Apache-2.0"
   },
   "plugins": [
     {
