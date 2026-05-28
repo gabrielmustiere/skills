@@ -7,6 +7,13 @@ et ce projet adhère au [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+### Removed
+- **Rupture** : le plugin `workflow` est retiré de cette marketplace et déplacé dans son repo dédié [`gabrielmustiere/forge`](https://github.com/gabrielmustiere/forge) (marketplace `forge`). Les utilisateurs doivent le réinstaller via `/plugin marketplace add gabrielmustiere/forge` puis `/plugin install workflow@forge`. La marketplace `gabrielmustiere` ne publie plus que `sylius`, `symfony` et `editorial`.
+
+### Changed
+- Documentation (`README.md`, `CLAUDE.md`) repositionnée sur les trois plugins restants (Symfony / Sylius / éditorial) ; retrait du bandeau et du concept « Forge » (passés au repo `forge`). Note de migration `workflow` ajoutée en tête de `README.md`.
+- Mentions du plugin `workflow` dans les skills `editorial` et la description `sylius` annotées « marketplace `forge` ».
+
 ## [2.1.0] - 2026-05-27
 
 ### Added

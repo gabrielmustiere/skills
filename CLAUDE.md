@@ -4,7 +4,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Nature du repo
 
-Ce repo **n'est pas une application** : c'est une **marketplace de plugins Claude Code** (nom public : `gabrielmustiere`) distribuée via GitHub. Il n'y a ni build, ni test, ni runtime — juste du JSON et du Markdown consommés par Claude Code chez les utilisateurs qui ajoutent cette marketplace avec `/plugin marketplace add gabrielmustiere/skills`.
+Ce repo **n'est pas une application** : c'est une **marketplace de plugins Claude Code** (nom public : `gabrielmustiere`) distribuée via GitHub. Il n'y a ni build, ni test, ni runtime — juste du JSON et du Markdown consommés par Claude Code chez les utilisateurs qui ajoutent cette marketplace avec `/plugin marketplace add gabrielmustiere/skills`. Elle publie les plugins `sylius`, `symfony` et `editorial`.
+
+Le plugin `workflow` (pipeline de développement) a été extrait dans un repo dédié : `gabrielmustiere/forge` (marketplace `forge`). Toute évolution de ce plugin se fait là-bas, pas ici.
 
 Source de vérité :
 - `.claude-plugin/marketplace.json` → catalogue listant les plugins publiés
@@ -25,11 +27,11 @@ plugins/<plugin-name>/
 
 Règle structurelle critique : `skills/`, `commands/`, `agents/`, `hooks/` vont **à la racine du plugin**, jamais dans `.claude-plugin/`. Seul `plugin.json` habite `.claude-plugin/`.
 
-Granularité : **plugins thématiques**. Un plugin regroupe plusieurs skills liées (ex: `workflow` contient toutes les skills du pipeline de développement : phase 0 vision, tracks feature/refacto/tech, étapes communes). Les utilisateurs installent un thème entier, pas skill par skill.
+Granularité : **plugins thématiques**. Un plugin regroupe plusieurs skills liées (ex: `symfony` contient toutes les skills Symfony/Doctrine groupées par domaine). Les utilisateurs installent un thème entier, pas skill par skill.
 
-Namespacing : les skills de plugin sont toujours invoquées en préfixant par le nom du plugin → `/workflow:help`, pas `/help`. Le préfixe vient du champ `name` dans `plugin.json`.
+Namespacing : les skills de plugin sont toujours invoquées en préfixant par le nom du plugin → `/symfony:doctrine-entity`, pas `/doctrine-entity`. Le préfixe vient du champ `name` dans `plugin.json`.
 
-Résolution des `source` dans `marketplace.json` : `metadata.pluginRoot: "./plugins"` permet d'écrire `"source": "workflow"` au lieu de `"source": "./plugins/workflow"`.
+Résolution des `source` dans `marketplace.json` : `metadata.pluginRoot: "./plugins"` permet d'écrire `"source": "sylius"` au lieu de `"source": "./plugins/sylius"`.
 
 ## Workflow d'édition
 
@@ -41,7 +43,7 @@ Résolution des `source` dans `marketplace.json` : `metadata.pluginRoot: "./plug
 5. Aucune modif de `marketplace.json` — les skills sont auto-découvertes dans le plugin
 
 ### Créer un nouveau plugin thématique
-1. `plugins/<nouveau>/.claude-plugin/plugin.json` (copier `workflow/` comme base)
+1. `plugins/<nouveau>/.claude-plugin/plugin.json` (copier `symfony/` comme base)
 2. Au moins une skill dans `plugins/<nouveau>/skills/<skill>/SKILL.md`
 3. Ajouter une entrée au tableau `plugins` de `.claude-plugin/marketplace.json`
 4. Créer `documentation/<nouveau>.md` (inventaire 2 colonnes) et ajouter la ligne correspondante dans le tableau « Plugins disponibles » du `README.md`

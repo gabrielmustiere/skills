@@ -10,13 +10,6 @@
   },
   "plugins": [
     {
-      "name": "workflow",
-      "source": "./plugins/workflow",
-      "description": "Skills pour les différentes étapes de mon workflow de développement ",
-      "version": "1.4.0",
-      "category": "development"
-    },
-    {
       "name": "sylius",
       "source": "./plugins/sylius",
       "description": "Skills Sylius 2.x couvrant la customisation officielle : modèle, formulaires, grids, templates, styles, validation, state-machines, translation, fixtures, menus, emails, ordres, panier, ajustements, coupons, promotions, content dynamique. Aligné sur les conventions natives (jamais de modification vendor).",
@@ -26,7 +19,7 @@
     {
       "name": "symfony",
       "source": "./plugins/symfony",
-      "description": "Skills focalisées Symfony/Doctrine (entités, requêtes, migrations, forms, HTTP client, validator, service container, event dispatcher, messenger, serializer, object-mapper, controller, routing) relayées par le plugin workflow via détection stack",
+      "description": "Skills focalisées Symfony/Doctrine (entités, requêtes, migrations, forms, HTTP client, validator, service container, event dispatcher, messenger, serializer, object-mapper, controller, routing) relayées par le plugin workflow (marketplace forge) via détection stack",
       "version": "0.13.0",
       "category": "development"
     },

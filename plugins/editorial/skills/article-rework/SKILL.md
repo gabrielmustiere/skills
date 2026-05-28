@@ -172,7 +172,7 @@ Rendre la main avec un récapitulatif court :
 - Traduction propagée ? oui / non / sans objet.
 - Vérifications passées ? oui / non, lesquelles.
 - Reste à faire : sources à confirmer, captures à régénérer si la retouche en invalide une, mise à jour de l'OG image si le titre a changé, etc.
-- Si pertinent : suggérer `/workflow:review` sur le diff pour audit final.
+- Si pertinent : suggérer `/workflow:review` sur le diff pour audit final (plugin `workflow`, marketplace `forge` — optionnel).
 
 Pas de commit automatique. Le user décide quand commiter et quoi inclure.
 
