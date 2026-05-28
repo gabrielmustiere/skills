@@ -30,7 +30,7 @@ Tu conçois ou complètes une classe FormType (`src/Form/…Type.php`). Tu t'app
    - Présents → OK.
    - `symfony/form` absent → `composer require symfony/form` avant de continuer.
    - Stack non-Symfony → demander : *« Ce skill cible Symfony, je ne trouve pas les paquets attendus. On continue quand même ? »*
-3. Si `sylius/sylius` présent → les forms Sylius héritent de `AbstractResourceType` et utilisent les groupes de validation `Default` + `sylius`. Détails dans `references/stacks/sylius.md` du plugin workflow.
+3. Si `sylius/sylius` présent → les forms Sylius héritent de `AbstractResourceType` et utilisent les groupes de validation `Default` + `sylius`.
 
 ## Règles fondamentales
 

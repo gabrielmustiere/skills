@@ -16,7 +16,7 @@ allowed-tools:
 
 Atelier de cadrage pour la **première étape** du workflow de rédaction d'un article (blog) ou d'une fiche side-project. Ne rédige **pas** l'article — produit un plan détaillé que le skill `article` exécutera ensuite.
 
-Le plan vit dans `docs/story/a-<NNN>-<slug>/plan.md`, dans la lignée des dossiers `f-` (feature), `r-` (refacto), `t-` (tech) du plugin `workflow`. `a-` pour *article*.
+Le plan vit dans `docs/story/a-<NNN>-<slug>/plan.md`. `a-` pour *article*.
 
 ## Pourquoi ce skill existe
 
@@ -75,7 +75,7 @@ Si monolingue : ne pas inventer de stratégie de traduction. Le plan ne doit pas
 
 #### 0.4 Numérotation et compteurs
 
-- **Lister `docs/story/a-*`** pour déterminer le prochain `NNN` du **dossier de plan** (incrément simple, sur 3 chiffres : `a-001`, `a-002`...). C'est la convention du plugin `workflow`. Si `docs/story/` n'existe pas, le créer.
+- **Lister `docs/story/a-*`** pour déterminer le prochain `NNN` du **dossier de plan** (incrément simple, sur 3 chiffres : `a-001`, `a-002`...). Si `docs/story/` n'existe pas, le créer.
 - **Si la stack a un champ `number`** dans le schéma (Astro CC notamment), c'est un compteur **séparé** du dossier de plan. Il reflète l'ordre de publication dans la collection ; il s'incrémente en lisant les frontmatters publiés. Pour une collection bilingue où une paire FR/EN partage le même `number` (via `translationOf`), filtrer par langue principale pour calculer la séquence. Sinon, prendre `max(number) + 1`.
 - Si le schéma n'a pas de `number`, ne pas l'inventer.
 
@@ -287,7 +287,7 @@ Rédaction complète à partir de ce plan. Lancer le skill `article` (`/editoria
 - **Respecter les contraintes du schéma détecté** — bornes Zod, enums, champs requis. Un plan qui propose un `excerpt` hors bornes est cassé d'office.
 - **Pas d'invention de chiffres.** Si une donnée n'a pas de source, marquer « _à étayer en rédaction_ » plutôt que de poser un chiffre fragile.
 - **Slug court, sans accents, kebab-case.** Cohérent avec les fichiers existants de la collection.
-- **Numérotation `a-NNN`** : strictement incrémentale, jamais réutiliser. Padding 3 chiffres. C'est la convention `docs/story/` du plugin `workflow`.
+- **Numérotation `a-NNN`** : strictement incrémentale, jamais réutiliser. Padding 3 chiffres.
 - **Si un `docs/story/a-<NNN>-<slug>/plan.md` existe déjà** pour un sujet proche, le proposer en lecture avant de créer un nouveau dossier — éviter les plans orphelins.
 - **Recherche web : annoncer avant, citer après.** Chaque source consultée apparaît dans la section « Sources lues » du plan, avec son URL.
 - **Stack détectée mais user en désaccord** : la détection n'est qu'une hypothèse. Si le user dit « non, on est en Hugo pas en Jekyll », recaler immédiatement et adapter la suite. Ne pas insister.

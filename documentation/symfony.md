@@ -1,6 +1,6 @@
 # Inventaire — plugin `symfony`
 
-Skills Symfony/Doctrine groupées par domaine (25 skills). Relayées par `workflow` quand le stack détecté est Symfony/Sylius.
+Skills Symfony/Doctrine groupées par domaine (25 skills).
 
 | Skill | Rôle |
 | --- | --- |

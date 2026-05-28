@@ -11,8 +11,9 @@ et ce projet adhère au [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - **Rupture** : le plugin `workflow` est retiré de cette marketplace et déplacé dans son repo dédié [`gabrielmustiere/forge`](https://github.com/gabrielmustiere/forge) (marketplace `forge`). Les utilisateurs doivent le réinstaller via `/plugin marketplace add gabrielmustiere/forge` puis `/plugin install workflow@forge`. La marketplace `gabrielmustiere` ne publie plus que `sylius`, `symfony` et `editorial`.
 
 ### Changed
-- Documentation (`README.md`, `CLAUDE.md`) repositionnée sur les trois plugins restants (Symfony / Sylius / éditorial) ; retrait du bandeau et du concept « Forge » (passés au repo `forge`). Note de migration `workflow` ajoutée en tête de `README.md`.
-- Mentions du plugin `workflow` dans les skills `editorial` et la description `sylius` annotées « marketplace `forge` ».
+- Documentation (`README.md`, `CLAUDE.md`) repositionnée sur les trois plugins restants (Symfony / Sylius / éditorial) ; retrait du bandeau et du concept « Forge » (passés au repo `forge`).
+- Purge complète des références au plugin `workflow` dans la marketplace : descriptions (`marketplace.json`, `plugin.json` des trois plugins), inventaire `documentation/symfony.md`, note de migration `README.md`, et renvois croisés dans les skills `editorial` (`article`, `article-plan`, `article-rework`), `symfony` (`doctrine-entity`, `form-type`) et `sylius` (`translation-entity`). Seules subsistent les mentions du composant *Symfony Workflow* (state machines) et la garde-fou opérationnelle de `CLAUDE.md`.
+- Bumps patch : `sylius` `0.27.0` → `0.27.1`, `symfony` `0.13.0` → `0.13.1`, `editorial` `0.4.0` → `0.4.1`.
 
 ## [2.1.0] - 2026-05-27
 

@@ -241,7 +241,7 @@ Afficher :
 
 - Fichiers créés/modifiés (`Supplier.php`, `SupplierTranslation.php`, `_sylius.yaml`).
 - Champs traduisibles vs non traduisibles.
-- Ce qui reste : migration (`/symfony:doctrine-migration`), form type avec `ResourceTranslationsType` (voir plugin workflow), fixtures multi-locale, mise à jour du ProductRepository si filtre par nom traduit.
+- Ce qui reste : migration (`/symfony:doctrine-migration`), form type avec `ResourceTranslationsType`, fixtures multi-locale, mise à jour du ProductRepository si filtre par nom traduit.
 
 ## Pièges fréquents
 

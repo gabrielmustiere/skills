@@ -5,13 +5,6 @@ Collection de skills Claude Code regroupées par **plugins thématiques**, insta
 - **Marketplace** : `gabrielmustiere`
 - **Source** : `gabrielmustiere/skills` (ce repo)
 
-> **Le plugin `workflow` a déménagé.** Le pipeline de développement vit désormais dans son repo dédié [`gabrielmustiere/forge`](https://github.com/gabrielmustiere/forge), marketplace `forge`. Si tu l'utilisais depuis cette marketplace, réinstalle-le :
-> ```
-> /plugin marketplace add gabrielmustiere/forge
-> /plugin install workflow@forge
-> /reload-plugins
-> ```
-
 ## Installation
 
 Dans une session Claude Code ouverte sur n'importe quel projet :
@@ -38,9 +31,9 @@ Mettre à jour le catalogue : `/plugin marketplace update gabrielmustiere` puis 
 
 | Plugin | Version | Inventaire | Description |
 | --- | --- | --- | --- |
-| `sylius` | `0.27.0` | [17 skills](documentation/sylius.md) | Skills pour travailler avec Sylius (conventions, entités traduisibles, customization de modèle/form/grid/template/styles/dynamic/validation/state-machine/translation/fixtures, commandes, e-mails, promotions panier, coupons, ajustements). Pour la documentation d'une feature existante, voir `workflow:doc-feature` (plugin `workflow`, marketplace `forge`). |
-| `symfony` | `0.13.0` | [25 skills](documentation/symfony.md) | Skills Symfony/Doctrine groupées par domaine : **doctrine** (entity, migration, query), **events** (dispatch, listen, subscribe), **forms** (type, handle, render, advanced), **http** (controller-action, routing-define), **http-client** (request, response, async, test), **messenger** (async), **serializer** (use), **object-mapper**, **services** (define, wire, tags), **validation** (constraints, groups, use). Relayées par le plugin `workflow` (marketplace `forge`) quand le stack détecté est Symfony/Sylius. |
-| `editorial` | `0.4.0` | [3 skills](documentation/editorial.md) | Pipeline éditorial en trois étapes — `article-plan` (cadrage), `article` (rédaction guidée + vérifications + traduction) et `article-rework` (retouche chirurgicale d'une portion d'un article publié) — pour articles de blog et fiches side-project. Stack-agnostique : détecte Astro Content Collections, Next.js MDX, Hugo, Jekyll ou markdown brut. Artifacts unifiés sous `docs/story/a-NNN-slug/`. |
+| `sylius` | `0.27.1` | [17 skills](documentation/sylius.md) | Skills pour travailler avec Sylius (conventions, entités traduisibles, customization de modèle/form/grid/template/styles/dynamic/validation/state-machine/translation/fixtures, commandes, e-mails, promotions panier, coupons, ajustements). |
+| `symfony` | `0.13.1` | [25 skills](documentation/symfony.md) | Skills Symfony/Doctrine groupées par domaine : **doctrine** (entity, migration, query), **events** (dispatch, listen, subscribe), **forms** (type, handle, render, advanced), **http** (controller-action, routing-define), **http-client** (request, response, async, test), **messenger** (async), **serializer** (use), **object-mapper**, **services** (define, wire, tags), **validation** (constraints, groups, use). |
+| `editorial` | `0.4.1` | [3 skills](documentation/editorial.md) | Pipeline éditorial en trois étapes — `article-plan` (cadrage), `article` (rédaction guidée + vérifications + traduction) et `article-rework` (retouche chirurgicale d'une portion d'un article publié) — pour articles de blog et fiches side-project. Stack-agnostique : détecte Astro Content Collections, Next.js MDX, Hugo, Jekyll ou markdown brut. Artifacts unifiés sous `docs/story/a-NNN-slug/`. |
 
 ## Licence
 

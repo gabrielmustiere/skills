@@ -184,7 +184,7 @@ Rendre la main avec un récapitulatif court :
 - Statut `draft` (true / false / sans objet).
 - Vérifications passées (oui / non, et lesquelles).
 - Reste à faire : choix encore ouverts, sources à étayer, captures à ajouter, OG image à générer, mise en ligne, etc.
-- Si pertinent : suggérer de lancer le dev server pour relire le rendu, ou (après merge) `/workflow:review` sur le diff pour audit final (plugin `workflow`, marketplace `forge` — optionnel).
+- Si pertinent : suggérer de lancer le dev server pour relire le rendu.
 
 Pas de commit automatique. Le user décide quand commiter et quoi inclure.
 

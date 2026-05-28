@@ -29,7 +29,7 @@ Tu aides à concevoir une entité Doctrine propre dans un projet Symfony ou Syli
 2. Vérifier `symfony/framework-bundle` dans les dépendances.
    - Présent → OK, continuer.
    - Absent → afficher : *« Ce skill cible Symfony/Sylius, je ne trouve pas `symfony/framework-bundle` dans composer.json. On continue quand même ou on change d'approche ? »* et attendre la réponse.
-3. Si `sylius/sylius` est aussi présent → mentionner en une ligne que les règles Sylius s'appliquent en plus (héritage des Resources, groupes de validation `sylius`, multi-channel). Détails dans le plugin workflow (`references/stacks/sylius.md`).
+3. Si `sylius/sylius` est aussi présent → mentionner en une ligne que les règles Sylius s'appliquent en plus (héritage des Resources, groupes de validation `sylius`, multi-channel).
 
 ## Règles fondamentales
 
