@@ -7,6 +7,11 @@ et ce projet adhère au [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+## [3.0.0] - 2026-05-28
+
+### Added
+- Licence Apache 2.0 déclarée dans les manifestes (`marketplace.json` et les quatre `plugin.json`) et documentée dans le `README.md`.
+
 ### Removed
 - **Rupture** : le plugin `workflow` est retiré de cette marketplace et déplacé dans son repo dédié [`gabrielmustiere/forge`](https://github.com/gabrielmustiere/forge) (marketplace `forge`). Les utilisateurs doivent le réinstaller via `/plugin marketplace add gabrielmustiere/forge` puis `/plugin install workflow@forge`. La marketplace `gabrielmustiere` ne publie plus que `sylius`, `symfony` et `editorial`.
 
@@ -185,7 +190,8 @@ Première version stable de la marketplace `gabrielmustiere`. Le format des plug
 - Plugin `workflow` synchronisé à `0.10.0` dans `marketplace.json` et `README.md` (alignement avec `plugin.json`)
 - Inventaire workflow du `README.md` complété avec les skills `migrate-legacy`, `import-external` et `release`
 
-[Unreleased]: https://github.com/gabrielmustiere/skills/compare/v2.1.0...HEAD
+[Unreleased]: https://github.com/gabrielmustiere/skills/compare/v3.0.0...HEAD
+[3.0.0]: https://github.com/gabrielmustiere/skills/compare/v2.1.0...v3.0.0
 [2.1.0]: https://github.com/gabrielmustiere/skills/compare/v2.0.0...v2.1.0
 [2.0.0]: https://github.com/gabrielmustiere/skills/compare/v1.8.1...v2.0.0
 [1.8.1]: https://github.com/gabrielmustiere/skills/compare/v1.8.0...v1.8.1
